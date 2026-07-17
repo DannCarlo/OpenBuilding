@@ -1,22 +1,17 @@
 import { useCallback } from 'react';
 import { useModelParser } from './useModelParser';
-import { useUIStore } from '../store/uiStore';
 import { SUPPORTED_EXTENSIONS } from '../lib/constants';
 
 export function useFileUpload() {
   const { parseFile, progress } = useModelParser();
-  const { setShowUpload } = useUIStore();
 
   const handleFile = useCallback(
     (file: File) => {
       const ext = '.' + file.name.split('.').pop()?.toLowerCase();
-      if (!SUPPORTED_EXTENSIONS.includes(ext)) {
-        return;
-      }
+      if (!SUPPORTED_EXTENSIONS.includes(ext)) return;
       parseFile(file);
-      setShowUpload(false);
     },
-    [parseFile, setShowUpload]
+    [parseFile]
   );
 
   const handleDrop = useCallback(

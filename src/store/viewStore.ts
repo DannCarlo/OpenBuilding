@@ -23,7 +23,7 @@ export const useViewStore = create<ViewState>((set) => ({
   showLabels: false,
   showGrid: true,
   showSupports: true,
-  theme: 'dark',
+  theme: 'light',
 
   setDisplayMode: (mode) => set({ displayMode: mode }),
   toggleLabels: () => set((s) => ({ showLabels: !s.showLabels })),

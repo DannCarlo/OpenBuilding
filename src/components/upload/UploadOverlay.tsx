@@ -5,25 +5,63 @@ import { useFileUpload } from '../../hooks/useFileUpload';
 import { SUPPORTED_FORMATS } from '../../lib/constants';
 
 /**
- * Initial upload overlay with drag-and-drop.
+ * Welcome screen — shown when no model is loaded.
+ * Drag-and-drop or click to upload a structural analysis file.
  */
 export function UploadOverlay() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { handleDrop, handleDragOver, handleFileInput, progress } = useFileUpload();
 
+  // Show a loading state during parsing
+  const isLoading = progress > 0 && progress < 100;
+
   return (
     <motion.div
-      className="absolute inset-0 z-40 flex items-center justify-center bg-[var(--color-bg-primary)]/80 backdrop-blur-sm"
+      className="absolute inset-0 z-10 flex items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
     >
-      <DropZone
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
+      <div
         onClick={() => fileInputRef.current?.click()}
-        progress={progress}
-      />
+        className="w-[440px] max-w-[92vw] p-10 sm:p-14 rounded-2xl border-2 border-dashed border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors cursor-pointer flex flex-col items-center gap-5 sm:gap-7 text-center"
+      >
+        {isLoading ? (
+          <>
+            <div className="w-16 h-16 rounded-full bg-[var(--color-accent)]/10 flex items-center justify-center">
+              <FileUp size={32} className="text-[var(--color-accent)]" />
+            </div>
+            <div>
+              <p className="text-lg font-medium text-[var(--color-text-primary)]">Processing file…</p>
+              <p className="text-sm text-[var(--color-text-secondary)] mt-1">{progress}%</p>
+            </div>
+            <div className="w-full h-1.5 bg-[var(--color-border)] rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-[var(--color-accent)] rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.2 }}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <motion.div
+              className="w-20 h-20 rounded-2xl bg-[var(--color-accent)]/10 flex items-center justify-center"
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <Upload size={36} className="text-[var(--color-accent)]" />
+            </motion.div>
+            <div>
+              <p className="text-lg font-medium text-[var(--color-text-primary)]">Drop your .std file here</p>
+              <p className="text-sm text-[var(--color-text-secondary)] mt-1">or click to browse</p>
+            </div>
+            <p className="text-xs text-[var(--color-text-secondary)] opacity-60">{SUPPORTED_FORMATS}</p>
+          </>
+        )}
+      </div>
       <input
         ref={fileInputRef}
         type="file"
@@ -31,79 +69,6 @@ export function UploadOverlay() {
         onChange={handleFileInput}
         className="hidden"
       />
-    </motion.div>
-  );
-}
-
-function DropZone({
-  onDrop,
-  onDragOver,
-  onClick,
-  progress,
-}: {
-  onDrop: (e: React.DragEvent) => void;
-  onDragOver: (e: React.DragEvent) => void;
-  onClick: () => void;
-  progress: number;
-}) {
-  const isLoading = progress > 0 && progress < 100;
-
-  return (
-    <motion.div
-      onDrop={onDrop}
-      onDragOver={onDragOver}
-      onClick={onClick}
-      className="w-[420px] max-w-[90vw] p-10 rounded-2xl border-2 border-dashed border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors cursor-pointer flex flex-col items-center gap-5 text-center"
-      whileHover={{ scale: 1.01 }}
-      whileTap={{ scale: 0.99 }}
-      animate={{
-        borderColor: isLoading ? 'var(--color-accent)' : 'var(--color-border)',
-      }}
-    >
-      {isLoading ? (
-        <>
-          <div className="w-16 h-16 rounded-full bg-[var(--color-accent)]/10 flex items-center justify-center">
-            <FileUp size={32} className="text-[var(--color-accent)]" />
-          </div>
-          <div>
-            <p className="text-lg font-medium text-[var(--color-text-primary)]">
-              Processing file...
-            </p>
-            <p className="text-sm text-[var(--color-text-secondary)] mt-1">
-              {progress}%
-            </p>
-          </div>
-          <div className="w-full h-1.5 bg-[var(--color-border)] rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-[var(--color-accent)] rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.2 }}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          <motion.div
-            className="w-20 h-20 rounded-2xl bg-[var(--color-accent)]/10 flex items-center justify-center"
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <Upload size={36} className="text-[var(--color-accent)]" />
-          </motion.div>
-          <div>
-            <p className="text-lg font-medium text-[var(--color-text-primary)]">
-              Drop your .std file here
-            </p>
-            <p className="text-sm text-[var(--color-text-secondary)] mt-1">
-              or click to browse
-            </p>
-          </div>
-          <p className="text-xs text-[var(--color-text-secondary)] opacity-60">
-            {SUPPORTED_FORMATS}
-          </p>
-        </>
-      )}
     </motion.div>
   );
 }

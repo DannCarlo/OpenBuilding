@@ -14,7 +14,7 @@ interface IconButtonProps {
 export function IconButton({ icon, label, onClick, active = false, className = '' }: IconButtonProps) {
   return (
     <motion.button
-      className={`p-2 rounded-lg transition-colors duration-150 flex items-center justify-center
+      className={`p-2.5 rounded-lg transition-colors duration-150 flex items-center justify-center
         ${active
           ? 'bg-[var(--color-accent)] text-white'
           : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-white/10'

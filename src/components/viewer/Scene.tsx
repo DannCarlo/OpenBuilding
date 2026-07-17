@@ -6,12 +6,17 @@ import { Grid } from './Grid';
 import { CameraControls } from './CameraControls';
 import { Lighting } from './Lighting';
 
+interface SceneProps {
+  bgColor?: string;
+}
+
 /**
  * Root 3D scene containing all structural elements.
  */
-export function Scene() {
+export function Scene({ bgColor = '#ffffff' }: SceneProps) {
   return (
     <>
+      <color attach="background" args={[bgColor]} />
       <Lighting />
       <Grid />
       <Nodes />

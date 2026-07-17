@@ -4,24 +4,21 @@ import { Scene } from './Scene';
 import { useViewStore } from '../../store/viewStore';
 
 /**
- * Wraps the R3F Canvas with suspense and background color.
+ * Full-viewport 3D canvas with theme-aware background.
  */
 export function ViewerCanvas() {
   const theme = useViewStore((s) => s.theme);
-  const bgColor = theme === 'dark' ? '#0a0a0b' : '#f5f5f7';
+  const bg = theme === 'dark' ? '#0a0a0b' : '#ffffff';
 
   return (
-    <div style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}>
+    <div className="absolute inset-0" style={{ background: bg }}>
       <Canvas
         camera={{ position: [10, 8, 10], fov: 45 }}
-        gl={{ antialias: true, alpha: false }}
-        style={{ background: bgColor }}
-        onPointerMissed={() => {
-          document.body.style.cursor = '';
-        }}
+        gl={{ antialias: true, alpha: true }}
+        onPointerMissed={() => { document.body.style.cursor = ''; }}
       >
         <Suspense fallback={null}>
-          <Scene />
+          <Scene bgColor={bg} />
         </Suspense>
       </Canvas>
     </div>
