@@ -21,9 +21,9 @@ export function StatusBar() {
         {/* Desktop: full labels */}
         <span className="hidden sm:contents">
           <StatItem label="Nodes" value={nodeCount} color="#4A90D9" />
-          <div className="w-px h-4 bg-[var(--color-border)]" />
+          <div className="w-px h-4 bg-border" />
           <StatItem label="Members" value={memberCount} color="#E85D47" />
-          <div className="w-px h-4 bg-[var(--color-border)]" />
+          <div className="w-px h-4 bg-border" />
           <StatItem label="Supports" value={supportCount} color="#50C878" />
         </span>
         {/* Mobile: dots only */}
@@ -34,7 +34,7 @@ export function StatusBar() {
         </span>
         {model.warnings.length > 0 && (
           <>
-            <div className="w-px h-4 bg-[var(--color-border)]" />
+            <div className="w-px h-4 bg-border" />
             <span className="text-amber-500 text-xs">⚠ {model.warnings.length}</span>
           </>
         )}
@@ -47,8 +47,8 @@ function StatItem({ label, value, color }: { label: string; value: number; color
   return (
     <div className="flex items-center gap-2">
       <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: color }} />
-      <span className="text-[var(--color-text-secondary)]">{label}</span>
-      <span className="text-[var(--color-text-primary)] font-mono font-semibold">{value}</span>
+      <span className="text-text-secondary">{label}</span>
+      <span className="text-text-primary font-mono font-semibold">{value}</span>
     </div>
   );
 }
@@ -57,7 +57,7 @@ function DotStat({ color, value }: { color: string; value: number }) {
   return (
     <div className="flex items-center gap-1.5">
       <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
-      <span className="text-[var(--color-text-primary)] font-mono font-semibold text-sm">{value}</span>
+      <span className="text-text-primary font-mono font-semibold text-sm">{value}</span>
     </div>
   );
 }

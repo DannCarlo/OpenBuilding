@@ -11,15 +11,15 @@ export function TopBar() {
   return (
     <div className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between p-4">
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-xl bg-[var(--color-accent)] flex items-center justify-center shrink-0 shadow-sm">
+        <div className="w-9 h-9 rounded-xl bg-accent flex items-center justify-center shrink-0 shadow-sm">
           <Box size={18} className="text-white" />
         </div>
         <div className="min-w-0">
-          <h1 className="text-sm sm:text-base font-semibold text-[var(--color-text-primary)] leading-none truncate">
+          <h1 className="text-sm sm:text-base font-semibold text-text-primary leading-none truncate">
             {APP_NAME}
           </h1>
           {fileName && (
-            <p className="text-[11px] sm:text-xs text-[var(--color-text-secondary)] mt-1 truncate max-w-[140px] sm:max-w-[220px]">
+            <p className="text-[11px] sm:text-xs text-text-secondary mt-1 truncate max-w-35 sm:max-w-55">
               {fileName}
             </p>
           )}

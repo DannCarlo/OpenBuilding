@@ -25,12 +25,12 @@ export function InfoPanel() {
   const panelContent = (
     <GlassPanel className="p-5 sm:p-6 w-full sm:w-72">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-[var(--color-text-primary)]">
+        <h3 className="text-sm font-semibold text-text-primary">
           Member {member.id}
         </h3>
         <button
           onClick={() => selectMember(null)}
-          className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors p-1"
+          className="text-text-secondary hover:text-text-primary transition-colors p-1"
         >
           <X size={14} />
         </button>
@@ -51,7 +51,7 @@ export function InfoPanel() {
         )}
         {member.section && (
           <>
-            <div className="w-full h-px bg-[var(--color-border)] my-1" />
+            <div className="w-full h-px bg-border my-1" />
             <InfoRow
               label="Depth Y"
               value={member.section.depthY ? `${member.section.depthY}m` : '—'}
@@ -95,8 +95,8 @@ export function InfoPanel() {
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between gap-3">
-      <span className="text-[var(--color-text-secondary)] shrink-0">{label}</span>
-      <span className="text-[var(--color-text-primary)] font-mono truncate text-right">{value}</span>
+      <span className="text-text-secondary shrink-0">{label}</span>
+      <span className="text-text-primary font-mono truncate text-right">{value}</span>
     </div>
   );
 }

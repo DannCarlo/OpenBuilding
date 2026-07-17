@@ -25,20 +25,20 @@ export function UploadOverlay() {
     >
       <div
         onClick={() => fileInputRef.current?.click()}
-        className="w-[440px] max-w-[92vw] p-10 sm:p-14 rounded-2xl border-2 border-dashed border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors cursor-pointer flex flex-col items-center gap-5 sm:gap-7 text-center"
+        className="w-110 max-w-[92vw] p-10 sm:p-14 rounded-2xl border-2 border-dashed border-border hover:border-accent transition-colors cursor-pointer flex flex-col items-center gap-5 sm:gap-7 text-center"
       >
         {isLoading ? (
           <>
-            <div className="w-16 h-16 rounded-full bg-[var(--color-accent)]/10 flex items-center justify-center">
-              <FileUp size={32} className="text-[var(--color-accent)]" />
+            <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center">
+              <FileUp size={32} className="text-accent" />
             </div>
             <div>
-              <p className="text-lg font-medium text-[var(--color-text-primary)]">Processing file…</p>
-              <p className="text-sm text-[var(--color-text-secondary)] mt-1">{progress}%</p>
+              <p className="text-lg font-medium text-text-primary">Processing file…</p>
+              <p className="text-sm text-text-secondary mt-1">{progress}%</p>
             </div>
-            <div className="w-full h-1.5 bg-[var(--color-border)] rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-borderrounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-[var(--color-accent)] rounded-full"
+                className="h-full bg-accent rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.2 }}
@@ -48,17 +48,17 @@ export function UploadOverlay() {
         ) : (
           <>
             <motion.div
-              className="w-20 h-20 rounded-2xl bg-[var(--color-accent)]/10 flex items-center justify-center"
+              className="w-20 h-20 rounded-2xl bg-accent/10 flex items-center justify-center"
               animate={{ scale: [1, 1.05, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <Upload size={36} className="text-[var(--color-accent)]" />
+              <Upload size={36} className="text-accent" />
             </motion.div>
             <div>
-              <p className="text-lg font-medium text-[var(--color-text-primary)]">Drop your .std file here</p>
-              <p className="text-sm text-[var(--color-text-secondary)] mt-1">or click to browse</p>
+              <p className="text-lg font-medium text-text-primary">Drop your .std file here</p>
+              <p className="text-sm text-text-secondary mt-1">or click to browse</p>
             </div>
-            <p className="text-xs text-[var(--color-text-secondary)] opacity-60">{SUPPORTED_FORMATS}</p>
+            <p className="text-xs text-text-secondary opacity-60">{SUPPORTED_FORMATS}</p>
           </>
         )}
       </div>

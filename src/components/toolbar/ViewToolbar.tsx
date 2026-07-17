@@ -33,7 +33,7 @@ export function ViewToolbar() {
           />
         ))}
       </div>
-      <div className="w-px h-5 sm:w-5 sm:h-px bg-[var(--color-border)]" />
+      <div className="w-px h-5 sm:w-5 sm:h-px bg-border" />
       <div className="flex flex-row sm:flex-col gap-1">
         <IconButton
           icon={showLabels ? <Eye size={16} /> : <EyeOff size={16} />}
@@ -70,7 +70,7 @@ export function ViewToolbar() {
       <div className="absolute top-16 right-4 z-50 sm:hidden flex flex-col items-end gap-2">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="p-2.5 rounded-xl bg-[var(--color-bg-primary)] border border-[var(--color-border)] shadow-sm text-[var(--color-text-primary)]"
+          className="p-2.5 rounded-xl bg-bg-primary border border-border shadow-sm text-text-primary"
         >
           {menuOpen ? <X size={18} /> : <Menu size={18} />}
         </button>

@@ -16,8 +16,8 @@ export function IconButton({ icon, label, onClick, active = false, className = '
     <motion.button
       className={`p-2.5 rounded-lg transition-colors duration-150 flex items-center justify-center
         ${active
-          ? 'bg-[var(--color-accent)] text-white'
-          : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-white/10'
+          ? 'bg-accent text-white'
+          : 'text-text-secondary hover:text-text-primary hover:bg-white/10'
         }
         ${className}`}
       onClick={onClick}
