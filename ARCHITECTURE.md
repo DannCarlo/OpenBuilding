@@ -2,7 +2,7 @@
 
 > **App:** STAAD .std 3D Model Viewer — Web-based structural analysis model viewer with Apple-inspired premium UI.
 > **Repo:** `structure_viewer`
-> **Status:** MVP Complete (Phase 1)
+> **Status:** MVP Complete — 6 section shapes, BETA angles, mobile responsive, light mode default
 
 ---
 
@@ -37,7 +37,7 @@ structure_viewer/
 │   ├── store/                           # Zustand state management
 │   │   ├── modelStore.ts                # Model data, file name, loading/error state
 │   │   ├── viewStore.ts                 # Display mode, labels/grid/support toggles, theme
-│   │   └── uiStore.ts                  # Selected/hovered member, upload overlay, info panel visibility
+│   │   └── uiStore.ts                  # Selected/hovered member, info panel visibility
 │   │
 │   ├── components/
 │   │   ├── viewer/                      # ★ React-Three-Fiber 3D scene
@@ -45,10 +45,10 @@ structure_viewer/
 │   │   │   ├── Scene.tsx                # Root scene composition (lights + grid + nodes + members + supports + labels)
 │   │   │   ├── useSceneGeometry.ts      # ★ Core hook — model → Three.js geometry data (nodes, members, supports, labels, bounds)
 │   │   │   ├── Nodes.tsx                # InstancedMesh spheres at joint positions
-│   │   │   ├── Members.tsx              # Per-member cylinder meshes with hover/click interaction
+│   │   │   ├── Members.tsx              # Per-member geometry — boxes for rectangular, cylinders for circular/unknown
 │   │   │   ├── Supports.tsx             # Symbolic support markers (cone = fixed, sphere = pinned)
 │   │   │   ├── Labels.tsx               # 3D text labels (node IDs) via @react-three/drei <Text>
-│   │   │   ├── Grid.tsx                 # Ground reference grid (gridHelper)
+│   │   │   ├── Grid.tsx                 # Ground reference grid — theme-aware colors from constants
 │   │   │   ├── CameraControls.tsx       # OrbitControls with auto-fit on model load
 │   │   │   └── Lighting.tsx             # Ambient + directional + hemisphere lights, theme-aware intensity
 │   │   ├── layout/
@@ -56,7 +56,7 @@ structure_viewer/
 │   │   │   ├── TopBar.tsx               # Logo, file name, upload/theme toggle buttons
 │   │   │   └── StatusBar.tsx            # Bottom-center glass panel — node/member/support counts
 │   │   ├── upload/
-│   │   │   └── UploadOverlay.tsx        # Drag-and-drop + click-to-browse upload with progress bar
+│   │   │   └── UploadOverlay.tsx        # Welcome screen (shown when no model) — drag-drop upload with progress
 │   │   ├── toolbar/
 │   │   │   └── ViewToolbar.tsx          # Right-side floating toolbar — display modes + toggles
 │   │   ├── panels/
@@ -70,8 +70,8 @@ structure_viewer/
 │   │   └── useModelParser.ts            # FileReader → STAAD parser → model builder → Zustand store
 │   │
 │   ├── lib/
-│   │   ├── colors.ts                    # Member/section/support color palette + color lookup helpers
-│   │   └── constants.ts                 # App name, supported extensions, geometry defaults, grid settings
+│   │   ├── colors.ts                    # Member/section/support color palette (RECTANGULAR, CIRCULAR, STANDARD)
+│   │   └── constants.ts                 # App name, supported extensions, geometry defaults, GRID_COLORS
 │   │
 │   └── types/                           # (reserved for shared types)
 │
@@ -218,7 +218,8 @@ Each format parser is self-contained with its own types, utilities, and command 
 | `idle` | *(initial / after END)* | Scans for next section keyword |
 | `joints` | `JOINT COORDINATES` | `ID X Y Z` entries split by `;` |
 | `members` | `MEMBER INCIDENCES` | `MemberID JointI JointJ` entries split by `;` |
-| `memberProp` | `MEMBER PROPERTY` | Range-expanded IDs + `PRIS YD ZD` or `TABLE ST W12X26` |
+| `memberProp` | `MEMBER PROPERTY` | Range-expanded IDs + `PRIS YD ZD [YB ZB]` or `TABLE ST <name>` |
+| `constants` | `CONSTANTS` | `BETA <angle> MEMB <list>` → beta angle map |
 | `supports` | `SUPPORTS` | Range-expanded joint IDs + support type |
 | `groups` | `START GROUP DEFINITION` | Collects lines until `END GROUP DEFINITION`; parses as block |
 | `skip` | `START *`, `DEFINE *`, `LOAD *`, etc. | Discards lines until matching `END` or next section keyword |
@@ -249,7 +250,11 @@ After the state machine fills `StaadParseResult`, the `toBaseResult()` function 
 | `StaadJoint` (joint) | → | `ParseNode` (node) |
 | `StaadMember.jointI` / `jointJ` | → | `ParseMember.startNodeId` / `endNodeId` |
 | `PRIS YD ZD` | → | `RECTANGULAR depthY depthZ` |
+| `PRIS YD` (no ZD) | → | `CIRCULAR` (radius = YD/2) |
+| `PRIS YD ZD ZB` | → | `TRAPEZOIDAL` (tapers in Z) |
+| `PRIS YD ZD YB ZB` | → | `TSHAPE` (flange + web) |
 | `TABLE ST W12X26` | → | `STANDARD W12X26` |
+| `BETA <angle> MEMB` | → | `beta` in ParseMember |
 | `FIXED_BUT` | → | `FIXED` |
 | Support joint ranges | → | Individual per-node supports |
 | Separate properties/groups arrays | → | Merged into each `ParseMember` |
@@ -291,11 +296,19 @@ After the state machine fills `StaadParseResult`, the `toBaseResult()` function 
 
 ### Member Rendering Strategy
 
-Each member is rendered as a **cylinder** rotated to align with its start→end direction vector:
+Each member is rendered with its **actual cross-section shape**, rotated to align with its start→end direction vector:
+
+| Section | Geometry | Size |
+|---|---|---|
+| **Rectangular** | `BoxGeometry` | depthZ × length × depthY |
+| **Circular** | `CylinderGeometry` (8-sided) | radius = depthY / 2 |
+| **Trapezoidal** | `ExtrudeGeometry` (trapezoid shape) | YD height, ZD→ZB taper |
+| **T-shape** | `ExtrudeGeometry` (T-profile shape) | flange ZD, web ZB×YB |
+| **Unknown / no section** | `CylinderGeometry` | `DEFAULT_MEMBER_RADIUS` (0.05m) |
+
 - **Position**: Midpoint of start and end nodes
-- **Rotation**: Quaternion from `(0,1,0)` to the direction vector
-- **Radius**: Derived from section `YD`/`ZD` (average / 4, min 0.02m), or `DEFAULT_MEMBER_RADIUS` (0.05m)
-- **Color**: Columns (cos(dir·Y) > 0.8) → coral `#E85D47`; beams → blue `#4A90D9`; selected → gold `#FFD700`; hovered → light blue `#66AAFF`
+- **Rotation**: 3-axis orthonormal basis — local Y→direction, local Z→world up (beams) or world X (columns); BETA applied as extra rotation around member axis
+- **Color**: Columns (cos(dir·Y) > 0.8) → coral `#E85D47`; beams → blue `#4A90D9`; circular → orange `#F4A261`; trapezoidal → purple `#9B59B6`; T-shape → red `#E74C3C`; selected → gold `#FFD700`; hovered → light blue `#66AAFF`
 
 ### Node Rendering
 
@@ -352,7 +365,6 @@ All nodes rendered as a single `InstancedMesh` with `SphereGeometry`. Instance m
 |---|---|---|
 | `selectedMemberId` | `number \| null` | Currently clicked member |
 | `hoveredMemberId` | `number \| null` | Currently hovered member |
-| `showUpload` | `boolean` | Upload overlay visibility |
 | `showInfoPanel` | `boolean` | Member info panel visibility |
 
 ---
@@ -377,9 +389,8 @@ All nodes rendered as a single `InstancedMesh` with `SphereGeometry`. Instance m
   │   ├── <TopBar />                              # Logo, file name, upload/theme buttons
   │   ├── <ViewToolbar />                         # Display modes + toggles (conditional: model loaded)
   │   ├── <StatusBar />                           # Node/member/support counts (conditional: model loaded)
-  │   ├── <InfoPanel />                           # Selected member details slide-out
-  │   └── <AnimatePresence>
-  │       └── <UploadOverlay />                   # Drag-drop zone (conditional: showUpload)
+  │   ├── <InfoPanel />                           # Selected member details slide-out (desktop sidebar, mobile bottom sheet)
+  │   └── {!model && <UploadOverlay />}           # Welcome screen when no model loaded
 ```
 
 ---
@@ -388,12 +399,12 @@ All nodes rendered as a single `InstancedMesh` with `SphereGeometry`. Instance m
 
 ### Color Tokens (Tailwind v4 @theme)
 
-| Token | Dark Value | Light Value |
-|---|---|---|
-| `--color-bg-primary` | `#0a0a0b` | `#f5f5f7` |
-| `--color-bg-secondary` | `#161618` | `#ffffff` |
-| `--color-bg-glass` | `rgba(22,22,24,0.7)` | `rgba(255,255,255,0.7)` |
-| `--color-border` | `rgba(255,255,255,0.08)` | `rgba(0,0,0,0.08)` |
+| Token | Light (default) | Dark |
+|---|---|---|---|
+| `--color-bg-primary` | `#ffffff` | `#0a0a0b` |
+| `--color-bg-secondary` | `#f5f5f7` | `#161618` |
+| `--color-bg-glass` | `rgba(255,255,255,0.72)` | `rgba(22,22,24,0.72)` |
+| `--color-border` | `rgba(0,0,0,0.06)` | `rgba(255,255,255,0.06)` |
 | `--color-accent` | `#0066FF` | `#0066FF` |
 | `--color-text-primary` | `#f5f5f7` | `#1d1d1f` |
 | `--color-text-secondary` | `#a1a1a6` | `#86868b` |
@@ -404,8 +415,8 @@ All floating UI uses the `.glass` CSS class:
 ```css
 .glass {
   background: var(--color-bg-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);       /* 12px */
 }
@@ -427,15 +438,18 @@ All floating UI uses the `.glass` CSS class:
 | Beam (horizontal member) | Blue | `#4A90D9` |
 | Column (vertical member) | Coral | `#E85D47` |
 | Brace | Purple | `#7B68EE` |
-| PRIS section | Blue | `#4A90D9` |
-| TABLE section (steel) | Green | `#50C878` |
+| Rectangular section | Blue | `#4A90D9` |
+| Circular section | Orange | `#F4A261` |
+| Trapezoidal section | Purple | `#9B59B6` |
+| T-shape section | Red | `#E74C3C` |
+| Standard section (steel) | Green | `#50C878` |
 | Selected member | Gold | `#FFD700` |
 | Hovered member | Light Blue | `#66AAFF` |
 | Fixed support | Coral | `#E85D47` |
 | Pinned support | Orange | `#F4A261` |
 | Roller support | Green | `#50C878` |
-| Grid major lines | `#555555` | |
-| Grid minor lines | `#333333` | |
+| Grid lines (light mode) | `#e8e8ed` / `#d5d5da` |
+| Grid lines (dark mode) | `#222226` / `#3a3a3e` |
 | Node spheres | Gray | `#999999` |
 
 ---

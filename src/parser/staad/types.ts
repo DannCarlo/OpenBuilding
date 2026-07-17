@@ -18,6 +18,8 @@ export interface StaadMemberProperty {
   type: 'PRIS' | 'TABLE' | 'TAPERED' | 'USER' | 'UNKNOWN';
   yd?: number; // Y-depth for PRIS
   zd?: number; // Z-depth for PRIS
+  yb?: number; // Y-bottom (web for T-shape)
+  zb?: number; // Z-bottom (narrower end for trapezoid, web for T-shape)
   tableName?: string; // e.g., "ST W12X26"
   description: string; // human-readable
 }
@@ -45,6 +47,7 @@ export interface StaadParseResult {
   memberProperties: StaadMemberProperty[];
   supports: StaadSupport[];
   groups: StaadGroup[];
+  betaAngles: Map<number, number>; // memberId → beta angle (degrees)
   units: StaadUnits;
   warnings: string[];
 }
@@ -55,6 +58,7 @@ export type ParserMode =
   | 'joints'
   | 'members'
   | 'memberProp'
+  | 'constants'
   | 'supports'
   | 'groups'
   | 'skip';

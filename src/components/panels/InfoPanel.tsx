@@ -49,6 +49,9 @@ export function InfoPanel() {
         {member.groupNames.length > 0 && (
           <InfoRow label="Groups" value={member.groupNames.join(', ')} />
         )}
+        {member.beta != null && (
+          <InfoRow label="Beta Angle" value={`${member.beta}°`} />
+        )}
         {member.section && (
           <>
             <div className="w-full h-px bg-border my-1" />
@@ -60,6 +63,18 @@ export function InfoPanel() {
               label="Depth Z"
               value={member.section.depthZ ? `${member.section.depthZ}m` : '—'}
             />
+            {member.section.depthYB != null && (
+              <InfoRow
+                label="Depth YB"
+                value={`${member.section.depthYB}m`}
+              />
+            )}
+            {member.section.depthZB != null && (
+              <InfoRow
+                label="Depth ZB"
+                value={`${member.section.depthZB}m`}
+              />
+            )}
           </>
         )}
       </div>

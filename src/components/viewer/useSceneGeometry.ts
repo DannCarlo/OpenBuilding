@@ -11,6 +11,12 @@ export interface MemberGeometryData {
   rotation: [number, number, number];
   length: number;
   radius: number;
+  depthY?: number;
+  depthZ?: number;
+  depthYB?: number;
+  depthZB?: number;
+  sectionType?: string;
+  beta?: number;
   color: string;
   memberId: number;
 }
@@ -65,16 +71,44 @@ export function useSceneGeometry() {
       // Direction vector
       const dir = new THREE.Vector3(dx, dy, dz).normalize();
 
-      // Compute rotation to align Y-axis cylinder with direction
-      const yAxis = new THREE.Vector3(0, 1, 0);
-      const quaternion = new THREE.Quaternion().setFromUnitVectors(yAxis, dir);
+      // Build rotation matrix that aligns:
+      //   local Y → member direction
+      //   local Z → world up (for beams) or world X (for columns)
+      // This ensures depthY (local Z) is the vertical dimension for beams.
+      const yAxis = dir.clone();
+      const worldUp = new THREE.Vector3(0, 1, 0);
+      const zAxis = new THREE.Vector3();
+      // If member is nearly vertical (column), use world X as local Z
+      if (Math.abs(yAxis.dot(worldUp)) > 0.99) {
+        zAxis.set(1, 0, 0);
+      } else {
+        zAxis.copy(worldUp);
+      }
+      const xAxis = new THREE.Vector3().crossVectors(yAxis, zAxis).normalize();
+      zAxis.crossVectors(xAxis, yAxis).normalize();
+      const rotMatrix = new THREE.Matrix4().makeBasis(xAxis, yAxis, zAxis);
+      const quaternion = new THREE.Quaternion().setFromRotationMatrix(rotMatrix);
       const euler = new THREE.Euler().setFromQuaternion(quaternion);
 
       // Section size (default or from property)
       let radius = DEFAULT_MEMBER_RADIUS;
-      if (member.section && member.section.depthY && member.section.depthZ) {
-        // Use the average of depthY and depthZ as visual radius (scaled for display)
-        radius = Math.max((member.section.depthY + member.section.depthZ) / 4, 0.02);
+      let depthY: number | undefined;
+      let depthZ: number | undefined;
+      let depthYB: number | undefined;
+      let depthZB: number | undefined;
+
+      if (member.section?.depthY) {
+        depthY = member.section.depthY;
+        depthYB = member.section.depthYB;
+        depthZB = member.section.depthZB;
+        if (member.section.depthZ) {
+          // Rectangular, trapezoidal, or T-shape — use outer YD×ZD for box
+          depthZ = member.section.depthZ;
+          radius = Math.max((depthY + depthZ) / 4, 0.02);
+        } else {
+          // Circular: YD only (diameter)
+          radius = depthY / 2;
+        }
       }
 
       // Color
@@ -96,6 +130,12 @@ export function useSceneGeometry() {
         rotation: [euler.x, euler.y, euler.z],
         length,
         radius,
+        depthY,
+        depthZ,
+        depthYB,
+        depthZB,
+        sectionType: member.section?.type,
+        beta: member.beta,
         color,
         memberId: member.id,
       });

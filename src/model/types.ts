@@ -13,12 +13,15 @@ export interface ModelMember {
   endNodeId: number;
   section: MemberSection | null;
   groupNames: string[];
+  beta?: number; // rotation angle in degrees around member axis
 }
 
 export interface MemberSection {
-  type: 'RECTANGULAR' | 'STANDARD' | 'TAPERED' | 'USER' | 'UNKNOWN';
+  type: 'RECTANGULAR' | 'CIRCULAR' | 'TRAPEZOIDAL' | 'TSHAPE' | 'STANDARD' | 'TAPERED' | 'USER' | 'UNKNOWN';
   depthY?: number;
   depthZ?: number;
+  depthYB?: number;
+  depthZB?: number;
   tableName?: string;
   description: string;
 }

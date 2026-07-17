@@ -11,6 +11,9 @@ export const MEMBER_COLORS: Record<string, string> = {
 // Color by section type (format-agnostic names)
 export const SECTION_COLORS: Record<string, string> = {
   RECTANGULAR: '#4A90D9',
+  CIRCULAR: '#F4A261',
+  TRAPEZOIDAL: '#9B59B6',
+  TSHAPE: '#E74C3C',
   STANDARD: '#50C878',
   UNKNOWN: '#888888',
 };

@@ -11,9 +11,11 @@ export interface ParseNode {
 
 /** Section data already normalized to format-agnostic terminology */
 export interface ParseSection {
-  type: 'RECTANGULAR' | 'STANDARD' | 'TAPERED' | 'USER' | 'UNKNOWN';
+  type: 'RECTANGULAR' | 'CIRCULAR' | 'TRAPEZOIDAL' | 'TSHAPE' | 'STANDARD' | 'TAPERED' | 'USER' | 'UNKNOWN';
   depthY?: number;
   depthZ?: number;
+  depthYB?: number;
+  depthZB?: number;
   tableName?: string;
   description: string;
 }
@@ -25,6 +27,7 @@ export interface ParseMember {
   endNodeId: number;
   section: ParseSection | null;
   groupNames: string[];
+  beta?: number; // rotation angle in degrees around member axis
 }
 
 /** A boundary condition at a node */

@@ -42,15 +42,23 @@ export function parseMemberPropertyLine(line: string): StaadMemberProperty | nul
 
   if (propType === 'PRIS') {
     prop.type = 'PRIS';
-    // PRIS YD <val> ZD <val>
     const ydIdx = propTokens.findIndex(t => t.toUpperCase() === 'YD');
     const zdIdx = propTokens.findIndex(t => t.toUpperCase() === 'ZD');
+    const ybIdx = propTokens.findIndex(t => t.toUpperCase() === 'YB');
+    const zbIdx = propTokens.findIndex(t => t.toUpperCase() === 'ZB');
     if (ydIdx >= 0 && ydIdx < propTokens.length - 1) {
       prop.yd = parseFloat(propTokens[ydIdx + 1]);
     }
     if (zdIdx >= 0 && zdIdx < propTokens.length - 1) {
       prop.zd = parseFloat(propTokens[zdIdx + 1]);
     }
+    if (ybIdx >= 0 && ybIdx < propTokens.length - 1) {
+      prop.yb = parseFloat(propTokens[ybIdx + 1]);
+    }
+    if (zbIdx >= 0 && zbIdx < propTokens.length - 1) {
+      prop.zb = parseFloat(propTokens[zbIdx + 1]);
+    }
+    // Description handled by toBaseResult() for accurate shape naming
     prop.description = `PRIS ${prop.yd ?? '?'}×${prop.zd ?? '?'}m`;
   } else if (propType === 'TABLE') {
     prop.type = 'TABLE';

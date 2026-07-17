@@ -33,6 +33,7 @@ export function buildModel(parsed: BaseParseResult): ParsedModel {
       endNodeId: m.endNodeId,
       section: m.section ? { ...m.section } : null,
       groupNames: m.groupNames,
+      beta: m.beta,
     });
   }
 

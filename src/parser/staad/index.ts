@@ -1,6 +1,6 @@
 import type { StaadParseResult, ParserMode } from './types';
 import type { BaseParseResult, ParseNode, ParseMember, ParseSection, ParseSupport } from '../types';
-import { parseUnitLine, normalizeJoint, isContinuation, isEmptyOrComment } from './utils';
+import { parseUnitLine, normalizeJoint, isContinuation, isEmptyOrComment, expandRange } from './utils';
 import { getLengthConversion } from '../utils';
 import { parseJointLine } from './commands/joint-coordinates';
 import { parseMemberLine } from './commands/member-incidences';
@@ -18,6 +18,7 @@ export function parseStaadFile(text: string): BaseParseResult {
     memberProperties: [],
     supports: [],
     groups: [],
+    betaAngles: new Map(),
     units: { length: 'METER', force: 'KN' },
     warnings: [],
   };
@@ -86,6 +87,10 @@ export function parseStaadFile(text: string): BaseParseResult {
       mode = 'supports';
       continue;
     }
+    if (upperLine.startsWith('CONSTANTS')) {
+      mode = 'constants';
+      continue;
+    }
 
     // Check if we hit a new major section that should change mode
     if (isNewSectionKeyword(upperLine)) {
@@ -120,6 +125,10 @@ export function parseStaadFile(text: string): BaseParseResult {
         if (support) result.supports.push(support);
         break;
       }
+      case 'constants': {
+        parseConstantLine(line, result.betaAngles, result.warnings);
+        break;
+      }
       default:
         break;
     }
@@ -133,6 +142,28 @@ export function parseStaadFile(text: string): BaseParseResult {
 
   // Translate STAAD-specific result → shared BaseParseResult
   return toBaseResult(result);
+}
+
+/**
+ * Parse a CONSTANTS line (BETA angles).
+ */
+function parseConstantLine(
+  line: string,
+  betaMap: Map<number, number>,
+  _warnings: string[]
+): void {
+  const tokens = line.trim().split(/\s+/);
+  const betaIdx = tokens.findIndex(t => t.toUpperCase() === 'BETA');
+  const membIdx = tokens.findIndex(t => t.toUpperCase() === 'MEMB');
+  if (betaIdx < 0 || membIdx < 0 || betaIdx >= tokens.length - 1) return;
+
+  const angle = parseFloat(tokens[betaIdx + 1]);
+  if (isNaN(angle)) return;
+
+  const idTokens = tokens.slice(membIdx + 1);
+  for (const mid of expandRange(idTokens)) {
+    betaMap.set(mid, angle);
+  }
 }
 
 /**
@@ -154,9 +185,11 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
   const sectionMap = new Map<number, ParseSection>();
   for (const prop of staad.memberProperties) {
     const section: ParseSection = {
-      type: mapSectionType(prop.type),
+      type: mapSectionType(prop),
       depthY: prop.yd,
       depthZ: prop.zd,
+      depthYB: prop.yb,
+      depthZB: prop.zb,
       tableName: prop.tableName,
       description: mapSectionDescription(prop),
     };
@@ -192,6 +225,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
       endNodeId: m.jointJ,
       section: sectionMap.get(m.id) || null,
       groupNames: groupMap.get(m.id) || [],
+      beta: staad.betaAngles.get(m.id),
     });
   }
 
@@ -214,9 +248,14 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
 }
 
 /** Map STAAD section type → format-agnostic type */
-function mapSectionType(staadType: string): ParseSection['type'] {
-  switch (staadType) {
-    case 'PRIS': return 'RECTANGULAR';
+function mapSectionType(prop: import('./types').StaadMemberProperty): ParseSection['type'] {
+  if (prop.type === 'PRIS') {
+    if (prop.zd == null) return 'CIRCULAR';
+    if (prop.yb != null && prop.zb != null) return 'TSHAPE';
+    if (prop.zb != null) return 'TRAPEZOIDAL';
+    return 'RECTANGULAR';
+  }
+  switch (prop.type) {
     case 'TABLE': return 'STANDARD';
     case 'TAPERED': return 'TAPERED';
     case 'USER': return 'USER';
@@ -227,6 +266,9 @@ function mapSectionType(staadType: string): ParseSection['type'] {
 /** Build human-readable description from STAAD property */
 function mapSectionDescription(prop: import('./types').StaadMemberProperty): string {
   if (prop.type === 'PRIS') {
+    if (prop.zd == null) return `Circular Ø${prop.yd ?? '?'}m`;
+    if (prop.yb != null && prop.zb != null) return `T-shape ${prop.yd}×${prop.zd}/${prop.yb}×${prop.zb}m`;
+    if (prop.zb != null) return `Trapezoidal ${prop.yd}×${prop.zd}/${prop.zb}m`;
     return `Rectangular ${prop.yd ?? '?'}×${prop.zd ?? '?'}m`;
   }
   if (prop.type === 'TABLE') {
