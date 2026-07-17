@@ -1,0 +1,46 @@
+import { useRef } from 'react';
+import * as THREE from 'three';
+import { useThree, useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import { useSceneGeometry } from './useSceneGeometry';
+
+/**
+ * Camera controls that auto-fit the model on load.
+ */
+export function CameraControls() {
+  const controlsRef = useRef<any>(null);
+  const geo = useSceneGeometry();
+  const camera = useThree((s) => s.camera);
+
+  // Auto-fit camera when geometry changes
+  useFrame(() => {
+    if (!controlsRef.current || !geo) return;
+    // Only fit once
+    if ((controlsRef.current as any)._fitted) return;
+    (controlsRef.current as any)._fitted = true;
+
+    const { center, size } = geo.bounds;
+    const target = new THREE.Vector3(center[0], center[1], center[2]);
+    (controlsRef.current as any).target.copy(target);
+
+    // Position camera based on model size
+    const distance = size * 1.5;
+    (camera as THREE.PerspectiveCamera).position.set(
+      target.x + distance * 0.8,
+      target.y + distance * 0.6,
+      target.z + distance
+    );
+    (controlsRef.current as any).update();
+  });
+
+  return (
+    <OrbitControls
+      ref={controlsRef}
+      enableDamping
+      dampingFactor={0.08}
+      minDistance={0.5}
+      maxDistance={100}
+      maxPolarAngle={Math.PI * 0.85}
+    />
+  );
+}
