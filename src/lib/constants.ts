@@ -3,6 +3,9 @@
 export const APP_NAME = 'Structure Viewer';
 
 export const SUPPORTED_EXTENSIONS = ['.std'];
+// Future: ['.std', '.$et', '.e2k', '.s2k', '.sdb']
+
+export const SUPPORTED_FORMATS = 'STAAD.Pro (.std)';
 
 export const MAX_FILE_SIZE_MB = 50;
 

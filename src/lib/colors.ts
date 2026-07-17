@@ -8,10 +8,10 @@ export const MEMBER_COLORS: Record<string, string> = {
   girder: '#3A7BD5',         // darker blue for girders
 };
 
-// Color by section type
+// Color by section type (format-agnostic names)
 export const SECTION_COLORS: Record<string, string> = {
-  PRIS: '#4A90D9',
-  TABLE: '#50C878',
+  RECTANGULAR: '#4A90D9',
+  STANDARD: '#50C878',
   UNKNOWN: '#888888',
 };
 

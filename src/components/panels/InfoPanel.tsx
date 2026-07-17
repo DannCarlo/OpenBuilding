@@ -58,12 +58,12 @@ export function InfoPanel() {
             {member.section && (
               <>
                 <InfoRow
-                  label="Section YD"
-                  value={member.section.yd ? `${member.section.yd}m` : '—'}
+                  label="Depth Y"
+                  value={member.section.depthY ? `${member.section.depthY}m` : '—'}
                 />
                 <InfoRow
-                  label="Section ZD"
-                  value={member.section.zd ? `${member.section.zd}m` : '—'}
+                  label="Depth Z"
+                  value={member.section.depthZ ? `${member.section.depthZ}m` : '—'}
                 />
               </>
             )}

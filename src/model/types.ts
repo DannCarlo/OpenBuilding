@@ -16,9 +16,9 @@ export interface ModelMember {
 }
 
 export interface MemberSection {
-  type: 'PRIS' | 'TABLE' | 'TAPERED' | 'USER' | 'UNKNOWN';
-  yd?: number;
-  zd?: number;
+  type: 'RECTANGULAR' | 'STANDARD' | 'TAPERED' | 'USER' | 'UNKNOWN';
+  depthY?: number;
+  depthZ?: number;
   tableName?: string;
   description: string;
 }

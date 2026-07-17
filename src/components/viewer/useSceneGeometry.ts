@@ -72,9 +72,9 @@ export function useSceneGeometry() {
 
       // Section size (default or from property)
       let radius = DEFAULT_MEMBER_RADIUS;
-      if (member.section && member.section.yd && member.section.zd) {
-        // Use the average of YD and ZD as visual radius (scaled for display)
-        radius = Math.max((member.section.yd + member.section.zd) / 4, 0.02);
+      if (member.section && member.section.depthY && member.section.depthZ) {
+        // Use the average of depthY and depthZ as visual radius (scaled for display)
+        radius = Math.max((member.section.depthY + member.section.depthZ) / 4, 0.02);
       }
 
       // Color

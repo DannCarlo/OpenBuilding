@@ -1,78 +1,46 @@
-import type { StaadParseResult } from '../parser/types';
-import type { ParsedModel, ModelNode, ModelMember, MemberSection, ModelSupport } from './types';
+import type { BaseParseResult } from '../parser/types';
+import type { ParsedModel, ModelNode, ModelMember, ModelSupport } from './types';
 
 /**
- * Convert STAAD parse result into a normalized, format-independent model.
+ * Assemble a format-agnostic ParsedModel from a BaseParseResult.
+ * All format-specific translation is done by the parser —
+ * this function is pure assembly with no knowledge of STAAD/ETABS/SAP2000.
  */
-export function buildModel(parsed: StaadParseResult): ParsedModel {
+export function buildModel(parsed: BaseParseResult): ParsedModel {
   // Build node lookup
   const nodeMap = new Map<number, ModelNode>();
-  for (const j of parsed.joints) {
-    nodeMap.set(j.id, { id: j.id, x: j.x, y: j.y, z: j.z });
+  for (const n of parsed.nodes) {
+    nodeMap.set(n.id, { id: n.id, x: n.x, y: n.y, z: n.z });
   }
 
-  // Build member property lookup (memberId → property)
-  const propMap = new Map<number, MemberSection>();
-  for (const prop of parsed.memberProperties) {
-    const section: MemberSection = {
-      type: prop.type,
-      yd: prop.yd,
-      zd: prop.zd,
-      tableName: prop.tableName,
-      description: prop.description,
-    };
-    for (const mid of prop.memberIds) {
-      propMap.set(mid, section);
-    }
-  }
-
-  // Build group lookup (memberId → group names)
-  const groupMap = new Map<number, string[]>();
-  for (const group of parsed.groups) {
-    for (const mid of group.memberIds) {
-      const existing = groupMap.get(mid) || [];
-      existing.push(group.name);
-      groupMap.set(mid, existing);
-    }
-  }
-
-  // Build members
+  // Members: already normalized by parser, just validate connectivity
   const members: ModelMember[] = [];
-  const warnings: string[] = [...parsed.warnings];
+  const warnings = [...parsed.warnings];
 
   for (const m of parsed.members) {
-    if (!nodeMap.has(m.jointI)) {
-      warnings.push(`Member ${m.id}: start joint ${m.jointI} not found`);
+    if (!nodeMap.has(m.startNodeId)) {
+      warnings.push(`Member ${m.id}: start node ${m.startNodeId} not found`);
       continue;
     }
-    if (!nodeMap.has(m.jointJ)) {
-      warnings.push(`Member ${m.id}: end joint ${m.jointJ} not found`);
+    if (!nodeMap.has(m.endNodeId)) {
+      warnings.push(`Member ${m.id}: end node ${m.endNodeId} not found`);
       continue;
     }
 
     members.push({
       id: m.id,
-      startNodeId: m.jointI,
-      endNodeId: m.jointJ,
-      section: propMap.get(m.id) || null,
-      groupNames: groupMap.get(m.id) || [],
+      startNodeId: m.startNodeId,
+      endNodeId: m.endNodeId,
+      section: m.section ? { ...m.section } : null,
+      groupNames: m.groupNames,
     });
   }
 
-  // Build supports (expand joint ranges to individual node IDs)
-  const supports: ModelSupport[] = [];
-  for (const s of parsed.supports) {
-    for (const jointId of s.jointIds) {
-      if (nodeMap.has(jointId)) {
-        supports.push({
-          nodeId: jointId,
-          type: s.type === 'FIXED_BUT' ? 'FIXED' : s.type as ModelSupport['type'],
-        });
-      } else {
-        warnings.push(`Support at joint ${jointId}: joint not found`);
-      }
-    }
-  }
+  // Supports: already expanded and normalized by parser
+  const supports: ModelSupport[] = parsed.supports.map(s => ({
+    nodeId: s.nodeId,
+    type: s.type,
+  }));
 
   return {
     nodes: Array.from(nodeMap.values()),

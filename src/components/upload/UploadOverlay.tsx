@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Upload, FileUp } from 'lucide-react';
 import { useFileUpload } from '../../hooks/useFileUpload';
+import { SUPPORTED_FORMATS } from '../../lib/constants';
 
 /**
  * Initial upload overlay with drag-and-drop.
@@ -99,7 +100,7 @@ function DropZone({
             </p>
           </div>
           <p className="text-xs text-[var(--color-text-secondary)] opacity-60">
-            Supports STAAD.Pro .std input files
+            {SUPPORTED_FORMATS}
           </p>
         </>
       )}
