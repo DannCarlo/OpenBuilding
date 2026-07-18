@@ -15,7 +15,6 @@ export interface MemberGeometryData {
   depthZ?: number;
   depthYB?: number;
   depthZB?: number;
-  sectionType?: string;
   beta?: number;
   color: string;
   memberId: number;
@@ -134,7 +133,6 @@ export function useSceneGeometry() {
         depthZ,
         depthYB,
         depthZB,
-        sectionType: member.section?.type,
         beta: member.beta,
         color,
         memberId: member.id,

@@ -6,9 +6,7 @@ import { useUIStore } from '../../store/uiStore';
 
 /**
  * Renders members with proper cross-section shapes.
- * Rectangular/T-shape → box geometry.
- * Trapezoidal → tapered 4-sided cylinder (wider one end).
- * Circular → cylinder geometry.
+ * Shape is determined automatically from which dimensions are present.
  */
 export function Members() {
   const geo = useSceneGeometry();
@@ -68,8 +66,8 @@ function MemberCylinder({
     rot.setFromQuaternion(betaQ);
   }
 
-  // Choose geometry based on section type
-  const geom = getMemberGeometry(data);
+  // Choose geometry — single function determines shape from available dimensions
+  const geom = createSectionGeometry(data);
 
   return (
     <mesh
@@ -93,7 +91,7 @@ function MemberCylinder({
         document.body.style.cursor = '';
       }}
     >
-      {geom}
+      <primitive object={geom} attach="geometry" />
       <meshStandardMaterial
         color={color}
         roughness={0.5}
@@ -108,87 +106,64 @@ function MemberCylinder({
   );
 }
 
-/** Pick the right geometry for the section type */
-function getMemberGeometry(data: MemberGeometryData) {
-  // Trapezoidal: extrude trapezoid cross-section (constant along member)
-  if (data.sectionType === 'TRAPEZOIDAL' && data.depthY != null && data.depthZ != null && data.depthZB != null) {
-    return <primitive object={createTrapezoidShape(data.depthY, data.depthZ, data.depthZB, data.length)} attach="geometry" />;
-  }
+/**
+ * Create section geometry from available dimensions. Returns a BufferGeometry.
+ *   yd only              → CylinderGeometry (circular)
+ *   yd + zd              → BoxGeometry (rectangular)
+ *   yd + zd + zb         → ExtrudeGeometry (trapezoidal)
+ *   yd + zd + yb + zb    → ExtrudeGeometry (T-shape)
+ *   none                 → CylinderGeometry (default radius)
+ */
+function createSectionGeometry(data: MemberGeometryData): THREE.BufferGeometry {
+  const { depthY: yd, depthZ: zd, depthYB: yb, depthZB: zb, length, radius } = data;
 
-  // T-shape: extrude T-profile cross-section (constant along member)
-  if (data.sectionType === 'TSHAPE' && data.depthY != null && data.depthZ != null && data.depthYB != null && data.depthZB != null) {
-    return <primitive object={createTShape(data.depthY, data.depthZ, data.depthYB, data.depthZB, data.length)} attach="geometry" />;
+  // T-shape
+  if (yd != null && zd != null && yb != null && zb != null) {
+    return buildExtrudedShape(buildTShapePoints(yd, zd, yb, zb), length);
   }
-
-  // Rectangular: box
-  if (data.depthY != null && data.depthZ != null) {
-    return <boxGeometry args={[data.depthZ, data.length, data.depthY]} />;
+  // Trapezoidal
+  if (yd != null && zd != null && zb != null) {
+    return buildExtrudedShape(buildTrapezoidPoints(yd, zd, zb), length);
   }
-
-  // Circular or default: cylinder
-  return <cylinderGeometry args={[data.radius, data.radius, data.length, 8]} />;
+  // Rectangular
+  if (yd != null && zd != null) {
+    return new THREE.BoxGeometry(zd, length, yd);
+  }
+  // Circular or default
+  return new THREE.CylinderGeometry(radius, radius, length, 8);
 }
 
-/**
- * Create a trapezoidal prism — constant trapezoid cross-section extruded along length.
- * YD = total height, ZD = top width, ZB = bottom width.
- * Cross-section in XZ plane (member runs along Y).
- */
-function createTrapezoidShape(h: number, topW: number, botW: number, length: number): THREE.BufferGeometry {
+/** Build a 2D Shape from vertex pairs [[x,z], ...], then extrude along Y */
+function buildExtrudedShape(points: [number, number][], length: number): THREE.BufferGeometry {
   const shape = new THREE.Shape();
-  const hh = h / 2;
-  const hTop = topW / 2;
-  const hBot = botW / 2;
-  // Trapezoid shape in XZ plane: wider at top (Z+), narrower at bottom (Z-)
-  // Vertices: top-left, top-right, bottom-right, bottom-left
-  shape.moveTo(-hTop,  hh);  // top-left
-  shape.lineTo( hTop,  hh);  // top-right
-  shape.lineTo( hBot, -hh);  // bottom-right
-  shape.lineTo(-hBot, -hh);  // bottom-left
+  shape.moveTo(points[0][0], points[0][1]);
+  for (let i = 1; i < points.length; i++) {
+    shape.lineTo(points[i][0], points[i][1]);
+  }
   shape.closePath();
 
-  const extrudeSettings: THREE.ExtrudeGeometryOptions = {
-    steps: 1,
-    depth: length,
-    bevelEnabled: false,
-  };
-  const geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-  // ExtrudeGeometry extrudes along Z; we need to rotate so it runs along Y
+  const geo = new THREE.ExtrudeGeometry(shape, { steps: 1, depth: length, bevelEnabled: false });
   geo.rotateX(-Math.PI / 2);
   geo.translate(0, -length / 2, 0);
   return geo;
 }
 
-/**
- * Create a T-shape prism — constant T-profile cross-section extruded along length.
- * YD = total height, ZD = flange width, YB = web height, ZB = web width.
- */
-function createTShape(yd: number, zd: number, yb: number, zb: number, length: number): THREE.BufferGeometry {
-  const shape = new THREE.Shape();
-  const hy = yd / 2;
-  const hFlange = zd / 2;
-  const hWeb = zb / 2;
-  const flangeH = yd - yb; // flange thickness = total height - web height
+/** Trapezoid: wider top (ZD), narrower bottom (ZB), height YD */
+function buildTrapezoidPoints(yd: number, zd: number, zb: number): [number, number][] {
+  const hy = yd / 2, hTop = zd / 2, hBot = zb / 2;
+  return [
+    [-hTop,  hy], [ hTop,  hy],  // top
+    [ hBot, -hy], [-hBot, -hy],  // bottom
+  ];
+}
 
-  // T-shape in XZ plane: flange on top (+Z), web below
-  // Start from top-left of flange, go clockwise
-  shape.moveTo(-hFlange,  hy);                      // top-left flange
-  shape.lineTo( hFlange,  hy);                      // top-right flange
-  shape.lineTo( hFlange,  hy - flangeH);             // right flange bottom
-  shape.lineTo( hWeb,     hy - flangeH);             // right web top
-  shape.lineTo( hWeb,    -hy);                       // right web bottom
-  shape.lineTo(-hWeb,    -hy);                       // left web bottom
-  shape.lineTo(-hWeb,     hy - flangeH);             // left web top
-  shape.lineTo(-hFlange,  hy - flangeH);             // left flange bottom
-  shape.closePath();
-
-  const extrudeSettings: THREE.ExtrudeGeometryOptions = {
-    steps: 1,
-    depth: length,
-    bevelEnabled: false,
-  };
-  const geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-  geo.rotateX(-Math.PI / 2);
-  geo.translate(0, -length / 2, 0);
-  return geo;
+/** T-shape: flange ZD × (YD−YB), web ZB × YB */
+function buildTShapePoints(yd: number, zd: number, yb: number, zb: number): [number, number][] {
+  const hy = yd / 2, hFl = zd / 2, hWb = zb / 2, fh = yd - yb;
+  return [
+    [-hFl,  hy], [ hFl,  hy],           // flange top
+    [ hFl,  hy - fh], [ hWb,  hy - fh], // flange bottom → web top
+    [ hWb, -hy], [-hWb, -hy],           // web bottom
+    [-hWb,  hy - fh], [-hFl,  hy - fh], // web top → flange bottom
+  ];
 }
