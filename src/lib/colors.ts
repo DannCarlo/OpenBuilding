@@ -16,6 +16,14 @@ export const SECTION_COLORS: Record<string, string> = {
   TSHAPE: '#E74C3C',
   STANDARD: '#50C878',
   UNKNOWN: '#888888',
+  // Steel variants — metallic silver palette
+  STEEL_ANGLE: '#D4D4D8',
+  STEEL_DOUBLE_ANGLE: '#C8C8CE',
+  STEEL_WIDE_FLANGE: '#CDCDD3',
+  STEEL_CHANNEL: '#D0D0D6',
+  STEEL_PIPE: '#D6D6DA',
+  STEEL_TUBE: '#CCCCD2',
+  STEEL_GENERIC: '#C4C4CA',
 };
 
 // Support type colors

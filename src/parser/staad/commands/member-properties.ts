@@ -62,11 +62,11 @@ export function parseMemberPropertyLine(line: string): StaadMemberProperty | nul
     prop.description = `PRIS ${prop.yd ?? '?'}×${prop.zd ?? '?'}m`;
   } else if (propType === 'TABLE') {
     prop.type = 'TABLE';
-    // TABLE <material> <sectionName>
-    if (propTokens.length >= 3) {
-      prop.tableName = propTokens.slice(2).join(' ');
-    } else if (propTokens.length >= 2) {
-      prop.tableName = propTokens[1];
+    // TABLE <type-prefix?> <sectionName> [SP <spacing>]
+    // e.g. "TABLE ST W12X26" or "TABLE LD L20203 SP 0.005"
+    // Preserve the full section designation (everything after TABLE)
+    if (propTokens.length >= 2) {
+      prop.tableName = propTokens.slice(1).join(' ');
     }
     prop.description = `TABLE ${prop.tableName ?? 'unknown'}`;
   } else {

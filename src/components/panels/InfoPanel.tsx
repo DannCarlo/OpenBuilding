@@ -5,7 +5,19 @@ import { useUIStore } from '../../store/uiStore';
 import { useModelStore } from '../../store/modelStore';
 
 /**
- * Slide-out info panel showing selected member details.
+ * Format a dimension for display.
+ *   ≥ 1 m  → "3.50 m"
+ *   < 1 m  → "50.8 mm"
+ *   null   → "—"
+ */
+function fmt(v: number | null | undefined): string {
+  if (v == null) return '—';
+  if (v >= 1) return `${v.toFixed(2)} m`;
+  return `${(v * 1000).toFixed(1)} mm`;
+}
+
+/**
+ * Slide-out info panel showing selected member or plate details.
  * Desktop: left sidebar panel.
  * Mobile: bottom sheet.
  */
@@ -23,8 +35,8 @@ export function InfoPanel() {
     const plate = model.plates.find(p => p.id === selectedPlateId);
     if (!plate) return null;
     const avgThick = plate.thicknesses.length > 0
-      ? (plate.thicknesses.reduce((a, b) => a + b, 0) / plate.thicknesses.length).toFixed(3)
-      : '—';
+      ? plate.thicknesses.reduce((a, b) => a + b, 0) / plate.thicknesses.length
+      : null;
 
     const panelContent = (
       <GlassPanel className="p-5 sm:p-6 w-full sm:w-72">
@@ -37,9 +49,9 @@ export function InfoPanel() {
         <div className="space-y-2.5 text-xs">
           <InfoRow label="Type" value={plate.nodeIds.length === 4 ? 'Quad Shell' : 'Tri Plate'} />
           <InfoRow label="Nodes" value={plate.nodeIds.join(', ')} />
-          <InfoRow label="Avg Thickness" value={`${avgThick} m`} />
+          <InfoRow label="Avg Thickness" value={fmt(avgThick)} />
           {plate.thicknesses.length > 0 && (
-            <InfoRow label="Node Thicknesses" value={plate.thicknesses.map(t => `${t}m`).join(', ')} />
+            <InfoRow label="Node Thicknesses" value={plate.thicknesses.map(t => fmt(t)).join(', ')} />
           )}
         </div>
       </GlassPanel>
@@ -77,7 +89,7 @@ export function InfoPanel() {
         {startNode && endNode && (
           <InfoRow
             label="Length"
-            value={`${calculateLength(startNode, endNode).toFixed(2)} m`}
+            value={fmt(calculateLength(startNode, endNode))}
           />
         )}
         {member.groupNames.length > 0 && (
@@ -89,25 +101,19 @@ export function InfoPanel() {
         {member.section && (
           <>
             <div className="w-full h-px bg-border my-1" />
-            <InfoRow
-              label="Depth Y"
-              value={member.section.depthY ? `${member.section.depthY}m` : '—'}
-            />
-            <InfoRow
-              label="Depth Z"
-              value={member.section.depthZ ? `${member.section.depthZ}m` : '—'}
-            />
-            {member.section.depthYB != null && (
-              <InfoRow
-                label="Depth YB"
-                value={`${member.section.depthYB}m`}
-              />
-            )}
-            {member.section.depthZB != null && (
-              <InfoRow
-                label="Depth ZB"
-                value={`${member.section.depthZB}m`}
-              />
+            {member.section.meta ? (
+              <>
+                <InfoRow label="Section" value={member.section.meta.label} />
+                <InfoRow label="Family" value={member.section.meta.family} />
+                {member.section.meta.dims.map(d => (
+                  <InfoRow key={d.name} label={d.name} value={fmt(d.value)} />
+                ))}
+                {member.section.meta.area != null && (
+                  <InfoRow label="Area" value={`${(member.section.meta.area * 1e6).toFixed(1)} mm²`} />
+                )}
+              </>
+            ) : (
+              <InfoRow label="Type" value={member.section.description || 'Unknown'} />
             )}
           </>
         )}

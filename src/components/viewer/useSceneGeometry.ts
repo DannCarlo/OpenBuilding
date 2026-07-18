@@ -5,19 +5,21 @@ import { getMemberColor, getSupportColor } from '../../lib/colors';
 import { useViewStore } from '../../store/viewStore';
 import { useUIStore } from '../../store/uiStore';
 import * as THREE from 'three';
+import type { SectionProfile, SectionMeta } from '../../parser/types';
 
 export interface MemberGeometryData {
   position: [number, number, number];
   rotation: [number, number, number];
   length: number;
   radius: number;
-  depthY?: number;
-  depthZ?: number;
-  depthYB?: number;
-  depthZB?: number;
+  /** Cross-section polygon */
+  profile?: SectionProfile;
+  /** Metadata for InfoPanel display */
+  meta?: SectionMeta;
   beta?: number;
   color: string;
   memberId: number;
+  sectionType?: string;
 }
 
 /**
@@ -108,26 +110,7 @@ export function useSceneGeometry() {
       const quaternion = new THREE.Quaternion().setFromRotationMatrix(rotMatrix);
       const euler = new THREE.Euler().setFromQuaternion(quaternion);
 
-      // Section size (default or from property)
-      let radius = DEFAULT_MEMBER_RADIUS;
-      let depthY: number | undefined;
-      let depthZ: number | undefined;
-      let depthYB: number | undefined;
-      let depthZB: number | undefined;
-
-      if (member.section?.depthY) {
-        depthY = member.section.depthY;
-        depthYB = member.section.depthYB;
-        depthZB = member.section.depthZB;
-        if (member.section.depthZ) {
-          // Rectangular, trapezoidal, or T-shape — use outer YD×ZD for box
-          depthZ = member.section.depthZ;
-          radius = Math.max((depthY + depthZ) / 4, 0.02);
-        } else {
-          // Circular: YD only (diameter)
-          radius = depthY / 2;
-        }
-      }
+      const radius = DEFAULT_MEMBER_RADIUS;
 
       // Color
       let color = getMemberColor(member.section?.type);
@@ -148,13 +131,12 @@ export function useSceneGeometry() {
         rotation: [euler.x, euler.y, euler.z],
         length,
         radius,
-        depthY,
-        depthZ,
-        depthYB,
-        depthZB,
+        profile: member.section?.profile,
+        meta: member.section?.meta,
         beta: member.beta,
         color,
         memberId: member.id,
+        sectionType: member.section?.type,
       });
     }
 

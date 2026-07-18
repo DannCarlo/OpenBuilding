@@ -7,6 +7,10 @@ import { parseMemberLine } from './commands/member-incidences';
 import { parseMemberPropertyLine } from './commands/member-properties';
 import { parseSupportLine } from './commands/supports';
 import { parseGroupBlock } from './commands/group-definitions';
+import { lookupSteelSection } from '../../lib/steel-db';
+import { resolveStaadSteelKey } from './steel-resolver';
+import { computeSectionProperties, polygonCircle } from '../../lib/section-profiles';
+import type { SectionProfile, SectionMeta } from '../types';
 
 /**
  * Parse a STAAD .std input file and return a format-agnostic BaseParseResult.
@@ -305,17 +309,127 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
   }));
 
   // 2. Build section lookup (memberId → ParseSection)
+  // Section dimensions need the same length conversion as offsets
+  const dimConv = getLengthConversion(staad.units.length);
   const sectionMap = new Map<number, ParseSection>();
   for (const prop of staad.memberProperties) {
+    let depthY = prop.yd != null ? prop.yd * dimConv : undefined;
+    let depthZ = prop.zd != null ? prop.zd * dimConv : undefined;
+    let depthYB = prop.yb != null ? prop.yb * dimConv : undefined;
+    let depthZB = prop.zb != null ? prop.zb * dimConv : undefined;
+
+    // Phase 3 — TABLE (steel) sections: resolver → registry lookup
+    if (prop.type === 'TABLE' && prop.tableName) {
+      const resolved = resolveStaadSteelKey(prop.tableName, dimConv);
+      if (resolved.sectionKey) {
+        const entry = lookupSteelSection(resolved.sectionKey);
+        if (entry) {
+          // Build section directly from registry entry
+          const section: ParseSection = {
+            type: entry.variant,
+            description: entry.meta.label,
+            profile: entry.profile,
+            meta: entry.meta,
+            sectionKey: entry.key,
+          };
+          for (const mid of prop.memberIds) {
+            sectionMap.set(mid, section);
+          }
+          continue;
+        }
+      }
+      // Registry lookup failed — fall through to generic handling
+    }
+
+    const sectionType = mapSectionType(prop);
     const section: ParseSection = {
-      type: mapSectionType(prop),
-      depthY: prop.yd,
-      depthZ: prop.zd,
-      depthYB: prop.yb,
-      depthZB: prop.zb,
-      tableName: prop.tableName,
-      description: mapSectionDescription(prop),
+      type: sectionType,
+      description: prop.description || sectionType,
     };
+
+    // ── PRIS profile generation (Phase 2) ──────────────────────────
+    if (prop.type === 'PRIS' && depthY != null) {
+      let profile: SectionProfile | undefined;
+      let meta: SectionMeta | undefined;
+
+      if (prop.zd == null) {
+        // Circular: YD = diameter
+        const d = depthY, r = d / 2;
+        profile = { outer: polygonCircle(r) };
+        meta = {
+          label: `Ø${(d * 1000).toFixed(0)} mm Circle`,
+          family: 'Circle',
+          source: 'STAAD-PRIS',
+          dims: [{ name: 'Diameter', value: d }],
+        };
+      } else if (depthYB != null && depthZB != null) {
+        // T-shape: YD total depth, ZD flange width, YB web depth, ZB web width
+        const yd = depthY, zd = depthZ!, yb = depthYB, zb = depthZB;
+        const hy = yd / 2, hFl = zd / 2, hWb = zb / 2, fh = yd - yb;
+        profile = {
+          outer: [
+            [-hFl,  hy], [ hFl,  hy],
+            [ hFl,  hy - fh], [ hWb,  hy - fh],
+            [ hWb, -hy], [-hWb, -hy],
+            [-hWb,  hy - fh], [-hFl,  hy - fh],
+          ],
+        };
+        meta = {
+          label: `T ${(zd * 1000).toFixed(0)}×${(yd * 1000).toFixed(0)}/${(yb * 1000).toFixed(0)}×${(zb * 1000).toFixed(0)} mm`,
+          family: 'T-Shape',
+          source: 'STAAD-PRIS',
+          dims: [
+            { name: 'Total Depth', value: yd },
+            { name: 'Flange Width', value: zd },
+            { name: 'Web Depth', value: yb },
+            { name: 'Web Width', value: zb },
+          ],
+        };
+      } else if (depthZB != null) {
+        // Trapezoid: YD height, ZD top width, ZB bottom width
+        const yd = depthY, zd = depthZ!, zb = depthZB;
+        const hy = yd / 2, hTop = zd / 2, hBot = zb / 2;
+        profile = {
+          outer: [
+            [-hTop,  hy], [ hTop,  hy],
+            [ hBot, -hy], [-hBot, -hy],
+          ],
+        };
+        meta = {
+          label: `Trap ${(zd * 1000).toFixed(0)}/${(zb * 1000).toFixed(0)}×${(yd * 1000).toFixed(0)} mm`,
+          family: 'Trapezoid',
+          source: 'STAAD-PRIS',
+          dims: [
+            { name: 'Height', value: yd },
+            { name: 'Top Width', value: zd },
+            { name: 'Bottom Width', value: zb },
+          ],
+        };
+      } else {
+        // Rectangle: YD × ZD
+        const yd = depthY, zd = depthZ!;
+        const hy = yd / 2, hz = zd / 2;
+        profile = {
+          outer: [[-hz, -hy], [hz, -hy], [hz, hy], [-hz, hy]],
+        };
+        meta = {
+          label: `${(zd * 1000).toFixed(0)}×${(yd * 1000).toFixed(0)} mm Rect`,
+          family: 'Rectangle',
+          source: 'STAAD-PRIS',
+          dims: [
+            { name: 'Height', value: yd },
+            { name: 'Width', value: zd },
+          ],
+        };
+      }
+
+      if (profile && meta) {
+        const props = computeSectionProperties(profile);
+        section.profile = profile;
+        section.meta = { ...meta, area: props.area, ix: props.ix, iy: props.iy };
+      }
+    }
+
     for (const mid of prop.memberIds) {
       sectionMap.set(mid, section);
     }
@@ -411,7 +525,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
   return { nodes, members, plates, supports, warnings };
 }
 
-/** Map STAAD section type → format-agnostic type */
+/** Map STAAD section type → format-agnostic type (PRIS only; TABLE handled by registry). */
 function mapSectionType(prop: import('./types').StaadMemberProperty): ParseSection['type'] {
   if (prop.type === 'PRIS') {
     if (prop.zd == null) return 'CIRCULAR';
@@ -420,25 +534,10 @@ function mapSectionType(prop: import('./types').StaadMemberProperty): ParseSecti
     return 'RECTANGULAR';
   }
   switch (prop.type) {
-    case 'TABLE': return 'STANDARD';
     case 'TAPERED': return 'TAPERED';
     case 'USER': return 'USER';
     default: return 'UNKNOWN';
   }
-}
-
-/** Build human-readable description from STAAD property */
-function mapSectionDescription(prop: import('./types').StaadMemberProperty): string {
-  if (prop.type === 'PRIS') {
-    if (prop.zd == null) return `Circular Ø${prop.yd ?? '?'}m`;
-    if (prop.yb != null && prop.zb != null) return `T-shape ${prop.yd}×${prop.zd}/${prop.yb}×${prop.zb}m`;
-    if (prop.zb != null) return `Trapezoidal ${prop.yd}×${prop.zd}/${prop.zb}m`;
-    return `Rectangular ${prop.yd ?? '?'}×${prop.zd ?? '?'}m`;
-  }
-  if (prop.type === 'TABLE') {
-    return `Standard ${prop.tableName ?? 'unknown'}`;
-  }
-  return prop.description;
 }
 
 /** Map STAAD support type → format-agnostic type */

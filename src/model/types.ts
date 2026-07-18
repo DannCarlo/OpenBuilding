@@ -19,12 +19,15 @@ export interface ModelMember {
 }
 
 export interface MemberSection {
-  type: 'RECTANGULAR' | 'CIRCULAR' | 'TRAPEZOIDAL' | 'TSHAPE' | 'STANDARD' | 'TAPERED' | 'USER' | 'UNKNOWN';
-  depthY?: number;
-  depthZ?: number;
-  depthYB?: number;
-  depthZB?: number;
-  tableName?: string;
+  type: 'RECTANGULAR' | 'CIRCULAR' | 'TRAPEZOIDAL' | 'TSHAPE' | 'CUSTOM' | 'TAPERED' | 'USER' | 'UNKNOWN'
+    | 'STEEL_ANGLE' | 'STEEL_DOUBLE_ANGLE' | 'STEEL_WIDE_FLANGE' | 'STEEL_CHANNEL' | 'STEEL_PIPE' | 'STEEL_TUBE' | 'STEEL_GENERIC';
+  /** Cross-section polygon */
+  profile?: import('../parser/types').SectionProfile;
+  /** Human-readable metadata for InfoPanel */
+  meta?: import('../parser/types').SectionMeta;
+  /** Canonical steel section key */
+  sectionKey?: string;
+  /** Fallback description */
   description: string;
 }
 

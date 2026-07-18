@@ -9,14 +9,58 @@ export interface ParseNode {
   z: number;
 }
 
+// ── Section profile contracts (new — Phase 1) ────────────────────────────
+
+/** A cross-section polygon. Origin should be the centroid for correct beam theory. */
+export interface SectionProfile {
+  /** Outer boundary vertices as [x, z] pairs in the member's local cross-section plane.
+   *  x = local horizontal (weak axis), z = local vertical (strong axis).
+   *  Centroid at origin. */
+  outer: [number, number][];
+  /** Inner voids — one array per hole (pipe bore, HSS cavity, etc.) */
+  holes?: [number, number][][];
+}
+
+/** A single named dimension for display in the InfoPanel. */
+export interface SectionDim {
+  name: string;    // e.g. "Depth", "Flange Width", "Wall Thickness"
+  value: number;   // meters
+}
+
+/** Human-readable metadata about a section. Produced at parse time, consumed by InfoPanel. */
+export interface SectionMeta {
+  /** Short display label  e.g. "W12×26", "300×600 Rectangle" */
+  label: string;
+  /** Section family e.g. "Wide Flange", "Rectangle", "Single Angle", "Pipe" */
+  family: string;
+  /** Named dimensions in InfoPanel display order */
+  dims: SectionDim[];
+  /** Source format/standard  e.g. "AISC", "STAAD-PRIS", "Custom" */
+  source: string;
+  /** Pre-computed cross-section properties (optional) */
+  area?: number;   // m²
+  ix?: number;     // m⁴  second moment about local x (weak axis)
+  iy?: number;     // m⁴  second moment about local y (strong axis)
+}
+
+// ── Updated ParseSection ──────────────────────────────────────────────────
+
 /** Section data already normalized to format-agnostic terminology */
 export interface ParseSection {
-  type: 'RECTANGULAR' | 'CIRCULAR' | 'TRAPEZOIDAL' | 'TSHAPE' | 'STANDARD' | 'TAPERED' | 'USER' | 'UNKNOWN';
-  depthY?: number;
-  depthZ?: number;
-  depthYB?: number;
-  depthZB?: number;
-  tableName?: string;
+  /** Shape family tag — used for color lookup and legend. */
+  type: 'RECTANGULAR' | 'CIRCULAR' | 'TRAPEZOIDAL' | 'TSHAPE' | 'CUSTOM' | 'TAPERED' | 'USER' | 'UNKNOWN'
+    | 'STEEL_ANGLE' | 'STEEL_DOUBLE_ANGLE' | 'STEEL_WIDE_FLANGE' | 'STEEL_CHANNEL' | 'STEEL_PIPE' | 'STEEL_TUBE' | 'STEEL_GENERIC';
+
+  /** Cross-section polygon — the geometry source of truth. */
+  profile?: SectionProfile;
+
+  /** Human-readable metadata for InfoPanel. */
+  meta?: SectionMeta;
+
+  /** Canonical steel section key (registry lookup). */
+  sectionKey?: string;
+
+  /** Fallback description (used when meta is not present). */
   description: string;
 }
 

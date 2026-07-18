@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { useSceneGeometry, type MemberGeometryData } from './useSceneGeometry';
 import { useViewStore } from '../../store/viewStore';
 import { useUIStore } from '../../store/uiStore';
+import { buildExtrudedProfile } from '../../lib/geometry-utils';
 
 /**
  * Renders members with proper cross-section shapes.
@@ -53,6 +54,9 @@ function MemberCylinder({
 
   const color = new THREE.Color(data.color);
   const opacity = semi ? 0.5 : 1;
+  const isSteel = data.sectionType?.startsWith('STEEL_');
+  const metalness = isSteel ? 0.75 : 0.3;
+  const roughness = isSteel ? 0.35 : 0.5;
 
   // Compute rotation: align axes, then apply beta around member direction
   const rot = data.rotation ? new THREE.Euler(data.rotation[0], data.rotation[1], data.rotation[2]) : new THREE.Euler();
@@ -94,8 +98,8 @@ function MemberCylinder({
       <primitive object={geom} attach="geometry" />
       <meshStandardMaterial
         color={color}
-        roughness={0.5}
-        metalness={0.3}
+        roughness={roughness}
+        metalness={metalness}
         opacity={opacity}
         transparent={opacity < 1}
         wireframe={wireframe}
@@ -106,64 +110,10 @@ function MemberCylinder({
   );
 }
 
-/**
- * Create section geometry from available dimensions. Returns a BufferGeometry.
- *   yd only              → CylinderGeometry (circular)
- *   yd + zd              → BoxGeometry (rectangular)
- *   yd + zd + zb         → ExtrudeGeometry (trapezoidal)
- *   yd + zd + yb + zb    → ExtrudeGeometry (T-shape)
- *   none                 → CylinderGeometry (default radius)
- */
+/** Unified geometry builder — dispatches on profile presence only. */
 function createSectionGeometry(data: MemberGeometryData): THREE.BufferGeometry {
-  const { depthY: yd, depthZ: zd, depthYB: yb, depthZB: zb, length, radius } = data;
-
-  // T-shape
-  if (yd != null && zd != null && yb != null && zb != null) {
-    return buildExtrudedShape(buildTShapePoints(yd, zd, yb, zb), length);
+  if (data.profile) {
+    return buildExtrudedProfile(data.profile, data.length);
   }
-  // Trapezoidal
-  if (yd != null && zd != null && zb != null) {
-    return buildExtrudedShape(buildTrapezoidPoints(yd, zd, zb), length);
-  }
-  // Rectangular
-  if (yd != null && zd != null) {
-    return new THREE.BoxGeometry(zd, length, yd);
-  }
-  // Circular or default
-  return new THREE.CylinderGeometry(radius, radius, length, 8);
-}
-
-/** Build a 2D Shape from vertex pairs [[x,z], ...], then extrude along Y */
-function buildExtrudedShape(points: [number, number][], length: number): THREE.BufferGeometry {
-  const shape = new THREE.Shape();
-  shape.moveTo(points[0][0], points[0][1]);
-  for (let i = 1; i < points.length; i++) {
-    shape.lineTo(points[i][0], points[i][1]);
-  }
-  shape.closePath();
-
-  const geo = new THREE.ExtrudeGeometry(shape, { steps: 1, depth: length, bevelEnabled: false });
-  geo.rotateX(-Math.PI / 2);
-  geo.translate(0, -length / 2, 0);
-  return geo;
-}
-
-/** Trapezoid: wider top (ZD), narrower bottom (ZB), height YD */
-function buildTrapezoidPoints(yd: number, zd: number, zb: number): [number, number][] {
-  const hy = yd / 2, hTop = zd / 2, hBot = zb / 2;
-  return [
-    [-hTop,  hy], [ hTop,  hy],  // top
-    [ hBot, -hy], [-hBot, -hy],  // bottom
-  ];
-}
-
-/** T-shape: flange ZD × (YD−YB), web ZB × YB */
-function buildTShapePoints(yd: number, zd: number, yb: number, zb: number): [number, number][] {
-  const hy = yd / 2, hFl = zd / 2, hWb = zb / 2, fh = yd - yb;
-  return [
-    [-hFl,  hy], [ hFl,  hy],           // flange top
-    [ hFl,  hy - fh], [ hWb,  hy - fh], // flange bottom → web top
-    [ hWb, -hy], [-hWb, -hy],           // web bottom
-    [-hWb,  hy - fh], [-hFl,  hy - fh], // web top → flange bottom
-  ];
+  return new THREE.CylinderGeometry(data.radius, data.radius, data.length, 8);
 }
