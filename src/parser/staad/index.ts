@@ -324,12 +324,33 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
       if (resolved.sectionKey) {
         const entry = lookupSteelSection(resolved.sectionKey);
         if (entry) {
-          // Build section directly from registry entry
+          // Build section from registry, customizing meta for double-angle configs
+          let meta = entry.meta;
+          if (resolved.config) {
+            // Double angle: two angles back-to-back. Area = 2× single angle.
+            // Ix/Iy omitted — require composite section analysis (parallel axis theorem
+            // with spacing) for correct values.
+            const configLabel = resolved.config === 'LD' ? 'Double Angle (LLBB)' : 'Double Angle (SLBB)';
+            const gap = resolved.spacing;
+            const dims = [
+              ...entry.meta.dims,
+              ...(gap != null
+                ? [{ name: 'Back-to-Back Gap' as string, value: gap }]
+                : []),
+            ];
+            meta = {
+              ...entry.meta,
+              label: `2${entry.meta.label}`,
+              family: configLabel,
+              dims,
+              area: (entry.meta.area ?? 0) * 2,
+            };
+          }
           const section: ParseSection = {
             type: entry.variant,
-            description: entry.meta.label,
-            profile: entry.profile,
-            meta: entry.meta,
+            description: meta.label,
+            profile: entry.profile,  // known gap: single L-shape, not paired
+            meta,
             sectionKey: entry.key,
           };
           for (const mid of prop.memberIds) {

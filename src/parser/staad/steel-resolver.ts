@@ -19,6 +19,8 @@ export interface ResolvedSteelKey {
   spacing?: number;
   /** STAAD "SP" value as-is in current units (for display) */
   spacingRaw?: number;
+  /** Configuration type: "LD" (long leg back-to-back), "SD" (short leg back-to-back) */
+  config?: 'LD' | 'SD';
 }
 
 /**
@@ -27,8 +29,9 @@ export interface ResolvedSteelKey {
  * STAAD quirks handled:
  *   "ST W12X26"        → key="W12X26"
  *   "W W12X26"         → key="W12X26"
- *   "LD L20203 SP 5"   → key="L2X2X3/16", spacing=5×unitConversion
- *   "L L20203"         → key="L2X2X3/16"
+ *   "LD L20203 SP 5"   → key="L2X2X3/16", config="LD", spacing=5×unitConversion
+ *   "SD L20203 SP 5"   → key="L2X2X3/16", config="SD", spacing=5×unitConversion
+ *   "L L20203"         → key="L2X2X3/16"  (single angle)
  *   "ST C6X8.2"        → key="C6X8.2"
  *   "ST P4"            → key="Pipe4STD"
  *   "ST PIPE4"         → key="Pipe4STD"
@@ -45,17 +48,19 @@ export function resolveStaadSteelKey(
   const cleaned = tableName.trim();
   const upper = cleaned.toUpperCase();
 
-  // ── Double Angle: LD L20203 SP 0.005 ──────────────────────────
-  const ldMatch = upper.match(/^LD\s+L(\d+)(?:\s+SP\s+([\d.]+))?/i);
-  if (ldMatch) {
-    const angleCode = ldMatch[1];
-    const spRaw = ldMatch[2] ? parseFloat(ldMatch[2]) : undefined;
+  // ── Double Angle: LD/SD L20203 SP 0.005 ──────────────────────
+  const daMatch = upper.match(/^(LD|SD)\s+L(\d+)(?:\s+SP\s+([\d.]+))?/i);
+  if (daMatch) {
+    const config = daMatch[1].toUpperCase() as 'LD' | 'SD';
+    const angleCode = daMatch[2];
+    const spRaw = daMatch[3] ? parseFloat(daMatch[3]) : undefined;
     const angleKey = unpackAngleCode(angleCode);
     if (angleKey) {
       return {
-        sectionKey: angleKey, // single angle key — double handled by spacing
+        sectionKey: angleKey,
         spacing: spRaw != null ? spRaw * spacingConversion : undefined,
         spacingRaw: spRaw,
+        config,
       };
     }
     return { sectionKey: null };
