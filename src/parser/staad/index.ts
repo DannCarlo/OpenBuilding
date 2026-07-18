@@ -140,8 +140,8 @@ export function parseStaadFile(text: string): BaseParseResult {
         break;
       }
       case 'elements': {
-        const el = parseElementLine(line);
-        if (el) result.plates.push(el);
+        const els = parseElementLine(line);
+        for (const el of els) result.plates.push(el);
         break;
       }
       case 'elementProp': {
@@ -186,37 +186,53 @@ function parseConstantLine(
   }
 }
 
-/** Parse an ELEMENT INCIDENCES line. Format: ID J1 J2 J3 [J4]; ... */
-function parseElementLine(line: string): import('./types').StaadPlate | null {
+/** Parse an ELEMENT INCIDENCES line. Format: ID J1 J2 J3 [J4]; ID J1 J2 J3 [J4]; ... */
+function parseElementLine(line: string): import('./types').StaadPlate[] {
   const cleaned = line.replace(/<!\s*[\s\S]*?\s*!>/g, '').trim();
-  if (!cleaned) return null;
-  const entry = cleaned.split(';')[0]?.trim();
-  if (!entry) return null;
-  const parts = entry.split(/\s+/);
-  if (parts.length < 4) return null;
-  const id = parseInt(parts[0], 10);
-  if (isNaN(id)) return null;
-  const jointIds = parts.slice(1).map(Number).filter(n => !isNaN(n));
-  if (jointIds.length < 3) return null;
-  return {
-    id,
-    type: jointIds.length === 4 ? 'SHELL' : jointIds.length === 3 ? 'PLATE' : 'UNKNOWN',
-    jointIds,
-  };
+  if (!cleaned) return [];
+
+  const plates: import('./types').StaadPlate[] = [];
+
+  for (const entry of cleaned.split(';')) {
+    const trimmed = entry.trim();
+    if (!trimmed) continue;
+    const parts = trimmed.split(/\s+/);
+    if (parts.length < 4) continue;
+    const id = parseInt(parts[0], 10);
+    if (isNaN(id)) continue;
+    const jointIds = parts.slice(1).map(Number).filter(n => !isNaN(n));
+    if (jointIds.length < 3) continue;
+    plates.push({
+      id,
+      type: jointIds.length >= 4 ? 'SHELL' : 'PLATE',
+      jointIds: jointIds.slice(0, 4), // max 4 for quad shell
+    });
+  }
+
+  return plates;
 }
 
-/** Parse an ELEMENT PROPERTY line. Format: ID THICKNESS t1 [t2 t3 t4] */
+/** Parse an ELEMENT PROPERTY line. Format: <id-list> THICKNESS t1 [t2 t3 t4] */
 function parseElementPropertyLine(line: string): import('./types').StaadPlateProperty | null {
   const cleaned = line.replace(/<!\s*[\s\S]*?\s*!>/g, '').trim();
   if (!cleaned) return null;
-  const parts = cleaned.split(/\s+/);
-  if (parts.length < 2) return null;
-  const id = parseInt(parts[0], 10);
-  if (isNaN(id)) return null;
-  const thickIdx = parts.findIndex(t => t.toUpperCase() === 'THICKNESS');
+
+  const tokens = cleaned.split(/\s+/);
+  if (tokens.length < 4) return null;
+
+  // Find where THICKNESS keyword starts
+  const thickIdx = tokens.findIndex(t => t.toUpperCase() === 'THICKNESS');
   if (thickIdx < 0) return null;
-  const thicknesses = parts.slice(thickIdx + 1).map(Number).filter(n => !isNaN(n));
-  return { plateIds: [id], thicknesses };
+
+  // IDs are everything before THICKNESS — expand TO ranges
+  const idTokens = tokens.slice(0, thickIdx);
+  const plateIds = expandRange(idTokens);
+  if (plateIds.length === 0) return null;
+
+  // Thickness values follow THICKNESS
+  const thicknesses = tokens.slice(thickIdx + 1).map(Number).filter(n => !isNaN(n));
+
+  return { plateIds, thicknesses };
 }
 
 /**

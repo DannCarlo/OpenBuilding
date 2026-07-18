@@ -220,6 +220,8 @@ Each format parser is self-contained with its own types, utilities, and command 
 | `joints` | `JOINT COORDINATES` | `ID X Y Z` entries split by `;` |
 | `members` | `MEMBER INCIDENCES` | `MemberID JointI JointJ` entries split by `;` |
 | `memberProp` | `MEMBER PROPERTY` | Range-expanded IDs + `PRIS YD ZD [YB ZB]` or `TABLE ST <name>` |
+| `elements` | `ELEMENT INCIDENCES` | `ElementID J1 J2 J3 [J4]` entries split by `;` → `StaadPlate[]` |
+| `elementProp` | `ELEMENT PROPERTY` | Range-expanded IDs + `THICKNESS t1 [t2 t3 t4]` → `StaadPlateProperty[]` |
 | `constants` | `CONSTANTS` | `BETA <angle> MEMB <list>` → beta angle map |
 | `supports` | `SUPPORTS` | Range-expanded joint IDs + support type |
 | `groups` | `START GROUP DEFINITION` | Collects lines until `END GROUP DEFINITION`; parses as block |
@@ -228,8 +230,8 @@ Each format parser is self-contained with its own types, utilities, and command 
 ### Key Parser Rules
 
 1. **Line continuation**: Lines ending with `-` are joined with the next line before processing.
-2. **Semicolons**: `JOINT COORDINATES` and `MEMBER INCIDENCES` use `;` as intra-line separator.
-3. **Range expansion**: `1014 TO 1021` → `[1014, 1015, ..., 1021]`.
+2. **Semicolons**: `JOINT COORDINATES`, `MEMBER INCIDENCES`, and `ELEMENT INCIDENCES` use `;` as intra-line separator.
+3. **Range expansion**: `1014 TO 1021` → `[1014, 1015, ..., 1021]`. Used in `MEMBER PROPERTY`, `ELEMENT PROPERTY`, `SUPPORTS`, and `CONSTANTS`.
 4. **Comment stripping**: `!` marks inline comments. `<! ... !>` are block comments.
 5. **Unit normalization**: `UNIT METER KN` → convert all coordinates to meters.
 6. **Graceful degradation**: Malformed lines emit warnings, never crash the parse.
@@ -257,6 +259,8 @@ After the state machine fills `StaadParseResult`, the `toBaseResult()` function 
 | `TABLE ST W12X26` | → | `STANDARD W12X26` |
 | `BETA <angle> MEMB` | → | `beta` in ParseMember |
 | `FIXED_BUT` | → | `FIXED` |
+| `ELEMENT INCIDENCES` quad/tri | → | `ParsePlate` with `nodeIds` |
+| `ELEMENT PROPERTY THICKNESS` | → | `ParsePlate.thicknesses` per node |
 | Support joint ranges | → | Individual per-node supports |
 | Separate properties/groups arrays | → | Merged into each `ParseMember` |
 
