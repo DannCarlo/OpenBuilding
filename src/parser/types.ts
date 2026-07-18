@@ -28,6 +28,8 @@ export interface ParseMember {
   section: ParseSection | null;
   groupNames: string[];
   beta?: number; // rotation angle in degrees around member axis
+  startOffset?: { dx: number; dy: number; dz: number };
+  endOffset?: { dx: number; dy: number; dz: number };
 }
 
 /** A boundary condition at a node */

@@ -47,6 +47,12 @@ export interface StaadPlateProperty {
   thicknesses: number[]; // one per node (4 for quad shell)
 }
 
+export interface StaadMemberOffset {
+  memberIds: number[];
+  start?: { x: number; y: number; z: number };
+  end?: { x: number; y: number; z: number };
+}
+
 export interface StaadUnits {
   length: string;  // METER, FEET, INCH, CM, MM
   force: string;   // KN, KIP, KG, N
@@ -60,6 +66,7 @@ export interface StaadParseResult {
   plateProperties: StaadPlateProperty[];
   supports: StaadSupport[];
   groups: StaadGroup[];
+  memberOffsets: StaadMemberOffset[];
   betaAngles: Map<number, number>;
   units: StaadUnits;
   warnings: string[];
@@ -71,6 +78,7 @@ export type ParserMode =
   | 'joints'
   | 'members'
   | 'memberProp'
+  | 'memberOffset'
   | 'elements'
   | 'elementProp'
   | 'constants'

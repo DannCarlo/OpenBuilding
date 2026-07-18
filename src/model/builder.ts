@@ -34,6 +34,8 @@ export function buildModel(parsed: BaseParseResult): ParsedModel {
       section: m.section ? { ...m.section } : null,
       groupNames: m.groupNames,
       beta: m.beta,
+      startOffset: m.startOffset,
+      endOffset: m.endOffset,
     });
   }
 

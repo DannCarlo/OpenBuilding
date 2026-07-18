@@ -220,6 +220,7 @@ Each format parser is self-contained with its own types, utilities, and command 
 | `joints` | `JOINT COORDINATES` | `ID X Y Z` entries split by `;` |
 | `members` | `MEMBER INCIDENCES` | `MemberID JointI JointJ` entries split by `;` |
 | `memberProp` | `MEMBER PROPERTY` | Range-expanded IDs + `PRIS YD ZD [YB ZB]` or `TABLE ST <name>` |
+| `memberOffset` | `MEMBER OFFSET` | Range-expanded IDs + `START x y z [END x y z]` → `StaadMemberOffset[]` |
 | `elements` | `ELEMENT INCIDENCES` | `ElementID J1 J2 J3 [J4]` entries split by `;` → `StaadPlate[]` |
 | `elementProp` | `ELEMENT PROPERTY` | Range-expanded IDs + `THICKNESS t1 [t2 t3 t4]` → `StaadPlateProperty[]` |
 | `constants` | `CONSTANTS` | `BETA <angle> MEMB <list>` → beta angle map |
@@ -231,7 +232,7 @@ Each format parser is self-contained with its own types, utilities, and command 
 
 1. **Line continuation**: Lines ending with `-` are joined with the next line before processing.
 2. **Semicolons**: `JOINT COORDINATES`, `MEMBER INCIDENCES`, and `ELEMENT INCIDENCES` use `;` as intra-line separator.
-3. **Range expansion**: `1014 TO 1021` → `[1014, 1015, ..., 1021]`. Used in `MEMBER PROPERTY`, `ELEMENT PROPERTY`, `SUPPORTS`, and `CONSTANTS`.
+3. **Range expansion**: `1014 TO 1021` → `[1014, 1015, ..., 1021]`. Used in `MEMBER PROPERTY`, `MEMBER OFFSET`, `ELEMENT PROPERTY`, `SUPPORTS`, and `CONSTANTS`.
 4. **Comment stripping**: `!` marks inline comments. `<! ... !>` are block comments.
 5. **Unit normalization**: `UNIT METER KN` → convert all coordinates to meters.
 6. **Graceful degradation**: Malformed lines emit warnings, never crash the parse.
@@ -259,6 +260,7 @@ After the state machine fills `StaadParseResult`, the `toBaseResult()` function 
 | `TABLE ST W12X26` | → | `STANDARD W12X26` |
 | `BETA <angle> MEMB` | → | `beta` in ParseMember |
 | `FIXED_BUT` | → | `FIXED` |
+| `MEMBER OFFSET START/END x y z` | → | `ParseMember.startOffset` / `endOffset` (global only) |
 | `ELEMENT INCIDENCES` quad/tri | → | `ParsePlate` with `nodeIds` |
 | `ELEMENT PROPERTY THICKNESS` | → | `ParsePlate.thicknesses` per node |
 | Support joint ranges | → | Individual per-node supports |
@@ -560,6 +562,16 @@ Plates are rendered as **solid 3D bodies** with per-node thickness (not flat sur
 - `faceNormal()` computes the extrusion direction from the first 3 points (CCW winding)
 - Index tables (`QUAD_INDICES`, `TRI_INDICES`) are static module-level constants — allocated once
 - Material: semi-transparent green (`#50C878`), `FrontSide` rendering (proper outward normals)
+
+---
+
+## Member Offsets
+
+Members can be shifted away from their nodes via `MEMBER OFFSET` data:
+
+- **Global offsets** (supported): `START x y z` / `END x y z` — member endpoints shift by `(dx, dy, dz)` in world coordinates, creating a visible gap from the node sphere. Applied directly to start/end positions in `useSceneGeometry`; length, midpoint, and direction are all recomputed from the offset-adjusted coordinates.
+- **Local offsets** (deferred): `START LOCAL x y z` — offsets in the member's local axis system (X = along member, Y = major, Z = minor). Parsed but **not yet applied** to rendering; only global offsets are active for now.
+- Offsets are length values and undergo the same unit conversion as joint coordinates (`getLengthConversion`).
 
 ---
 

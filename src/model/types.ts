@@ -14,6 +14,8 @@ export interface ModelMember {
   section: MemberSection | null;
   groupNames: string[];
   beta?: number; // rotation angle in degrees around member axis
+  startOffset?: { dx: number; dy: number; dz: number };
+  endOffset?: { dx: number; dy: number; dz: number };
 }
 
 export interface MemberSection {

@@ -20,6 +20,7 @@ export function parseStaadFile(text: string): BaseParseResult {
     plateProperties: [],
     supports: [],
     groups: [],
+    memberOffsets: [],
     betaAngles: new Map(),
     units: { length: 'METER', force: 'KN' },
     warnings: [],
@@ -83,6 +84,10 @@ export function parseStaadFile(text: string): BaseParseResult {
     }
     if (upperLine.startsWith('MEMBER PROPERTY')) {
       mode = 'memberProp';
+      continue;
+    }
+    if (upperLine.startsWith('MEMBER OFFSET')) {
+      mode = 'memberOffset';
       continue;
     }
     if (upperLine.startsWith('SUPPORTS')) {
@@ -149,6 +154,11 @@ export function parseStaadFile(text: string): BaseParseResult {
         if (ep) result.plateProperties.push(ep);
         break;
       }
+      case 'memberOffset': {
+        const off = parseMemberOffsetLine(line);
+        if (off) result.memberOffsets.push(off);
+        break;
+      }
       default:
         break;
     }
@@ -186,7 +196,51 @@ function parseConstantLine(
   }
 }
 
-/** Parse an ELEMENT INCIDENCES line. Format: ID J1 J2 J3 [J4]; ID J1 J2 J3 [J4]; ... */
+/** Parse a MEMBER OFFSET line. Format: <id-list> START x y z [END x y z] */
+function parseMemberOffsetLine(line: string): import('./types').StaadMemberOffset | null {
+  const cleaned = line.replace(/<!\s*[\s\S]*?\s*!>/g, '').trim();
+  if (!cleaned) return null;
+
+  const tokens = cleaned.split(/\s+/);
+
+  // Find START/END keyword positions
+  const startIdx = tokens.findIndex(t => t.toUpperCase() === 'START');
+  const endIdx = tokens.findIndex(t => t.toUpperCase() === 'END');
+
+  if (startIdx < 0 && endIdx < 0) return null;
+
+  // Determine where the ID list ends and offset data begins
+  const offsetStart = startIdx >= 0 ? startIdx : endIdx;
+  if (offsetStart < 0) return null;
+
+  const idTokens = tokens.slice(0, offsetStart);
+  const memberIds = expandRange(idTokens);
+  if (memberIds.length === 0) return null;
+
+  const result: import('./types').StaadMemberOffset = { memberIds };
+
+  // Parse START offset
+  if (startIdx >= 0) {
+    const x = parseFloat(tokens[startIdx + 1]);
+    const y = parseFloat(tokens[startIdx + 2]);
+    const z = parseFloat(tokens[startIdx + 3]);
+    if (!isNaN(x) && !isNaN(y) && !isNaN(z)) {
+      result.start = { x, y, z };
+    }
+  }
+
+  // Parse END offset
+  if (endIdx >= 0) {
+    const x = parseFloat(tokens[endIdx + 1]);
+    const y = parseFloat(tokens[endIdx + 2]);
+    const z = parseFloat(tokens[endIdx + 3]);
+    if (!isNaN(x) && !isNaN(y) && !isNaN(z)) {
+      result.end = { x, y, z };
+    }
+  }
+
+  return result;
+}
 function parseElementLine(line: string): import('./types').StaadPlate[] {
   const cleaned = line.replace(/<!\s*[\s\S]*?\s*!>/g, '').trim();
   if (!cleaned) return [];
@@ -277,7 +331,26 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
     }
   }
 
-  // 4. Members: combine incidence + section + groups
+  // 3.5 Build offset lookup (memberId → start/end offset)
+  // Offsets are length values — must be converted to meters
+  const offsetConv = getLengthConversion(staad.units.length);
+  const offsetMap = new Map<number, { startOffset?: { dx: number; dy: number; dz: number }; endOffset?: { dx: number; dy: number; dz: number } }>();
+  for (const off of staad.memberOffsets) {
+    for (const mid of off.memberIds) {
+      const entry = offsetMap.get(mid) || {};
+      if (off.start) {
+        entry.startOffset = { dx: off.start.x * offsetConv, dy: off.start.y * offsetConv, dz: off.start.z * offsetConv };
+      }
+      if (off.end) {
+        entry.endOffset = { dx: off.end.x * offsetConv, dy: off.end.y * offsetConv, dz: off.end.z * offsetConv };
+      }
+      if (entry.startOffset || entry.endOffset) {
+        offsetMap.set(mid, entry);
+      }
+    }
+  }
+
+  // 4. Members: combine incidence + section + groups + offsets
   const members: ParseMember[] = [];
   for (const m of staad.members) {
     if (!staad.joints.find(j => j.id === m.jointI)) {
@@ -295,6 +368,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
       section: sectionMap.get(m.id) || null,
       groupNames: groupMap.get(m.id) || [],
       beta: staad.betaAngles.get(m.id),
+      ...offsetMap.get(m.id),
     });
   }
 
@@ -414,6 +488,7 @@ function isNewSectionKeyword(upperLine: string): boolean {
     'JOINT COORDINATES',
     'MEMBER INCIDENCES',
     'MEMBER PROPERTY',
+    'MEMBER OFFSET',
     'ELEMENT INCIDENCES',
     'SUPPORTS',
     'CONSTANTS',

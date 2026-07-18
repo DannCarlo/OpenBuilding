@@ -52,20 +52,39 @@ export function useSceneGeometry() {
     const memberData: MemberGeometryData[] = [];
 
     for (const member of model.members) {
-      const start = nodeMap.get(member.startNodeId);
-      const end = nodeMap.get(member.endNodeId);
-      if (!start || !end) continue;
+      const startNode = nodeMap.get(member.startNodeId);
+      const endNode = nodeMap.get(member.endNodeId);
+      if (!startNode || !endNode) continue;
 
-      const dx = end.x - start.x;
-      const dy = end.y - start.y;
-      const dz = end.z - start.z;
+      // Apply global offsets: member endpoint = node + offset (gap from node sphere)
+      let sx = startNode.x;
+      let sy = startNode.y;
+      let sz = startNode.z;
+      let ex = endNode.x;
+      let ey = endNode.y;
+      let ez = endNode.z;
+
+      if (member.startOffset) {
+        sx += member.startOffset.dx;
+        sy += member.startOffset.dy;
+        sz += member.startOffset.dz;
+      }
+      if (member.endOffset) {
+        ex += member.endOffset.dx;
+        ey += member.endOffset.dy;
+        ez += member.endOffset.dz;
+      }
+
+      const dx = ex - sx;
+      const dy = ey - sy;
+      const dz = ez - sz;
       const length = Math.sqrt(dx * dx + dy * dy + dz * dz);
       if (length < 0.001) continue;
 
-      // Midpoint position
-      const midX = (start.x + end.x) / 2;
-      const midY = (start.y + end.y) / 2;
-      const midZ = (start.z + end.z) / 2;
+      // Midpoint position (using offset-adjusted coordinates)
+      const midX = (sx + ex) / 2;
+      const midY = (sy + ey) / 2;
+      const midZ = (sz + ez) / 2;
 
       // Direction vector
       const dir = new THREE.Vector3(dx, dy, dz).normalize();
