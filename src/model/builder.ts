@@ -46,6 +46,7 @@ export function buildModel(parsed: BaseParseResult): ParsedModel {
   return {
     nodes: Array.from(nodeMap.values()),
     members,
+    plates: parsed.plates.map(p => ({ ...p })),
     supports,
     warnings,
   };

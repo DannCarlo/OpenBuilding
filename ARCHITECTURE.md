@@ -31,13 +31,13 @@ structure_viewer/
 │   │           └── group-definitions.ts# START/END GROUP DEFINITION → StaadGroup[]
 │   │
 │   ├── model/                           # Format-independent normalized geometry model
-│   │   ├── types.ts                     # ParsedModel, ModelNode, ModelMember, MemberSection, ModelSupport
+│   │   ├── types.ts                     # ParsedModel, ModelNode, ModelMember, MemberSection, ModelPlate, ModelSupport
 │   │   └── builder.ts                   # BaseParseResult → ParsedModel (pure assembly, zero format knowledge)
 │   │
 │   ├── store/                           # Zustand state management
 │   │   ├── modelStore.ts                # Model data, file name, loading/error state
 │   │   ├── viewStore.ts                 # Display mode, labels/grid/support toggles, theme
-│   │   └── uiStore.ts                  # Selected/hovered member, info panel visibility
+│   │   └── uiStore.ts                  # Selected/hovered member/plate, info panel visibility
 │   │
 │   ├── components/
 │   │   ├── viewer/                      # ★ React-Three-Fiber 3D scene
@@ -45,7 +45,8 @@ structure_viewer/
 │   │   │   ├── Scene.tsx                # Root scene composition (lights + grid + nodes + members + supports + labels)
 │   │   │   ├── useSceneGeometry.ts      # ★ Core hook — model → Three.js geometry data (nodes, members, supports, labels, bounds)
 │   │   │   ├── Nodes.tsx                # InstancedMesh spheres at joint positions
-│   │   │   ├── Members.tsx              # Per-member geometry — boxes for rectangular, cylinders for circular/unknown
+│   │   │   ├── Members.tsx              # Per-member extruded cross-sections (box, cylinder, trapezoid, T-shape)
+│   │   │   ├── Plates.tsx               # Solid plate/shell bodies — per-node thickness, tri→wedge, quad→brick
 │   │   │   ├── Supports.tsx             # Symbolic support markers (cone = fixed, sphere = pinned)
 │   │   │   ├── Labels.tsx               # 3D text labels (node IDs) via @react-three/drei <Text>
 │   │   │   ├── Grid.tsx                 # Ground reference grid — theme-aware colors from constants
@@ -54,13 +55,13 @@ structure_viewer/
 │   │   ├── layout/
 │   │   │   ├── MainLayout.tsx           # Full-viewport shell (all children absolute-positioned)
 │   │   │   ├── TopBar.tsx               # Logo, file name, upload/theme toggle buttons
-│   │   │   └── StatusBar.tsx            # Bottom-center glass panel — node/member/support counts
+│   │   │   └── StatusBar.tsx            # Bottom-center glass panel — node/member/plate/support counts
 │   │   ├── upload/
 │   │   │   └── UploadOverlay.tsx        # Welcome screen (shown when no model) — drag-drop upload with progress
 │   │   ├── toolbar/
 │   │   │   └── ViewToolbar.tsx          # Right-side floating toolbar — display modes + toggles
 │   │   ├── panels/
-│   │   │   └── InfoPanel.tsx            # Slide-out member info panel (section, length, connectivity)
+│   │   │   └── InfoPanel.tsx            # Slide-out member/plate info panel (section, thickness, connectivity)
 │   │   └── ui/
 │   │       ├── GlassPanel.tsx           # Reusable frosted-glass container (backdrop-filter blur)
 │   │       └── IconButton.tsx           # Clean icon button with active state + tooltip
@@ -167,7 +168,7 @@ structure_viewer/
 │  Model Builder        │  Pure assembly — validates connectivity
 │  (model/builder)      │  Zero format knowledge
 └──────────┬───────────┘
-           │  ParsedModel { nodes[], members[], supports[], warnings[] }
+           │  ParsedModel { nodes[], members[], plates[], supports[], warnings[] }
            ▼
 ┌──────────────────────┐
 │  Zustand Store        │  modelStore.setModel(model, fileName)
@@ -365,7 +366,15 @@ All nodes rendered as a single `InstancedMesh` with `SphereGeometry`. Instance m
 |---|---|---|
 | `selectedMemberId` | `number \| null` | Currently clicked member |
 | `hoveredMemberId` | `number \| null` | Currently hovered member |
-| `showInfoPanel` | `boolean` | Member info panel visibility |
+| `selectedPlateId` | `number \| null` | Currently clicked plate |
+| `showInfoPanel` | `boolean` | Info panel visibility (member or plate) |
+
+| Action | Signature |
+|---|---|
+| `selectMember` | `(id: number \| null) => void` |
+| `hoverMember` | `(id: number \| null) => void` |
+| `selectPlate` | `(id: number \| null) => void` |
+| `setShowInfoPanel` | `(show: boolean) => void` |
 
 ---
 
@@ -381,7 +390,8 @@ All nodes rendered as a single `InstancedMesh` with `SphereGeometry`. Instance m
   │   │               ├── <Lighting />            # Ambient + 2× directional + hemisphere
   │   │               ├── <Grid />                # gridHelper at y=0
   │   │               ├── <Nodes />               # InstancedMesh spheres
-  │   │               ├── <Members />             # Per-member cylinders
+│   │               ├── <Members />             # Per-member extruded sections
+│   │               ├── <Plates />              # Solid plate bodies (tri/quad w/ thickness)
   │   │               ├── <Supports />            # Cone/sphere markers
   │   │               ├── <Labels />              # 3D Text labels
   │   │               └── <CameraControls />      # OrbitControls + auto-fit
@@ -448,6 +458,9 @@ All floating UI uses the `.glass` CSS class:
 | Fixed support | Coral | `#E85D47` |
 | Pinned support | Orange | `#F4A261` |
 | Roller support | Green | `#50C878` |
+| Plate (default) | Green | `#50C878` |
+| Plate (hovered) | Light Green | `#88DDA0` |
+| Plate (selected) | Gold | `#FFD700` |
 | Grid lines (light mode) | `#e8e8ed` / `#d5d5da` |
 | Grid lines (dark mode) | `#222226` / `#3a3a3e` |
 | Node spheres | Gray | `#999999` |
@@ -510,6 +523,7 @@ export { parseStaadFile } from './staad';
 interface BaseParseResult {
   nodes: ParseNode[];
   members: ParseMember[];
+  plates: ParsePlate[];
   supports: ParseSupport[];
   warnings: string[];
 }
@@ -524,10 +538,25 @@ Every format parser must implement `parse<Format>File(text: string): BaseParseRe
 - **Structure**: 3-story reinforced concrete frame building
 - **Joints**: 30 (ground: 1001–1008, 2F: 2001–2012, roof: 3001–3010)
 - **Members**: 45 (16 columns + 16 2F beams + 13 roof beams)
+- **Plates**: 1 (quad shell floor diaphragm)
 - **Supports**: 8 (all base joints fully fixed)
 - **Sections**: Rectangular prismatic (PRIS YD ZD)
 - **Units**: Meter, Kilonewton
 
 ---
 
-*End of ARCHITECTURE.md — Updated 2026-07-17*
+## Plate Rendering
+
+Plates are rendered as **solid 3D bodies** with per-node thickness (not flat surfaces):
+- **Tri plates (3 nodes)** → 6-vertex pentahedron (wedge)
+- **Quad plates (4 nodes)** → 8-vertex hexahedron (brick)
+- Reference surface is the mid-plane: half thickness above, half below
+- Per-node thickness means top/bottom faces may not be parallel — matching STAAD's display
+- Built via a single generic `buildPrism(pts, thicknesses, normal, 3|4)` function
+- `faceNormal()` computes the extrusion direction from the first 3 points (CCW winding)
+- Index tables (`QUAD_INDICES`, `TRI_INDICES`) are static module-level constants — allocated once
+- Material: semi-transparent green (`#50C878`), `FrontSide` rendering (proper outward normals)
+
+---
+
+*End of ARCHITECTURE.md — Updated 2026-07-18*

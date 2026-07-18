@@ -1,5 +1,6 @@
 import { Nodes } from './Nodes';
 import { Members } from './Members';
+import { Plates } from './Plates';
 import { Supports } from './Supports';
 import { Labels } from './Labels';
 import { Grid } from './Grid';
@@ -21,6 +22,7 @@ export function Scene({ bgColor = '#ffffff' }: SceneProps) {
       <Grid />
       <Nodes />
       <Members />
+      <Plates />
       <Supports />
       <Labels />
       <CameraControls />

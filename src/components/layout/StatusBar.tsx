@@ -13,6 +13,7 @@ export function StatusBar() {
 
   const nodeCount = model.nodes.length;
   const memberCount = model.members.length;
+  const plateCount = model.plates.length;
   const supportCount = model.supports.length;
 
   return (
@@ -25,6 +26,12 @@ export function StatusBar() {
           <StatItem label="Members" value={memberCount} color="#E85D47" />
           <div className="w-px h-4 bg-border" />
           <StatItem label="Supports" value={supportCount} color="#50C878" />
+          {plateCount > 0 && (
+            <>
+              <div className="w-px h-4 bg-border" />
+              <StatItem label="Plates" value={plateCount} color="#9B59B6" />
+            </>
+          )}
         </span>
         {/* Mobile: dots only */}
         <span className="contents sm:hidden">

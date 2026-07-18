@@ -11,10 +11,44 @@ import { useModelStore } from '../../store/modelStore';
  */
 export function InfoPanel() {
   const selectedMemberId = useUIStore((s) => s.selectedMemberId);
+  const selectedPlateId = useUIStore((s) => s.selectedPlateId);
   const selectMember = useUIStore((s) => s.selectMember);
+  const selectPlate = useUIStore((s) => s.selectPlate);
   const model = useModelStore((s) => s.model);
 
-  if (!model || !selectedMemberId) return null;
+  if (!model) return null;
+
+  // Show element info if a plate is selected
+  if (selectedPlateId != null) {
+    const plate = model.plates.find(p => p.id === selectedPlateId);
+    if (!plate) return null;
+    const avgThick = plate.thicknesses.length > 0
+      ? (plate.thicknesses.reduce((a, b) => a + b, 0) / plate.thicknesses.length).toFixed(3)
+      : '—';
+
+    const panelContent = (
+      <GlassPanel className="p-5 sm:p-6 w-full sm:w-72">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-sm font-semibold text-[var(--color-text-primary)]">Plate {plate.id}</h3>
+          <button onClick={() => selectPlate(null)} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors p-1">
+            <X size={14} />
+          </button>
+        </div>
+        <div className="space-y-2.5 text-xs">
+          <InfoRow label="Type" value={plate.nodeIds.length === 4 ? 'Quad Shell' : 'Tri Plate'} />
+          <InfoRow label="Nodes" value={plate.nodeIds.join(', ')} />
+          <InfoRow label="Avg Thickness" value={`${avgThick} m`} />
+          {plate.thicknesses.length > 0 && (
+            <InfoRow label="Node Thicknesses" value={plate.thicknesses.map(t => `${t}m`).join(', ')} />
+          )}
+        </div>
+      </GlassPanel>
+    );
+
+    return renderPanel(panelContent);
+  }
+
+  if (!selectedMemberId) return null;
 
   const member = model.members.find((m) => m.id === selectedMemberId);
   if (!member) return null;
@@ -81,6 +115,10 @@ export function InfoPanel() {
     </GlassPanel>
   );
 
+  return renderPanel(panelContent);
+}
+
+function renderPanel(content: React.ReactNode) {
   return (
     <AnimatePresence>
       <motion.div
@@ -91,7 +129,7 @@ export function InfoPanel() {
         exit={{ opacity: 0, x: -20 }}
         transition={{ duration: 0.2 }}
       >
-        {panelContent}
+        {content}
       </motion.div>
       <motion.div
         key="mobile"
@@ -101,7 +139,7 @@ export function InfoPanel() {
         exit={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.2 }}
       >
-        {panelContent}
+        {content}
       </motion.div>
     </AnimatePresence>
   );

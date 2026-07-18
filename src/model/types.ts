@@ -31,9 +31,16 @@ export interface ModelSupport {
   type: 'FIXED' | 'PINNED' | 'ROLLER' | 'UNKNOWN';
 }
 
+export interface ModelPlate {
+  id: number;
+  nodeIds: number[];
+  thicknesses: number[];
+}
+
 export interface ParsedModel {
   nodes: ModelNode[];
   members: ModelMember[];
+  plates: ModelPlate[];
   supports: ModelSupport[];
   warnings: string[];
 }

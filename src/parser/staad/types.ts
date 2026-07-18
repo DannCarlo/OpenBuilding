@@ -36,6 +36,17 @@ export interface StaadGroup {
   memberIds: number[];
 }
 
+export interface StaadPlate {
+  id: number;
+  type: 'SHELL' | 'PLATE' | 'SOLID' | 'UNKNOWN';
+  jointIds: number[]; // 3 for tri, 4 for quad, 8 for solid
+}
+
+export interface StaadPlateProperty {
+  plateIds: number[];
+  thicknesses: number[]; // one per node (4 for quad shell)
+}
+
 export interface StaadUnits {
   length: string;  // METER, FEET, INCH, CM, MM
   force: string;   // KN, KIP, KG, N
@@ -45,9 +56,11 @@ export interface StaadParseResult {
   joints: StaadJoint[];
   members: StaadMember[];
   memberProperties: StaadMemberProperty[];
+  plates: StaadPlate[];
+  plateProperties: StaadPlateProperty[];
   supports: StaadSupport[];
   groups: StaadGroup[];
-  betaAngles: Map<number, number>; // memberId → beta angle (degrees)
+  betaAngles: Map<number, number>;
   units: StaadUnits;
   warnings: string[];
 }
@@ -58,6 +71,8 @@ export type ParserMode =
   | 'joints'
   | 'members'
   | 'memberProp'
+  | 'elements'
+  | 'elementProp'
   | 'constants'
   | 'supports'
   | 'groups'

@@ -16,6 +16,8 @@ export function parseStaadFile(text: string): BaseParseResult {
     joints: [],
     members: [],
     memberProperties: [],
+    plates: [],
+    plateProperties: [],
     supports: [],
     groups: [],
     betaAngles: new Map(),
@@ -87,6 +89,14 @@ export function parseStaadFile(text: string): BaseParseResult {
       mode = 'supports';
       continue;
     }
+    if (upperLine.startsWith('ELEMENT INCIDENCES')) {
+      mode = 'elements';
+      continue;
+    }
+    if (upperLine.startsWith('ELEMENT PROPERTY')) {
+      mode = 'elementProp';
+      continue;
+    }
     if (upperLine.startsWith('CONSTANTS')) {
       mode = 'constants';
       continue;
@@ -129,6 +139,16 @@ export function parseStaadFile(text: string): BaseParseResult {
         parseConstantLine(line, result.betaAngles, result.warnings);
         break;
       }
+      case 'elements': {
+        const el = parseElementLine(line);
+        if (el) result.plates.push(el);
+        break;
+      }
+      case 'elementProp': {
+        const ep = parseElementPropertyLine(line);
+        if (ep) result.plateProperties.push(ep);
+        break;
+      }
       default:
         break;
     }
@@ -164,6 +184,39 @@ function parseConstantLine(
   for (const mid of expandRange(idTokens)) {
     betaMap.set(mid, angle);
   }
+}
+
+/** Parse an ELEMENT INCIDENCES line. Format: ID J1 J2 J3 [J4]; ... */
+function parseElementLine(line: string): import('./types').StaadPlate | null {
+  const cleaned = line.replace(/<!\s*[\s\S]*?\s*!>/g, '').trim();
+  if (!cleaned) return null;
+  const entry = cleaned.split(';')[0]?.trim();
+  if (!entry) return null;
+  const parts = entry.split(/\s+/);
+  if (parts.length < 4) return null;
+  const id = parseInt(parts[0], 10);
+  if (isNaN(id)) return null;
+  const jointIds = parts.slice(1).map(Number).filter(n => !isNaN(n));
+  if (jointIds.length < 3) return null;
+  return {
+    id,
+    type: jointIds.length === 4 ? 'SHELL' : jointIds.length === 3 ? 'PLATE' : 'UNKNOWN',
+    jointIds,
+  };
+}
+
+/** Parse an ELEMENT PROPERTY line. Format: ID THICKNESS t1 [t2 t3 t4] */
+function parseElementPropertyLine(line: string): import('./types').StaadPlateProperty | null {
+  const cleaned = line.replace(/<!\s*[\s\S]*?\s*!>/g, '').trim();
+  if (!cleaned) return null;
+  const parts = cleaned.split(/\s+/);
+  if (parts.length < 2) return null;
+  const id = parseInt(parts[0], 10);
+  if (isNaN(id)) return null;
+  const thickIdx = parts.findIndex(t => t.toUpperCase() === 'THICKNESS');
+  if (thickIdx < 0) return null;
+  const thicknesses = parts.slice(thickIdx + 1).map(Number).filter(n => !isNaN(n));
+  return { plateIds: [id], thicknesses };
 }
 
 /**
@@ -229,7 +282,28 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
     });
   }
 
-  // 5. Supports: expand joint ranges → individual node IDs, normalize types
+  // 5. Plates: map joint IDs → node IDs, pass thicknesses through
+  const plates: import('../types').ParsePlate[] = [];
+  const thicknessMap = new Map<number, number[]>();
+  for (const pp of staad.plateProperties) {
+    for (const pid of pp.plateIds) {
+      thicknessMap.set(pid, pp.thicknesses);
+    }
+  }
+  for (const pl of staad.plates) {
+    const missing = pl.jointIds.filter(jid => !staad.joints.find(j => j.id === jid));
+    if (missing.length > 0) {
+      warnings.push(`Plate ${pl.id}: joints not found: ${missing.join(', ')}`);
+      continue;
+    }
+    plates.push({
+      id: pl.id,
+      nodeIds: pl.jointIds,
+      thicknesses: thicknessMap.get(pl.id) || [],
+    });
+  }
+
+  // 6. Supports: expand joint ranges → individual node IDs, normalize types
   const supports: ParseSupport[] = [];
   for (const s of staad.supports) {
     for (const jointId of s.jointIds) {
@@ -244,7 +318,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
     }
   }
 
-  return { nodes, members, supports, warnings };
+  return { nodes, members, plates, supports, warnings };
 }
 
 /** Map STAAD section type → format-agnostic type */

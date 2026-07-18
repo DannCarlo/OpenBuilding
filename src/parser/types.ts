@@ -36,10 +36,18 @@ export interface ParseSupport {
   type: 'FIXED' | 'PINNED' | 'ROLLER' | 'UNKNOWN';
 }
 
+/** A plate/shell element with per-node thicknesses */
+export interface ParsePlate {
+  id: number;
+  nodeIds: number[];
+  thicknesses: number[];
+}
+
 /** Universal parse result — every format parser outputs this shape */
 export interface BaseParseResult {
   nodes: ParseNode[];
   members: ParseMember[];
+  plates: ParsePlate[];
   supports: ParseSupport[];
   warnings: string[];
 }
