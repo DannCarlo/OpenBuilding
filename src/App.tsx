@@ -1,8 +1,7 @@
 import { ViewerCanvas } from './components/viewer/ViewerCanvas';
 import { MainLayout } from './components/layout/MainLayout';
 import { TopBar } from './components/layout/TopBar';
-import { StatusBar } from './components/layout/StatusBar';
-import { ViewToolbar } from './components/toolbar/ViewToolbar';
+import { BottomToolbar } from './components/toolbar/BottomToolbar';
 import { UploadOverlay } from './components/upload/UploadOverlay';
 import { InfoPanel } from './components/panels/InfoPanel';
 import { useModelStore } from './store/modelStore';
@@ -24,8 +23,7 @@ export default function App() {
       {model ? (
         <>
           <ViewerCanvas />
-          <ViewToolbar />
-          <StatusBar />
+          <BottomToolbar />
           <InfoPanel />
         </>
       ) : (

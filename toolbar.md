@@ -172,280 +172,249 @@ Used for discrete actions: reset camera, fit view, screenshot, etc.
 
 ---
 
-## 4. Suggested Actions for a 3D Viewer
+## 4. Structure Viewer — Bottom Toolbar Plan
 
-Here is a toolbar layout tailored for a 3D model/scene viewer, grouped logically:
+### 4a. What This Replaces
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│ [Orbit] [Pan] [Select] │ [Wireframe] [X-Ray] [Grid] [Axes] │ [Fit] [↩] [↪] │ [⌫] │  12 objects  85% │
-└─────────────────────────────────────────────────────────────────────────┘
-```
-
-### Group 1 — Navigation Mode (mutually exclusive)
-
-| Button | Icon | Purpose |
-|---|---|---|
-| **Orbit** | ↻ | Rotate camera around pivot (default mode) |
-| **Pan** | ⇱ | Pan/translate camera in view plane |
-| **Select** | ⊹ | Click to select objects in the scene |
-
-### Group 2 — View Toggles (independently toggleable)
-
-| Button | Icon | Purpose |
-|---|---|---|
-| **Wireframe** | ◫ | Toggle wireframe / solid rendering |
-| **X-Ray** | ◈ | Toggle semi-transparent X-ray mode |
-| **Grid** | ⊞ | Show/hide reference grid plane |
-| **Axes** | ⊕ | Show/hide XYZ axes gizmo |
-
-### Group 3 — Camera Actions
-
-| Button | Icon | Purpose | Shortcut |
-|---|---|---|---|
-| **Fit View** | ⊡ | Frame all objects / selected object in viewport | `F` |
-| **Reset Cam** | ↩ | Reset camera to default position | `Ctrl+0` |
-| **Screenshot** | ◻ | Capture viewport as PNG | `Ctrl+S` |
-
-### Group 4 — Object Actions
-
-| Button | Icon | Purpose | Shortcut |
-|---|---|---|---|
-| **Delete** | ⌫ | Delete selected object(s) | `Del` |
-| **Focus** | ◎ | Zoom to selected object | `F` (when selected) |
-| **Isolate** | ◉ | Hide all except selected | `I` |
-
-### Group 5 — Info
-
-| Display | Example |
+| Remove | Replaced By |
 |---|---|
-| Object count | `12 objects` |
-| Triangle count | `45.2k tris` |
-| Zoom level | `85%` |
-| FPS | `60 fps` |
+| `src/components/toolbar/ViewToolbar.tsx` | New `BottomToolbar.tsx` |
+| `src/components/layout/StatusBar.tsx` | Stats section inside `BottomToolbar` |
+
+**Kept as-is:** `TopBar` (logo + filename + open-file + theme toggle), `InfoPanel` (slide-out detail card), `UploadOverlay`.
 
 ---
 
-## 5. Suggested 3D Viewer Toolbar Component
+### 4b. Desktop Layout (≥ 640px)
 
-Here is a complete React + Tailwind implementation with the actions above, adapted from the original BottomToolbar pattern:
+Full spread with all buttons + stats visible by default:
 
-```tsx
-// ViewportToolbar.tsx
+```
+┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ [↻ Orbit] [⇱ Pan] │ [◼ Solid] [◫ Wire] [◈ Semi] │ [⊞ Grid] [👁 Labels] [⚓ Support] │ [⊡ Fit] │ [📊] ●12 ●8 ●3 │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+  Group 1: Nav Mode     Group 2: Display Mode          Group 3: View Toggles              Action    Stats
+  (mutually exclusive,  (mutually exclusive,           (independent on/off,               (Fit      (expanded
+   dark-pill active)     dark-pill active)              blue-tint active)                  View)     by default)
+```
 
-interface ViewportToolbarProps {
-  onDelete: () => void;
-  onFitView: () => void;
-  onResetCamera: () => void;
-  canDelete: boolean;
-  objectCount: number;
-  triCount: string;   // e.g. "45.2k"
-  zoomPercent: number; // e.g. 85
+| Group | Buttons | Type | Behavior |
+|---|---|---|---|
+| **1 — Nav Mode** | Orbit, Pan | Mode selector | Mutually exclusive. Swaps OrbitControls mouse mapping so users without right-click can pan. Drives `viewStore.navMode`. |
+| **2 — Display Mode** | Solid, Wireframe, Semi | Mode selector | Mutually exclusive. Active = `bg-slate-900 text-white`. Drives `viewStore.displayMode`. |
+| **3 — View Toggles** | Grid, Labels, Supports | Toggle | Independent on/off. Active = `bg-blue-50 text-blue-600`. Drives `viewStore.showGrid / showLabels / showSupports`. |
+| **4 — Action** | Fit View | Action button | Re-frames camera to enclose all geometry. Increments `viewStore.fitViewTrigger`. |
+| **5 — Stats** | 📊 toggle + colored dots | Info + toggle | Expanded by default on desktop. Shows `● N ● M ● S` with colored dots + counts. Tapping 📊 collapses/expands with `AnimatePresence`. Drives `viewStore.showStats`. |
+
+**Why Nav Mode on desktop?** Mac trackpads and some mice lack a right mouse button. OrbitControls defaults to right-click-drag for pan. Switching to Pan mode remaps left-click-drag to pan instead of orbit, making the viewer usable for everyone.
+
+---
+
+### 4c. Mobile Layout (< 640px)
+
+Each action group collapses into a **labeled dropdown button**. Tapping opens a popover above the toolbar with the group's options:
+
+```
+          ┌──────────────────┐
+          │ ◼ Solid          │
+          │ ◫ Wireframe      │  ← popover (appears above the triggering dropdown button)
+          │ ◈ Semi           │
+          └──────────────────┘
+               ▲
+┌──────────────────────────────────────────────────────────┐
+│ [🎯 3D ▾] │ [👁 View ▾] │ [🔧 Util ▾] │ [⊡ Fit] │ [📊] │
+└──────────────────────────────────────────────────────────┘
+```
+
+| Dropdown | Opens | Today | Future |
+|---|---|---|---|
+| **🎯 3D** | Orbit, Pan, ~~Select~~, ~~Snap~~ | Orbit + Pan active. Select/Snap disabled placeholder. | Selection mode, snap-to-grid |
+| **👁 View** | Solid, Wireframe, Semi | All three active — same as desktop group 1 | — |
+| **🔧 Util** | Grid on/off, Labels on/off, Supports on/off | All three active — same as desktop group 2 | Axes toggle, measurement toggle |
+| **⊡ Fit** | *(direct action, no dropdown)* | Re-frames camera immediately | — |
+| **📊** | *(toggles stats inline)* | Collapsed by default on mobile; tap to reveal counts | — |
+
+**Dropdown behavior:**
+- Only one dropdown open at a time (tapping another closes the current one).
+- Tapping the same dropdown again, or tapping outside, closes it.
+- Tapping an option inside the popover applies the action AND closes the popover.
+- Uses `framer-motion` `AnimatePresence` for enter/exit animation (fade + slide up, 150ms).
+
+**Why dropdowns instead of icon-only buttons?**
+- On mobile (~375px wide), even icon-only buttons get cramped past 5-6 items.
+- Named dropdowns tell the user WHAT each group does ("View" is clearer than three mystery icons).
+- Scales well: adding a new toggle just adds a row in the relevant dropdown.
+
+---
+
+### 4d. Stats Section (both desktop & mobile)
+
+Compact inline stats displayed as colored dots + counts:
+
+```
+● 12 Nodes  ● 8 Members  ● 3 Supports
+```
+
+- Each dot is a 2.5×2.5 rounded-full `<div>` with the stat's theme color.
+- Numbers use `font-mono tabular-nums` so digits don't wiggle.
+- Desktop: visible by default, collapsed via 📊 toggle.
+- Mobile: collapsed by default, expanded via 📊 toggle.
+- Toggle state persisted in `viewStore.showStats`.
+- Animation: `AnimatePresence` with `layout` prop for smooth width transition.
+
+**Color mapping:**
+
+| Stat | Color |
+|---|---|
+| Nodes | `#4A90D9` (blue) |
+| Members | `#E85D47` (coral) |
+| Supports | `#50C878` (green) |
+| Plates (if > 0) | `#9B59B6` (purple) |
+
+---
+
+### 4e. New Store State
+
+Additions to `src/store/viewStore.ts`:
+
+```ts
+export type NavMode = 'orbit' | 'pan';
+
+interface ViewState {
+  // … existing state …
+
+  /** Which mouse action is mapped to left-click-drag */
+  navMode: NavMode;
+
+  /** Whether the stats section is expanded in the toolbar */
+  showStats: boolean;
+
+  /** Incremented to trigger a camera re-fit in CameraControls */
+  fitViewTrigger: number;
+
+  // … existing actions …
+
+  setNavMode: (mode: NavMode) => void;
+  toggleStats: () => void;
+  triggerFitView: () => void;
+}
+```
+
+**`navMode` behavior in `CameraControls.tsx`:**
+- `'orbit'` → `OrbitControls.mouseButtons = { LEFT: ROTATE, MIDDLE: DOLLY, RIGHT: PAN }` (default)
+- `'pan'` → `OrbitControls.mouseButtons = { LEFT: PAN, MIDDLE: DOLLY, RIGHT: ROTATE }` (left-drag pans)
+
+---
+
+### 4f. Component Tree (Simplified)
+
+Only **2 new files**. Groups are rendered inline — no unnecessary abstractions.
+
+```
+src/components/toolbar/BottomToolbar.tsx   ← NEW (~180 lines, all groups inline)
+├── Inline JSX: Nav Mode group             ← .map() over [Orbit, Pan], 6 lines
+├── Inline JSX: Display Mode group         ← .map() over [Solid, Wire, Semi], 6 lines
+├── Inline JSX: View Toggles group         ← .map() over [Grid, Labels, Supports], 6 lines
+├── Inline JSX: Fit View button            ← single <button>, 4 lines
+├── Inline JSX: Stats section              ← colored dots + counts, 12 lines
+└── <Popover> (mobile only)                ← wraps each dropdown group
+
+src/components/ui/Popover.tsx              ← NEW (~40 lines, reusable popover utility)
+src/store/viewStore.ts                     ← MODIFIED: +navMode, +showStats, +fitViewTrigger
+src/components/viewer/CameraControls.tsx   ← MODIFIED: subscribe to navMode + fitViewTrigger
+src/App.tsx                                ← MODIFIED: swap imports
+src/components/toolbar/ViewToolbar.tsx     ← DELETED
+src/components/layout/StatusBar.tsx        ← DELETED
+```
+
+**Why no `ToolbarButton` / `ModeSelectorGroup` / `ToggleGroup` / `StatsInline`?**
+- Each "group" is just `.map()` over an array of 2–3 items → 6 lines of JSX. Extracting to a component adds more boilerplate (interface, exports, imports) than it saves.
+- Button styling comes directly from the design tokens in section 6 — a short `className` string. No component needed.
+- The only genuinely reusable piece is the mobile `<Popover>`, which wraps any dropdown group in a button + animated popover.
+
+---
+
+### 4g. The One Reusable Piece: `Popover`
+
+The only sub-component worth extracting. Used by every mobile dropdown group.
+
+```ts
+// src/components/ui/Popover.tsx
+
+interface PopoverProps {
+  label: string;             // e.g. "View", "3D"
+  icon: React.ReactNode;     // icon for the trigger button
+  children: React.ReactNode; // popover content
 }
 
-type ViewMode = 'orbit' | 'pan' | 'select';
-
-const viewModes: { id: ViewMode; label: string; icon: string }[] = [
-  { id: 'orbit',  label: 'Orbit',  icon: '↻' },
-  { id: 'pan',    label: 'Pan',    icon: '⇱' },
-  { id: 'select', label: 'Select', icon: '⊹' },
-];
-
-export function ViewportToolbar({
-  onDelete, onFitView, onResetCamera,
-  canDelete, objectCount, triCount, zoomPercent,
-}: ViewportToolbarProps) {
-  const [viewMode, setViewMode] = useState<ViewMode>('orbit');
-  const [wireframe, setWireframe] = useState(false);
-  const [xray, setXray] = useState(false);
-  const [gridVisible, setGridVisible] = useState(true);
-  const [axesVisible, setAxesVisible] = useState(true);
+export function Popover({ label, icon, children }: PopoverProps) {
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex items-center justify-center pb-3 pt-1 px-4 select-none pointer-events-none">
-      <div className="flex items-center gap-1 bg-white/70 backdrop-blur-xl border border-slate-200/50 rounded-2xl px-2 py-2 shadow-lg shadow-slate-200/50 pointer-events-auto">
-
-        {/* ── Group 1: Navigation Mode ── */}
-        <div className="flex items-center gap-0.5 pr-2 mr-2 border-r border-slate-200">
-          {viewModes.map((mode) => (
-            <button
-              key={mode.id}
-              onClick={() => setViewMode(mode.id)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium
-                transition-all duration-150
-                ${viewMode === mode.id
-                  ? 'bg-slate-900 text-white shadow-sm'
-                  : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}`}
-              title={mode.label}
+    <div className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-medium
+                   text-slate-500 hover:bg-slate-100 hover:text-slate-700
+                   transition-all duration-150"
+      >
+        {icon}
+        <span>{label}</span>
+        <ChevronDown size={10} className={open ? 'rotate-180' : ''} />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <>
+            {/* Click-outside backdrop */}
+            <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.15 }}
+              className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 z-50
+                         bg-white/90 backdrop-blur-xl border border-slate-200/50
+                         rounded-2xl shadow-lg shadow-slate-200/50 p-1.5 min-w-[140px]"
             >
-              <span className="text-sm leading-none">{mode.icon}</span>
-              <span className="hidden sm:inline">{mode.label}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* ── Group 2: View Toggles ── */}
-        <div className="flex items-center gap-0.5 pr-2 mr-2 border-r border-slate-200">
-          <Toggle icon="◫" label="Wire"   active={wireframe}   onClick={() => setWireframe(!wireframe)} />
-          <Toggle icon="◈" label="X-Ray"  active={xray}        onClick={() => setXray(!xray)}         />
-          <Toggle icon="⊞" label="Grid"   active={gridVisible}  onClick={() => setGridVisible(!gridVisible)} />
-          <Toggle icon="⊕" label="Axes"   active={axesVisible}  onClick={() => setAxesVisible(!axesVisible)} />
-        </div>
-
-        {/* ── Group 3: Camera Actions ── */}
-        <div className="flex items-center gap-0.5 pr-2 mr-2 border-r border-slate-200">
-          <Action icon="⊡" label="Fit"     shortcut="F"       onClick={onFitView}      />
-          <Action icon="↩" label="Reset"   shortcut="Ctrl+0"  onClick={onResetCamera}   />
-          <Action icon="◻" label="Capture" shortcut="Ctrl+S"  onClick={() => {}}        />
-        </div>
-
-        {/* ── Group 4: Object Actions ── */}
-        <div className="flex items-center gap-0.5">
-          <Action icon="⌫" label="Delete" shortcut="Del" onClick={onDelete} disabled={!canDelete} danger />
-        </div>
-
-        {/* ── Group 5: Info ── */}
-        <div className="flex items-center gap-3 pl-3 ml-2 border-l border-slate-200">
-          <span className="text-[11px] text-slate-400 tabular-nums">{objectCount} objects</span>
-          <span className="text-[11px] text-slate-400 tabular-nums">{triCount} tris</span>
-          <span className="text-[11px] text-slate-400 tabular-nums">{zoomPercent}%</span>
-        </div>
-
-      </div>
+              {children}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
-
-/* ── Reusable sub-components ── */
-
-function Toggle({ icon, label, active, onClick }: {
-  icon: string; label: string; active: boolean; onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      title={label}
-      className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-medium
-        transition-all duration-150
-        ${active
-          ? 'bg-blue-50 text-blue-600'
-          : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600'}`}
-    >
-      <span className="text-sm leading-none">{icon}</span>
-      <span className="hidden sm:inline">{label}</span>
-    </button>
-  );
-}
-
-function Action({ icon, label, shortcut, onClick, disabled, danger }: {
-  icon: string; label: string; shortcut: string;
-  onClick: () => void; disabled?: boolean; danger?: boolean;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      title={`${label} (${shortcut})`}
-      className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-medium
-        transition-all duration-150
-        ${danger && !disabled
-          ? 'text-red-500 hover:bg-red-50 hover:text-red-600'
-          : disabled
-            ? 'text-slate-300 cursor-default'
-            : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}`}
-    >
-      <span className="text-sm leading-none">{icon}</span>
-      <span className="hidden sm:inline">{label}</span>
-    </button>
-  );
-}
 ```
 
----
-
-## 6. Responsive Plan for Smaller Viewports
-
-The toolbar is inherently **horizontal** and can overflow on narrow screens (≤ 640px). Here is a multi-tier strategy:
-
-### Tier 1 — Label Collapse (`sm:` breakpoint, ≥ 640px)
-
-Already built in via `hidden sm:inline` on all button labels:
-
-| Width | Behavior |
-|---|---|
-| **< 640px** | Only icons are visible — buttons shrink to icon-only squares |
-| **≥ 640px** | Icon + text label shown |
-
-Result: the toolbar roughly halves in width on phones.
-
-### Tier 2 — Info Truncation (`md:` breakpoint)
-
-On very small screens, reduce or hide the info section:
-
-```html
-<span className="hidden md:inline text-[11px] text-slate-400 tabular-nums">
-  {objectCount} objects
-</span>
-```
-
-Only the most critical info (e.g. zoom %) stays visible below `md`.
-
-### Tier 3 — Overflow Scroll (fallback for < 400px)
-
-If the toolbar still overflows, wrap the inner container with horizontal scrolling:
-
-```html
-<div class="max-w-[100vw] overflow-x-auto">
-  <div class="flex items-center gap-1 ... whitespace-nowrap">
-    <!-- toolbar content -->
-  </div>
-</div>
-```
-
-Hide the scrollbar visually for a clean look:
-
-```css
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-```
-
-### Tier 4 — Collapsible Groups (extreme case, optional)
-
-Use a "more" dropdown (⋮) to hide low-priority actions behind a menu:
-
+**Usage in `BottomToolbar` (mobile):**
 ```tsx
-// A "More" button that reveals a small popover with hidden actions
-<button className="..." onClick={() => setMenuOpen(!open)}>
-  <span>⋮</span>
-</button>
-{open && (
-  <div className="absolute bottom-full mb-2 bg-white rounded-xl shadow-lg ...">
-    {/* overflow actions */}
-  </div>
-)}
+<Popover label="View" icon={<Eye size={14} />}>
+  <button onClick={...} className={...}>◼ Solid</button>
+  <button onClick={...} className={...}>◫ Wireframe</button>
+  <button onClick={...} className={...}>◈ Semi</button>
+</Popover>
 ```
 
-### Tier 5 — Alternative: Split into Top + Bottom bars
-
-For very feature-rich 3D viewers, consider two toolbars:
-
-| Position | Content |
-|---|---|
-| **Top bar** | File operations, view modes, undo/redo |
-| **Bottom bar (this pattern)** | View toggles, info, zoom controls |
-
-This splits the button count across two rows, each remaining narrow enough for mobile.
-
-### Responsive Priority Order
-
-1. **Always visible** (highest priority): navigation mode buttons (orbit/pan/select), delete
-2. **Collapse to icon-only** at `sm` breakpoint: all labels
-3. **Hide** at `md` breakpoint: verbose info text (keep zoom % or object count only)
-4. **Overflow scroll** as last resort: prevent breaking layout on tiny screens
+Everything else — mode selectors, toggles, stats — is rendered directly as `<button>` and `<span>` elements in `BottomToolbar.tsx` using the Tailwind classes from the design tokens (section 6). No intermediate abstractions.
 
 ---
 
-## 7. Summary of Key Design Tokens
+## 5. Implementation Order
+
+| Step | File(s) | Description |
+|---|---|---|
+| **1** | `viewStore.ts` | Add `navMode` (default `'orbit'`), `showStats` (default `true`), `fitViewTrigger` (default `0`), `setNavMode()`, `toggleStats()`, `triggerFitView()` |
+| **2** | `CameraControls.tsx` | Subscribe to `navMode` (swap OrbitControls mouseButtons) and `fitViewTrigger` (re-run `fitCameraToScene()`) |
+| **3** | `BottomToolbar.tsx` | Build the full component with desktop + mobile layouts |
+| **4** | `App.tsx` | Replace `ViewToolbar` + `StatusBar` imports with `BottomToolbar` |
+| **5** | *(cleanup)* | Delete `ViewToolbar.tsx`, `StatusBar.tsx` |
+| **6** | *(verify)* | Test on desktop + mobile viewports, light + dark themes |
+
+---
+
+## 6. Summary of Key Design Tokens
+
+*(Same tokens as the original toolbar.md pattern — applied everywhere)*
 
 | Token | Value |
 |---|---|
@@ -454,12 +423,30 @@ This splits the button count across two rows, each remaining narrow enough for m
 | Border | `border-slate-200/50` |
 | Radius | `rounded-2xl` (16px) |
 | Shadow | `shadow-lg shadow-slate-200/50` |
-| Active (tool) | `bg-slate-900 text-white` |
+| Active (mode selector) | `bg-slate-900 text-white shadow-sm` |
+| Inactive (mode selector) | `text-slate-500 hover:bg-slate-100 hover:text-slate-700` |
 | Active (toggle) | `bg-blue-50 text-blue-600` |
-| Inactive (tool) | `text-slate-500` |
-| Inactive (toggle) | `text-slate-400` |
-| Hover bg | `bg-slate-100` |
-| Danger | `text-red-500` |
-| Disabled | `text-slate-300` |
-| Font | Inter, 11px–14px, `font-medium` |
+| Inactive (toggle) | `text-slate-400 hover:bg-slate-100 hover:text-slate-600` |
+| Default (action) | `text-slate-500 hover:bg-slate-100 hover:text-slate-700` |
+| Danger (action) | `text-red-500 hover:bg-red-50 hover:text-red-600` |
+| Disabled | `text-slate-300 cursor-default` |
+| Font | Inter, 12px (`text-xs`), `font-medium` |
+| Stats font | 11px (`text-[11px]`), `font-mono tabular-nums` |
 | Transition | `transition-all duration-150` |
+| Popover animation | `framer-motion` fade + slide-up, 150ms |
+
+---
+
+## 7. Future Additions (not in scope now)
+
+When these features are built, add them to the toolbar:
+
+| Feature | Where it goes | Button style |
+|---|---|---|
+| **Select mode** (disable orbit on click, cursor → crosshair, click-to-select only) | Desktop: Group 1 (new mode button). Mobile: 🎯 3D dropdown. | Mode selector |
+| **Axes gizmo** toggle | Desktop: Group 3. Mobile: 🔧 Util dropdown. | Toggle |
+| **Screenshot / Export PNG** | Desktop: Group 4. Mobile: new action button. | Action |
+| **Delete selected** | Desktop: Group 4. Mobile: new action button. | Action (danger) |
+| **Undo / Redo** | Desktop: Group 4. Mobile: 🎯 3D dropdown. | Action |
+| **Measurement tool** | Desktop: Group 4. Mobile: 🎯 3D dropdown. | Toggle |
+| **FPS counter** | Stats section | Info text |

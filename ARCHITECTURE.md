@@ -1,8 +1,8 @@
-# Structure Viewer — Architecture & Code Guide
+# OpenBuilding — Architecture & Code Guide
 
-> **App:** STAAD .std 3D Model Viewer — Web-based structural analysis model viewer with Apple-inspired premium UI.
+> **App:** OpenBuilding — Web-based 3D structural model viewer with Apple-inspired premium UI.
 > **Repo:** `structure_viewer`
-> **Status:** Refactor complete — profile-polygon architecture, AISC steel registry, analysis-ready sections
+> **Status:** Refactor complete — profile-polygon architecture, AISC steel registry, unified bottom toolbar
 
 ---
 
@@ -53,8 +53,9 @@ structure_viewer/
 │   │
 │   ├── store/
 │   │   ├── modelStore.ts                # model, fileName, isLoading, error
-│   │   ├── viewStore.ts                 # displayMode, showLabels, showGrid, showSupports, theme
-│   │   └── uiStore.ts                  # selectedMemberId, selectedPlateId, hoveredMemberId
+│   │   ├── viewStore.ts                 # displayMode, navMode, showLabels, showGrid, showSupports,
+│   │   │                                #   theme, showStats, fitViewTrigger
+│   │   └── uiStore.ts                  # selectedMemberId, selectedPlateId, hoveredMemberId, showInfoPanel
 │   │
 │   ├── components/
 │   │   ├── viewer/
@@ -70,22 +71,23 @@ structure_viewer/
 │   │   │   ├── Supports.tsx             # Cone (fixed) / sphere (pinned) markers
 │   │   │   ├── Labels.tsx               # 3D node ID labels
 │   │   │   ├── Grid.tsx                 # Theme-aware ground grid
-│   │   │   ├── CameraControls.tsx       # OrbitControls with auto-fit
+│   │   │   ├── CameraControls.tsx       # OrbitControls: auto-fit, navMode mouse swap, fitView re-trigger
 │   │   │   └── Lighting.tsx             # Ambient + directional + hemisphere lights
 │   │   ├── layout/
 │   │   │   ├── MainLayout.tsx
-│   │   │   ├── TopBar.tsx
-│   │   │   └── StatusBar.tsx
+│   │   │   └── TopBar.tsx               # Logo + filename + open-file + theme toggle
 │   │   ├── upload/
 │   │   │   └── UploadOverlay.tsx        # Welcome screen / drag-drop upload
 │   │   ├── toolbar/
-│   │   │   └── ViewToolbar.tsx          # Display modes + toggles
+│   │   │   └── BottomToolbar.tsx        # ★ Unified toolbar (desktop: full spread, mobile: scrollable bar)
+│   │   │                                #   Groups: Nav Mode | Display Mode | Toggles | Fit View | Stats
 │   │   ├── panels/
 │   │   │   └── InfoPanel.tsx            # ★ Renders member.section.meta.dims — fully generic,
 │   │   │                                #   no section-family special-casing
 │   │   └── ui/
 │   │       ├── GlassPanel.tsx
-│   │       └── IconButton.tsx
+│   │       ├── IconButton.tsx
+│   │       └── Popover.tsx              # Portal-based dropdown (mobile toolbar popovers)
 │   │
 │   ├── hooks/
 │   │   ├── useFileUpload.ts
@@ -113,8 +115,8 @@ structure_viewer/
 │   └── favicon.svg
 │
 ├── sample.std                           # RC frame fixture (30 joints, 45 members, 8 supports)
-├── sample-truss-1.STD                   # Steel truss fixture (42 nodes, 81 members, 4 supports)
-├── PLAN.md                              # Project plan and scope
+├── sample-steel.STD                     # Steel truss fixture (42 nodes, 81 members, 4 supports)
+├── toolbar.md                           # Bottom toolbar design plan + design tokens
 ├── REFACTOR.md                          # ✅ All 4 phases complete — profile-polygon refactor
 └── ARCHITECTURE.md                      # ← You are here
 ```
@@ -211,17 +213,20 @@ interface SectionDim { name: string; value: number; } // value in meters
 
 ## Steel Registry
 
-`STEEL_REGISTRY` is a `Map<string, SteelSectionEntry>` built from `src/data/aisc-sections.json` at module load. 1,223 sections across 5 families:
+`STEEL_REGISTRY` is a `Map<string, SteelSectionEntry>` built from `src/data/aisc-sections.json` at module load. 1,223 sections across 6 families:
 
 | Family | Count | Variant | Profile shape |
 |---|---|---|---|
 | Wide Flange (W) | 289 | STEEL_WIDE_FLANGE | 12-pt I-shape |
 | Channel (C) | 32 | STEEL_CHANNEL | 12-pt C-shape |
-| Angle (L) | 137 | STEEL_ANGLE | 8-pt L-shape |
-| HSS Rectangular | 525 | STEEL_TUBE | 4-pt rect + 4-pt hole |
-| HSS Round / Pipe | 240 | STEEL_PIPE | 24-gon + 24-gon hole |
+| Angle (L) | 137 | STEEL_ANGLE | 6-pt L-shape |
+| HSS Rectangular | 525 | STEEL_HSS_RECT | 4-pt rect + 4-pt hole |
+| HSS Round | 189 | STEEL_HSS_ROUND | 24-gon circle + hole |
+| Pipe | 51 | STEEL_PIPE | 24-gon circle + hole |
 
 All dimensions from published AISC Steel Construction Manual v16. Area/Ix/Iy are tabulated AISC values (fillets accounted for), not polygon-computed.
+
+**Type system:** `SectionType` (full union of all section tags) is the single source of truth in `parser/types.ts`. `SteelSectionVariant` is derived via `Extract<SectionType, `STEEL_${string}`>` — stays in sync automatically.
 
 **Adding a new section:** edit `src/data/aisc-sections.json`, re-run `node scripts/convert-aisc.mjs`.
 
@@ -275,9 +280,48 @@ Adding a new section type with 10 custom dimensions requires zero InfoPanel chan
 ## Design System
 
 - **Light mode default** — `--color-bg`, `--color-text-*`, `--color-border` CSS tokens
-- **Liquid glass** — `backdrop-filter: blur + saturate` on all panels
+- **Dark mode** — `.dark` class on `<html>` toggles all tokens via `viewStore.theme`
+- **Liquid glass** — `backdrop-filter: blur(24px) saturate(180%)` on panels + toolbar
 - **Apple-inspired** — minimal chrome, smooth transitions (Framer Motion)
-- **Mobile responsive** — hamburger toolbar, bottom-sheet InfoPanel
+- **Desktop toolbar** — centered floating frosted-glass pill at bottom: 5 groups with dividers
+- **Mobile toolbar** — fixed full-width scrollable bar at bottom (TradingView-style), horizontally scrollable with hidden scrollbar; dropdowns use portal-based `Popover` menus centered in viewport
+- **InfoPanel** — desktop left slide-out (`hidden sm:block`), mobile bottom sheet (`sm:hidden`)
+
+---
+
+## UI Layout
+
+```
+┌─────────────────────────────────────────────────────┐
+│  TopBar (logo + filename + open-file + theme)       │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│                 3D Viewport                         │
+│              (absolute inset-0)                     │
+│                                                     │
+│   ┌─ InfoPanel (desktop: left slide-out)            │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│  BottomToolbar                                      │
+│  Desktop: [Orbit|Pan] [Solid|Wire|Semi] [Grid...]   │
+│  Mobile:  [3D▾] [View▾] [Util▾] [Fit] [📊] ←scroll→│
+└─────────────────────────────────────────────────────┘
+```
+
+---
+
+## ViewStore — Toggle Reference
+
+| State | Type | Default | Driven by |
+|---|---|---|---|
+| `displayMode` | `'solid' \| 'wireframe' \| 'semi'` | `'solid'` | Display Mode group |
+| `navMode` | `'orbit' \| 'pan'` | `'orbit'` | Nav Mode group (swaps OrbitControls mouseButtons) |
+| `showGrid` | `boolean` | `true` | Toggle: Grid |
+| `showLabels` | `boolean` | `false` | Toggle: Labels |
+| `showSupports` | `boolean` | `true` | Toggle: Supports |
+| `theme` | `'dark' \| 'light'` | `'light'` | TopBar theme button |
+| `showStats` | `boolean` | `true` | Toggle: Stats (📊) |
+| `fitViewTrigger` | `number` | `0` | Fit View button (increments to trigger re-fit) |
 
 ---
 

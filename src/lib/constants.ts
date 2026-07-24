@@ -1,6 +1,6 @@
 // App constants
 
-export const APP_NAME = 'Structure Viewer';
+export const APP_NAME = 'OpenBuilding';
 
 export const SUPPORTED_EXTENSIONS = ['.std'];
 // Future: ['.std', '.$et', '.e2k', '.s2k', '.sdb']
