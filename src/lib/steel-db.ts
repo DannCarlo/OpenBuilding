@@ -155,12 +155,15 @@ export function buildSteelProfile(params: BuildSteelProfileParams): {
     case 'STEEL_ANGLE': {
       const leg = dims.leg, t = dims.t;
       const h = leg / 2;
+      // 6-point L-shape: heel at bottom-left, one concave corner at (-h+t, -h+t)
       profile = {
         outer: [
-          [ h,  h], [ h,  h - t],
-          [-h + t,  h - t], [-h + t, -h],
-          [-h, -h], [-h, -h + t],
-          [ h - t, -h + t], [ h - t,  h],
+          [-h,      -h     ],  // heel bottom-left
+          [ h,      -h     ],  // bottom-right (end of horizontal leg)
+          [ h,      -h + t ],  // inner-right (top of horizontal leg)
+          [-h + t,  -h + t ],  // inner corner
+          [-h + t,   h     ],  // top inner (end of vertical leg)
+          [-h,       h     ],  // top-left outer
         ],
       };
       family = 'Angle';
