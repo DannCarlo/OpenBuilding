@@ -303,11 +303,14 @@ export function BottomToolbar() {
                 animate={{ width: 'auto', opacity: 1 }}
                 exit={{ width: 0, opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-center gap-2 overflow-hidden whitespace-nowrap"
+                className="flex items-center gap-3 overflow-hidden whitespace-nowrap"
               >
-                <DotOnly color={STAT_COLORS.nodes} value={nodeCount} />
-                <DotOnly color={STAT_COLORS.members} value={memberCount} />
-                <DotOnly color={STAT_COLORS.supports} value={supportCount} />
+                <StatDot color={STAT_COLORS.nodes} value={nodeCount} label="Nodes" />
+                <StatDot color={STAT_COLORS.members} value={memberCount} label="Members" />
+                <StatDot color={STAT_COLORS.supports} value={supportCount} label="Supports" />
+                {plateCount > 0 && (
+                  <StatDot color={STAT_COLORS.plates} value={plateCount} label="Plates" />
+                )}
               </motion.div>
             )}
           </AnimatePresence>
@@ -332,11 +335,4 @@ function StatDot({ color, value, label }: { color: string; value: number; label:
   );
 }
 
-function DotOnly({ color, value }: { color: string; value: number }) {
-  return (
-    <div className="flex items-center gap-1">
-      <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
-      <span className="text-[11px] text-slate-600 font-mono tabular-nums font-semibold">{value}</span>
-    </div>
-  );
-}
+
