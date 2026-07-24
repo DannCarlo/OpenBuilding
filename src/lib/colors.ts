@@ -23,6 +23,8 @@ export const SECTION_COLORS: Record<string, string> = {
   STEEL_CHANNEL: '#D0D0D6',
   STEEL_PIPE: '#D6D6DA',
   STEEL_TUBE: '#CCCCD2',
+  STEEL_HSS_ROUND: '#E8C44A',
+  STEEL_HSS_RECT: '#D4A843',
   STEEL_GENERIC: '#C4C4CA',
 };
 

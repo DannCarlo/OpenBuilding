@@ -43,13 +43,23 @@ export interface SectionMeta {
   iy?: number;     // m⁴  second moment about local y (strong axis)
 }
 
+// ── Section type tags ────────────────────────────────────────────────────
+
+/** Single source of truth for all section type tags (used by color lookup, legend, etc.) */
+export type SectionType =
+  | 'RECTANGULAR' | 'CIRCULAR' | 'TRAPEZOIDAL' | 'TSHAPE' | 'CUSTOM' | 'TAPERED' | 'USER' | 'UNKNOWN'
+  | 'STEEL_ANGLE' | 'STEEL_DOUBLE_ANGLE' | 'STEEL_WIDE_FLANGE' | 'STEEL_CHANNEL' | 'STEEL_PIPE' | 'STEEL_TUBE'
+  | 'STEEL_HSS_ROUND' | 'STEEL_HSS_RECT' | 'STEEL_GENERIC';
+
+/** Convenience: only the steel sub-variants (derived, stays in sync automatically). */
+export type SteelSectionVariant = Extract<SectionType, `STEEL_${string}`>;
+
 // ── Updated ParseSection ──────────────────────────────────────────────────
 
 /** Section data already normalized to format-agnostic terminology */
 export interface ParseSection {
   /** Shape family tag — used for color lookup and legend. */
-  type: 'RECTANGULAR' | 'CIRCULAR' | 'TRAPEZOIDAL' | 'TSHAPE' | 'CUSTOM' | 'TAPERED' | 'USER' | 'UNKNOWN'
-    | 'STEEL_ANGLE' | 'STEEL_DOUBLE_ANGLE' | 'STEEL_WIDE_FLANGE' | 'STEEL_CHANNEL' | 'STEEL_PIPE' | 'STEEL_TUBE' | 'STEEL_GENERIC';
+  type: SectionType;
 
   /** Cross-section polygon — the geometry source of truth. */
   profile?: SectionProfile;

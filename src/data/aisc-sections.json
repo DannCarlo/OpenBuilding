@@ -9530,7 +9530,7 @@
     },
     "HSS34X10X1": {
       "key": "HSS34X10X1",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS34×10X1",
       "dims": {
         "Ht": 0.864,
@@ -9550,7 +9550,7 @@
     },
     "HSS34X10X7/8": {
       "key": "HSS34X10X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS34×10X7/8",
       "dims": {
         "Ht": 0.864,
@@ -9570,7 +9570,7 @@
     },
     "HSS34X10X3/4": {
       "key": "HSS34X10X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS34×10X3/4",
       "dims": {
         "Ht": 0.864,
@@ -9590,7 +9590,7 @@
     },
     "HSS34X10X5/8": {
       "key": "HSS34X10X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS34×10X5/8",
       "dims": {
         "Ht": 0.864,
@@ -9610,7 +9610,7 @@
     },
     "HSS30X10X1": {
       "key": "HSS30X10X1",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS30×10X1",
       "dims": {
         "Ht": 0.762,
@@ -9630,7 +9630,7 @@
     },
     "HSS30X10X7/8": {
       "key": "HSS30X10X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS30×10X7/8",
       "dims": {
         "Ht": 0.762,
@@ -9650,7 +9650,7 @@
     },
     "HSS30X10X3/4": {
       "key": "HSS30X10X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS30×10X3/4",
       "dims": {
         "Ht": 0.762,
@@ -9670,7 +9670,7 @@
     },
     "HSS30X10X5/8": {
       "key": "HSS30X10X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS30×10X5/8",
       "dims": {
         "Ht": 0.762,
@@ -9690,7 +9690,7 @@
     },
     "HSS30X10X1/2": {
       "key": "HSS30X10X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS30×10X1/2",
       "dims": {
         "Ht": 0.762,
@@ -9710,7 +9710,7 @@
     },
     "HSS24X20X3/4": {
       "key": "HSS24X20X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×20X3/4",
       "dims": {
         "Ht": 0.61,
@@ -9730,7 +9730,7 @@
     },
     "HSS24X20X5/8": {
       "key": "HSS24X20X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×20X5/8",
       "dims": {
         "Ht": 0.61,
@@ -9750,7 +9750,7 @@
     },
     "HSS24X20X1/2": {
       "key": "HSS24X20X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×20X1/2",
       "dims": {
         "Ht": 0.61,
@@ -9770,7 +9770,7 @@
     },
     "HSS24X20X3/8": {
       "key": "HSS24X20X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×20X3/8",
       "dims": {
         "Ht": 0.61,
@@ -9790,7 +9790,7 @@
     },
     "HSS24X20X5/16": {
       "key": "HSS24X20X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×20X5/16",
       "dims": {
         "Ht": 0.61,
@@ -9810,7 +9810,7 @@
     },
     "HSS24X18X3/4": {
       "key": "HSS24X18X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×18X3/4",
       "dims": {
         "Ht": 0.61,
@@ -9830,7 +9830,7 @@
     },
     "HSS24X18X5/8": {
       "key": "HSS24X18X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×18X5/8",
       "dims": {
         "Ht": 0.61,
@@ -9850,7 +9850,7 @@
     },
     "HSS24X18X1/2": {
       "key": "HSS24X18X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×18X1/2",
       "dims": {
         "Ht": 0.61,
@@ -9870,7 +9870,7 @@
     },
     "HSS24X18X3/8": {
       "key": "HSS24X18X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×18X3/8",
       "dims": {
         "Ht": 0.61,
@@ -9890,7 +9890,7 @@
     },
     "HSS24X18X5/16": {
       "key": "HSS24X18X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×18X5/16",
       "dims": {
         "Ht": 0.61,
@@ -9910,7 +9910,7 @@
     },
     "HSS24X16X3/4": {
       "key": "HSS24X16X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×16X3/4",
       "dims": {
         "Ht": 0.61,
@@ -9930,7 +9930,7 @@
     },
     "HSS24X16X5/8": {
       "key": "HSS24X16X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×16X5/8",
       "dims": {
         "Ht": 0.61,
@@ -9950,7 +9950,7 @@
     },
     "HSS24X16X1/2": {
       "key": "HSS24X16X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×16X1/2",
       "dims": {
         "Ht": 0.61,
@@ -9970,7 +9970,7 @@
     },
     "HSS24X16X3/8": {
       "key": "HSS24X16X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×16X3/8",
       "dims": {
         "Ht": 0.61,
@@ -9990,7 +9990,7 @@
     },
     "HSS24X16X5/16": {
       "key": "HSS24X16X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×16X5/16",
       "dims": {
         "Ht": 0.61,
@@ -10010,7 +10010,7 @@
     },
     "HSS24X14X3/4": {
       "key": "HSS24X14X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×14X3/4",
       "dims": {
         "Ht": 0.61,
@@ -10030,7 +10030,7 @@
     },
     "HSS24X14X5/8": {
       "key": "HSS24X14X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×14X5/8",
       "dims": {
         "Ht": 0.61,
@@ -10050,7 +10050,7 @@
     },
     "HSS24X14X1/2": {
       "key": "HSS24X14X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×14X1/2",
       "dims": {
         "Ht": 0.61,
@@ -10070,7 +10070,7 @@
     },
     "HSS24X14X3/8": {
       "key": "HSS24X14X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×14X3/8",
       "dims": {
         "Ht": 0.61,
@@ -10090,7 +10090,7 @@
     },
     "HSS24X14X5/16": {
       "key": "HSS24X14X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×14X5/16",
       "dims": {
         "Ht": 0.61,
@@ -10110,7 +10110,7 @@
     },
     "HSS24X14X1/4": {
       "key": "HSS24X14X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×14X1/4",
       "dims": {
         "Ht": 0.61,
@@ -10130,7 +10130,7 @@
     },
     "HSS24X12X1": {
       "key": "HSS24X12X1",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×12X1",
       "dims": {
         "Ht": 0.61,
@@ -10150,7 +10150,7 @@
     },
     "HSS24X12X7/8": {
       "key": "HSS24X12X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×12X7/8",
       "dims": {
         "Ht": 0.61,
@@ -10170,7 +10170,7 @@
     },
     "HSS24X12X3/4": {
       "key": "HSS24X12X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×12X3/4",
       "dims": {
         "Ht": 0.61,
@@ -10190,7 +10190,7 @@
     },
     "HSS24X12X5/8": {
       "key": "HSS24X12X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×12X5/8",
       "dims": {
         "Ht": 0.61,
@@ -10210,7 +10210,7 @@
     },
     "HSS24X12X1/2": {
       "key": "HSS24X12X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×12X1/2",
       "dims": {
         "Ht": 0.61,
@@ -10230,7 +10230,7 @@
     },
     "HSS24X12X3/8": {
       "key": "HSS24X12X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×12X3/8",
       "dims": {
         "Ht": 0.61,
@@ -10250,7 +10250,7 @@
     },
     "HSS24X12X5/16": {
       "key": "HSS24X12X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×12X5/16",
       "dims": {
         "Ht": 0.61,
@@ -10270,7 +10270,7 @@
     },
     "HSS24X12X1/4": {
       "key": "HSS24X12X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×12X1/4",
       "dims": {
         "Ht": 0.61,
@@ -10290,7 +10290,7 @@
     },
     "HSS24X8X1/2": {
       "key": "HSS24X8X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×8X1/2",
       "dims": {
         "Ht": 0.61,
@@ -10310,7 +10310,7 @@
     },
     "HSS24X8X3/8": {
       "key": "HSS24X8X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×8X3/8",
       "dims": {
         "Ht": 0.61,
@@ -10330,7 +10330,7 @@
     },
     "HSS24X8X5/16": {
       "key": "HSS24X8X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×8X5/16",
       "dims": {
         "Ht": 0.61,
@@ -10350,7 +10350,7 @@
     },
     "HSS24X8X1/4": {
       "key": "HSS24X8X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS24×8X1/4",
       "dims": {
         "Ht": 0.61,
@@ -10370,7 +10370,7 @@
     },
     "HSS22X22X1": {
       "key": "HSS22X22X1",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×22X1",
       "dims": {
         "Ht": 0.559,
@@ -10390,7 +10390,7 @@
     },
     "HSS22X22X7/8": {
       "key": "HSS22X22X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×22X7/8",
       "dims": {
         "Ht": 0.559,
@@ -10410,7 +10410,7 @@
     },
     "HSS22X22X3/4": {
       "key": "HSS22X22X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×22X3/4",
       "dims": {
         "Ht": 0.559,
@@ -10430,7 +10430,7 @@
     },
     "HSS22X22X5/8": {
       "key": "HSS22X22X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×22X5/8",
       "dims": {
         "Ht": 0.559,
@@ -10450,7 +10450,7 @@
     },
     "HSS22X22X1/2": {
       "key": "HSS22X22X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×22X1/2",
       "dims": {
         "Ht": 0.559,
@@ -10470,7 +10470,7 @@
     },
     "HSS22X20X3/4": {
       "key": "HSS22X20X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×20X3/4",
       "dims": {
         "Ht": 0.559,
@@ -10490,7 +10490,7 @@
     },
     "HSS22X20X5/8": {
       "key": "HSS22X20X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×20X5/8",
       "dims": {
         "Ht": 0.559,
@@ -10510,7 +10510,7 @@
     },
     "HSS22X20X1/2": {
       "key": "HSS22X20X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×20X1/2",
       "dims": {
         "Ht": 0.559,
@@ -10530,7 +10530,7 @@
     },
     "HSS22X20X3/8": {
       "key": "HSS22X20X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×20X3/8",
       "dims": {
         "Ht": 0.559,
@@ -10550,7 +10550,7 @@
     },
     "HSS22X20X5/16": {
       "key": "HSS22X20X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×20X5/16",
       "dims": {
         "Ht": 0.559,
@@ -10570,7 +10570,7 @@
     },
     "HSS22X18X3/4": {
       "key": "HSS22X18X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×18X3/4",
       "dims": {
         "Ht": 0.559,
@@ -10590,7 +10590,7 @@
     },
     "HSS22X18X5/8": {
       "key": "HSS22X18X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×18X5/8",
       "dims": {
         "Ht": 0.559,
@@ -10610,7 +10610,7 @@
     },
     "HSS22X18X1/2": {
       "key": "HSS22X18X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×18X1/2",
       "dims": {
         "Ht": 0.559,
@@ -10630,7 +10630,7 @@
     },
     "HSS22X18X3/8": {
       "key": "HSS22X18X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×18X3/8",
       "dims": {
         "Ht": 0.559,
@@ -10650,7 +10650,7 @@
     },
     "HSS22X18X5/16": {
       "key": "HSS22X18X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×18X5/16",
       "dims": {
         "Ht": 0.559,
@@ -10670,7 +10670,7 @@
     },
     "HSS22X16X3/4": {
       "key": "HSS22X16X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×16X3/4",
       "dims": {
         "Ht": 0.559,
@@ -10690,7 +10690,7 @@
     },
     "HSS22X16X5/8": {
       "key": "HSS22X16X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×16X5/8",
       "dims": {
         "Ht": 0.559,
@@ -10710,7 +10710,7 @@
     },
     "HSS22X16X1/2": {
       "key": "HSS22X16X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×16X1/2",
       "dims": {
         "Ht": 0.559,
@@ -10730,7 +10730,7 @@
     },
     "HSS22X16X3/8": {
       "key": "HSS22X16X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×16X3/8",
       "dims": {
         "Ht": 0.559,
@@ -10750,7 +10750,7 @@
     },
     "HSS22X16X5/16": {
       "key": "HSS22X16X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×16X5/16",
       "dims": {
         "Ht": 0.559,
@@ -10770,7 +10770,7 @@
     },
     "HSS22X16X1/4": {
       "key": "HSS22X16X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×16X1/4",
       "dims": {
         "Ht": 0.559,
@@ -10790,7 +10790,7 @@
     },
     "HSS22X14X3/4": {
       "key": "HSS22X14X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×14X3/4",
       "dims": {
         "Ht": 0.559,
@@ -10810,7 +10810,7 @@
     },
     "HSS22X14X5/8": {
       "key": "HSS22X14X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×14X5/8",
       "dims": {
         "Ht": 0.559,
@@ -10830,7 +10830,7 @@
     },
     "HSS22X14X1/2": {
       "key": "HSS22X14X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×14X1/2",
       "dims": {
         "Ht": 0.559,
@@ -10850,7 +10850,7 @@
     },
     "HSS22X14X3/8": {
       "key": "HSS22X14X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×14X3/8",
       "dims": {
         "Ht": 0.559,
@@ -10870,7 +10870,7 @@
     },
     "HSS22X14X5/16": {
       "key": "HSS22X14X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×14X5/16",
       "dims": {
         "Ht": 0.559,
@@ -10890,7 +10890,7 @@
     },
     "HSS22X14X1/4": {
       "key": "HSS22X14X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×14X1/4",
       "dims": {
         "Ht": 0.559,
@@ -10910,7 +10910,7 @@
     },
     "HSS22X10X5/8": {
       "key": "HSS22X10X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×10X5/8",
       "dims": {
         "Ht": 0.559,
@@ -10930,7 +10930,7 @@
     },
     "HSS22X10X1/2": {
       "key": "HSS22X10X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×10X1/2",
       "dims": {
         "Ht": 0.559,
@@ -10950,7 +10950,7 @@
     },
     "HSS22X10X3/8": {
       "key": "HSS22X10X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×10X3/8",
       "dims": {
         "Ht": 0.559,
@@ -10970,7 +10970,7 @@
     },
     "HSS22X10X5/16": {
       "key": "HSS22X10X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×10X5/16",
       "dims": {
         "Ht": 0.559,
@@ -10990,7 +10990,7 @@
     },
     "HSS22X10X1/4": {
       "key": "HSS22X10X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS22×10X1/4",
       "dims": {
         "Ht": 0.559,
@@ -11010,7 +11010,7 @@
     },
     "HSS20X20X1": {
       "key": "HSS20X20X1",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×20X1",
       "dims": {
         "Ht": 0.508,
@@ -11030,7 +11030,7 @@
     },
     "HSS20X20X7/8": {
       "key": "HSS20X20X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×20X7/8",
       "dims": {
         "Ht": 0.508,
@@ -11050,7 +11050,7 @@
     },
     "HSS20X20X3/4": {
       "key": "HSS20X20X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×20X3/4",
       "dims": {
         "Ht": 0.508,
@@ -11070,7 +11070,7 @@
     },
     "HSS20X20X5/8": {
       "key": "HSS20X20X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×20X5/8",
       "dims": {
         "Ht": 0.508,
@@ -11090,7 +11090,7 @@
     },
     "HSS20X20X1/2": {
       "key": "HSS20X20X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×20X1/2",
       "dims": {
         "Ht": 0.508,
@@ -11110,7 +11110,7 @@
     },
     "HSS20X20X3/8": {
       "key": "HSS20X20X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×20X3/8",
       "dims": {
         "Ht": 0.508,
@@ -11130,7 +11130,7 @@
     },
     "HSS20X20X5/16": {
       "key": "HSS20X20X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×20X5/16",
       "dims": {
         "Ht": 0.508,
@@ -11150,7 +11150,7 @@
     },
     "HSS20X16X3/4": {
       "key": "HSS20X16X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×16X3/4",
       "dims": {
         "Ht": 0.508,
@@ -11170,7 +11170,7 @@
     },
     "HSS20X16X5/8": {
       "key": "HSS20X16X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×16X5/8",
       "dims": {
         "Ht": 0.508,
@@ -11190,7 +11190,7 @@
     },
     "HSS20X16X1/2": {
       "key": "HSS20X16X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×16X1/2",
       "dims": {
         "Ht": 0.508,
@@ -11210,7 +11210,7 @@
     },
     "HSS20X16X3/8": {
       "key": "HSS20X16X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×16X3/8",
       "dims": {
         "Ht": 0.508,
@@ -11230,7 +11230,7 @@
     },
     "HSS20X16X5/16": {
       "key": "HSS20X16X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×16X5/16",
       "dims": {
         "Ht": 0.508,
@@ -11250,7 +11250,7 @@
     },
     "HSS20X16X1/4": {
       "key": "HSS20X16X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×16X1/4",
       "dims": {
         "Ht": 0.508,
@@ -11270,7 +11270,7 @@
     },
     "HSS20X12X1": {
       "key": "HSS20X12X1",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×12X1",
       "dims": {
         "Ht": 0.508,
@@ -11290,7 +11290,7 @@
     },
     "HSS20X12X7/8": {
       "key": "HSS20X12X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×12X7/8",
       "dims": {
         "Ht": 0.508,
@@ -11310,7 +11310,7 @@
     },
     "HSS20X12X3/4": {
       "key": "HSS20X12X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×12X3/4",
       "dims": {
         "Ht": 0.508,
@@ -11330,7 +11330,7 @@
     },
     "HSS20X12X5/8": {
       "key": "HSS20X12X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×12X5/8",
       "dims": {
         "Ht": 0.508,
@@ -11350,7 +11350,7 @@
     },
     "HSS20X12X1/2": {
       "key": "HSS20X12X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×12X1/2",
       "dims": {
         "Ht": 0.508,
@@ -11370,7 +11370,7 @@
     },
     "HSS20X12X3/8": {
       "key": "HSS20X12X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×12X3/8",
       "dims": {
         "Ht": 0.508,
@@ -11390,7 +11390,7 @@
     },
     "HSS20X12X5/16": {
       "key": "HSS20X12X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×12X5/16",
       "dims": {
         "Ht": 0.508,
@@ -11410,7 +11410,7 @@
     },
     "HSS20X8X1": {
       "key": "HSS20X8X1",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×8X1",
       "dims": {
         "Ht": 0.508,
@@ -11430,7 +11430,7 @@
     },
     "HSS20X8X7/8": {
       "key": "HSS20X8X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×8X7/8",
       "dims": {
         "Ht": 0.508,
@@ -11450,7 +11450,7 @@
     },
     "HSS20X8X3/4": {
       "key": "HSS20X8X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×8X3/4",
       "dims": {
         "Ht": 0.508,
@@ -11470,7 +11470,7 @@
     },
     "HSS20X8X5/8": {
       "key": "HSS20X8X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×8X5/8",
       "dims": {
         "Ht": 0.508,
@@ -11490,7 +11490,7 @@
     },
     "HSS20X8X1/2": {
       "key": "HSS20X8X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×8X1/2",
       "dims": {
         "Ht": 0.508,
@@ -11510,7 +11510,7 @@
     },
     "HSS20X8X3/8": {
       "key": "HSS20X8X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×8X3/8",
       "dims": {
         "Ht": 0.508,
@@ -11530,7 +11530,7 @@
     },
     "HSS20X8X5/16": {
       "key": "HSS20X8X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×8X5/16",
       "dims": {
         "Ht": 0.508,
@@ -11550,7 +11550,7 @@
     },
     "HSS20X6X5/8": {
       "key": "HSS20X6X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×6X5/8",
       "dims": {
         "Ht": 0.508,
@@ -11570,7 +11570,7 @@
     },
     "HSS20X6X1/2": {
       "key": "HSS20X6X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×6X1/2",
       "dims": {
         "Ht": 0.508,
@@ -11590,7 +11590,7 @@
     },
     "HSS20X6X3/8": {
       "key": "HSS20X6X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×6X3/8",
       "dims": {
         "Ht": 0.508,
@@ -11610,7 +11610,7 @@
     },
     "HSS20X6X5/16": {
       "key": "HSS20X6X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×6X5/16",
       "dims": {
         "Ht": 0.508,
@@ -11630,7 +11630,7 @@
     },
     "HSS20X6X1/4": {
       "key": "HSS20X6X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×6X1/4",
       "dims": {
         "Ht": 0.508,
@@ -11650,7 +11650,7 @@
     },
     "HSS20X4X1/2": {
       "key": "HSS20X4X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×4X1/2",
       "dims": {
         "Ht": 0.508,
@@ -11670,7 +11670,7 @@
     },
     "HSS20X4X3/8": {
       "key": "HSS20X4X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×4X3/8",
       "dims": {
         "Ht": 0.508,
@@ -11690,7 +11690,7 @@
     },
     "HSS20X4X5/16": {
       "key": "HSS20X4X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×4X5/16",
       "dims": {
         "Ht": 0.508,
@@ -11710,7 +11710,7 @@
     },
     "HSS20X4X1/4": {
       "key": "HSS20X4X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS20×4X1/4",
       "dims": {
         "Ht": 0.508,
@@ -11730,7 +11730,7 @@
     },
     "HSS18X18X1": {
       "key": "HSS18X18X1",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×18X1",
       "dims": {
         "Ht": 0.457,
@@ -11750,7 +11750,7 @@
     },
     "HSS18X18X7/8": {
       "key": "HSS18X18X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×18X7/8",
       "dims": {
         "Ht": 0.457,
@@ -11770,7 +11770,7 @@
     },
     "HSS18X18X3/4": {
       "key": "HSS18X18X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×18X3/4",
       "dims": {
         "Ht": 0.457,
@@ -11790,7 +11790,7 @@
     },
     "HSS18X18X5/8": {
       "key": "HSS18X18X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×18X5/8",
       "dims": {
         "Ht": 0.457,
@@ -11810,7 +11810,7 @@
     },
     "HSS18X18X1/2": {
       "key": "HSS18X18X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×18X1/2",
       "dims": {
         "Ht": 0.457,
@@ -11830,7 +11830,7 @@
     },
     "HSS18X18X3/8": {
       "key": "HSS18X18X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×18X3/8",
       "dims": {
         "Ht": 0.457,
@@ -11850,7 +11850,7 @@
     },
     "HSS18X18X5/16": {
       "key": "HSS18X18X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×18X5/16",
       "dims": {
         "Ht": 0.457,
@@ -11870,7 +11870,7 @@
     },
     "HSS18X18X1/4": {
       "key": "HSS18X18X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×18X1/4",
       "dims": {
         "Ht": 0.457,
@@ -11890,7 +11890,7 @@
     },
     "HSS18X10X5/8": {
       "key": "HSS18X10X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×10X5/8",
       "dims": {
         "Ht": 0.457,
@@ -11910,7 +11910,7 @@
     },
     "HSS18X10X1/2": {
       "key": "HSS18X10X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×10X1/2",
       "dims": {
         "Ht": 0.457,
@@ -11930,7 +11930,7 @@
     },
     "HSS18X10X3/8": {
       "key": "HSS18X10X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×10X3/8",
       "dims": {
         "Ht": 0.457,
@@ -11950,7 +11950,7 @@
     },
     "HSS18X10X5/16": {
       "key": "HSS18X10X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×10X5/16",
       "dims": {
         "Ht": 0.457,
@@ -11970,7 +11970,7 @@
     },
     "HSS18X10X1/4": {
       "key": "HSS18X10X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×10X1/4",
       "dims": {
         "Ht": 0.457,
@@ -11990,7 +11990,7 @@
     },
     "HSS18X8X5/8": {
       "key": "HSS18X8X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×8X5/8",
       "dims": {
         "Ht": 0.457,
@@ -12010,7 +12010,7 @@
     },
     "HSS18X8X1/2": {
       "key": "HSS18X8X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×8X1/2",
       "dims": {
         "Ht": 0.457,
@@ -12030,7 +12030,7 @@
     },
     "HSS18X8X3/8": {
       "key": "HSS18X8X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×8X3/8",
       "dims": {
         "Ht": 0.457,
@@ -12050,7 +12050,7 @@
     },
     "HSS18X8X5/16": {
       "key": "HSS18X8X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×8X5/16",
       "dims": {
         "Ht": 0.457,
@@ -12070,7 +12070,7 @@
     },
     "HSS18X8X1/4": {
       "key": "HSS18X8X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×8X1/4",
       "dims": {
         "Ht": 0.457,
@@ -12090,7 +12090,7 @@
     },
     "HSS18X6X3/4": {
       "key": "HSS18X6X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×6X3/4",
       "dims": {
         "Ht": 0.457,
@@ -12110,7 +12110,7 @@
     },
     "HSS18X6X5/8": {
       "key": "HSS18X6X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×6X5/8",
       "dims": {
         "Ht": 0.457,
@@ -12130,7 +12130,7 @@
     },
     "HSS18X6X1/2": {
       "key": "HSS18X6X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×6X1/2",
       "dims": {
         "Ht": 0.457,
@@ -12150,7 +12150,7 @@
     },
     "HSS18X6X3/8": {
       "key": "HSS18X6X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×6X3/8",
       "dims": {
         "Ht": 0.457,
@@ -12170,7 +12170,7 @@
     },
     "HSS18X6X5/16": {
       "key": "HSS18X6X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×6X5/16",
       "dims": {
         "Ht": 0.457,
@@ -12190,7 +12190,7 @@
     },
     "HSS18X6X1/4": {
       "key": "HSS18X6X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS18×6X1/4",
       "dims": {
         "Ht": 0.457,
@@ -12210,7 +12210,7 @@
     },
     "HSS16X16X1": {
       "key": "HSS16X16X1",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×16X1",
       "dims": {
         "Ht": 0.406,
@@ -12230,7 +12230,7 @@
     },
     "HSS16X16X7/8": {
       "key": "HSS16X16X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×16X7/8",
       "dims": {
         "Ht": 0.406,
@@ -12250,7 +12250,7 @@
     },
     "HSS16X16X3/4": {
       "key": "HSS16X16X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×16X3/4",
       "dims": {
         "Ht": 0.406,
@@ -12270,7 +12270,7 @@
     },
     "HSS16X16X5/8": {
       "key": "HSS16X16X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×16X5/8",
       "dims": {
         "Ht": 0.406,
@@ -12290,7 +12290,7 @@
     },
     "HSS16X16X1/2": {
       "key": "HSS16X16X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×16X1/2",
       "dims": {
         "Ht": 0.406,
@@ -12310,7 +12310,7 @@
     },
     "HSS16X16X3/8": {
       "key": "HSS16X16X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×16X3/8",
       "dims": {
         "Ht": 0.406,
@@ -12330,7 +12330,7 @@
     },
     "HSS16X16X5/16": {
       "key": "HSS16X16X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×16X5/16",
       "dims": {
         "Ht": 0.406,
@@ -12350,7 +12350,7 @@
     },
     "HSS16X16X1/4": {
       "key": "HSS16X16X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×16X1/4",
       "dims": {
         "Ht": 0.406,
@@ -12370,7 +12370,7 @@
     },
     "HSS16X12X1": {
       "key": "HSS16X12X1",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×12X1",
       "dims": {
         "Ht": 0.406,
@@ -12390,7 +12390,7 @@
     },
     "HSS16X12X7/8": {
       "key": "HSS16X12X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×12X7/8",
       "dims": {
         "Ht": 0.406,
@@ -12410,7 +12410,7 @@
     },
     "HSS16X12X3/4": {
       "key": "HSS16X12X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×12X3/4",
       "dims": {
         "Ht": 0.406,
@@ -12430,7 +12430,7 @@
     },
     "HSS16X12X5/8": {
       "key": "HSS16X12X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×12X5/8",
       "dims": {
         "Ht": 0.406,
@@ -12450,7 +12450,7 @@
     },
     "HSS16X12X1/2": {
       "key": "HSS16X12X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×12X1/2",
       "dims": {
         "Ht": 0.406,
@@ -12470,7 +12470,7 @@
     },
     "HSS16X12X3/8": {
       "key": "HSS16X12X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×12X3/8",
       "dims": {
         "Ht": 0.406,
@@ -12490,7 +12490,7 @@
     },
     "HSS16X12X5/16": {
       "key": "HSS16X12X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×12X5/16",
       "dims": {
         "Ht": 0.406,
@@ -12510,7 +12510,7 @@
     },
     "HSS16X10X5/8": {
       "key": "HSS16X10X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×10X5/8",
       "dims": {
         "Ht": 0.406,
@@ -12530,7 +12530,7 @@
     },
     "HSS16X10X1/2": {
       "key": "HSS16X10X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×10X1/2",
       "dims": {
         "Ht": 0.406,
@@ -12550,7 +12550,7 @@
     },
     "HSS16X10X3/8": {
       "key": "HSS16X10X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×10X3/8",
       "dims": {
         "Ht": 0.406,
@@ -12570,7 +12570,7 @@
     },
     "HSS16X10X5/16": {
       "key": "HSS16X10X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×10X5/16",
       "dims": {
         "Ht": 0.406,
@@ -12590,7 +12590,7 @@
     },
     "HSS16X10X1/4": {
       "key": "HSS16X10X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×10X1/4",
       "dims": {
         "Ht": 0.406,
@@ -12610,7 +12610,7 @@
     },
     "HSS16X8X7/8": {
       "key": "HSS16X8X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×8X7/8",
       "dims": {
         "Ht": 0.406,
@@ -12630,7 +12630,7 @@
     },
     "HSS16X8X3/4": {
       "key": "HSS16X8X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×8X3/4",
       "dims": {
         "Ht": 0.406,
@@ -12650,7 +12650,7 @@
     },
     "HSS16X8X5/8": {
       "key": "HSS16X8X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×8X5/8",
       "dims": {
         "Ht": 0.406,
@@ -12670,7 +12670,7 @@
     },
     "HSS16X8X1/2": {
       "key": "HSS16X8X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×8X1/2",
       "dims": {
         "Ht": 0.406,
@@ -12690,7 +12690,7 @@
     },
     "HSS16X8X3/8": {
       "key": "HSS16X8X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×8X3/8",
       "dims": {
         "Ht": 0.406,
@@ -12710,7 +12710,7 @@
     },
     "HSS16X8X5/16": {
       "key": "HSS16X8X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×8X5/16",
       "dims": {
         "Ht": 0.406,
@@ -12730,7 +12730,7 @@
     },
     "HSS16X8X1/4": {
       "key": "HSS16X8X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×8X1/4",
       "dims": {
         "Ht": 0.406,
@@ -12750,7 +12750,7 @@
     },
     "HSS16X6X5/8": {
       "key": "HSS16X6X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×6X5/8",
       "dims": {
         "Ht": 0.406,
@@ -12770,7 +12770,7 @@
     },
     "HSS16X6X1/2": {
       "key": "HSS16X6X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×6X1/2",
       "dims": {
         "Ht": 0.406,
@@ -12790,7 +12790,7 @@
     },
     "HSS16X6X3/8": {
       "key": "HSS16X6X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×6X3/8",
       "dims": {
         "Ht": 0.406,
@@ -12810,7 +12810,7 @@
     },
     "HSS16X6X5/16": {
       "key": "HSS16X6X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×6X5/16",
       "dims": {
         "Ht": 0.406,
@@ -12830,7 +12830,7 @@
     },
     "HSS16X6X1/4": {
       "key": "HSS16X6X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×6X1/4",
       "dims": {
         "Ht": 0.406,
@@ -12850,7 +12850,7 @@
     },
     "HSS16X6X3/16": {
       "key": "HSS16X6X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×6X3/16",
       "dims": {
         "Ht": 0.406,
@@ -12870,7 +12870,7 @@
     },
     "HSS16X4X5/8": {
       "key": "HSS16X4X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×4X5/8",
       "dims": {
         "Ht": 0.406,
@@ -12890,7 +12890,7 @@
     },
     "HSS16X4X1/2": {
       "key": "HSS16X4X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×4X1/2",
       "dims": {
         "Ht": 0.406,
@@ -12910,7 +12910,7 @@
     },
     "HSS16X4X3/8": {
       "key": "HSS16X4X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×4X3/8",
       "dims": {
         "Ht": 0.406,
@@ -12930,7 +12930,7 @@
     },
     "HSS16X4X5/16": {
       "key": "HSS16X4X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×4X5/16",
       "dims": {
         "Ht": 0.406,
@@ -12950,7 +12950,7 @@
     },
     "HSS16X4X1/4": {
       "key": "HSS16X4X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×4X1/4",
       "dims": {
         "Ht": 0.406,
@@ -12970,7 +12970,7 @@
     },
     "HSS16X4X3/16": {
       "key": "HSS16X4X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS16×4X3/16",
       "dims": {
         "Ht": 0.406,
@@ -12990,7 +12990,7 @@
     },
     "HSS14X14X1": {
       "key": "HSS14X14X1",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×14X1",
       "dims": {
         "Ht": 0.356,
@@ -13010,7 +13010,7 @@
     },
     "HSS14X14X7/8": {
       "key": "HSS14X14X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×14X7/8",
       "dims": {
         "Ht": 0.356,
@@ -13030,7 +13030,7 @@
     },
     "HSS14X14X3/4": {
       "key": "HSS14X14X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×14X3/4",
       "dims": {
         "Ht": 0.356,
@@ -13050,7 +13050,7 @@
     },
     "HSS14X14X5/8": {
       "key": "HSS14X14X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×14X5/8",
       "dims": {
         "Ht": 0.356,
@@ -13070,7 +13070,7 @@
     },
     "HSS14X14X1/2": {
       "key": "HSS14X14X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×14X1/2",
       "dims": {
         "Ht": 0.356,
@@ -13090,7 +13090,7 @@
     },
     "HSS14X14X3/8": {
       "key": "HSS14X14X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×14X3/8",
       "dims": {
         "Ht": 0.356,
@@ -13110,7 +13110,7 @@
     },
     "HSS14X14X5/16": {
       "key": "HSS14X14X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×14X5/16",
       "dims": {
         "Ht": 0.356,
@@ -13130,7 +13130,7 @@
     },
     "HSS14X14X1/4": {
       "key": "HSS14X14X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×14X1/4",
       "dims": {
         "Ht": 0.356,
@@ -13150,7 +13150,7 @@
     },
     "HSS14X12X5/8": {
       "key": "HSS14X12X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×12X5/8",
       "dims": {
         "Ht": 0.356,
@@ -13170,7 +13170,7 @@
     },
     "HSS14X12X1/2": {
       "key": "HSS14X12X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×12X1/2",
       "dims": {
         "Ht": 0.356,
@@ -13190,7 +13190,7 @@
     },
     "HSS14X12X3/8": {
       "key": "HSS14X12X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×12X3/8",
       "dims": {
         "Ht": 0.356,
@@ -13210,7 +13210,7 @@
     },
     "HSS14X12X5/16": {
       "key": "HSS14X12X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×12X5/16",
       "dims": {
         "Ht": 0.356,
@@ -13230,7 +13230,7 @@
     },
     "HSS14X12X1/4": {
       "key": "HSS14X12X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×12X1/4",
       "dims": {
         "Ht": 0.356,
@@ -13250,7 +13250,7 @@
     },
     "HSS14X10X7/8": {
       "key": "HSS14X10X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×10X7/8",
       "dims": {
         "Ht": 0.356,
@@ -13270,7 +13270,7 @@
     },
     "HSS14X10X3/4": {
       "key": "HSS14X10X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×10X3/4",
       "dims": {
         "Ht": 0.356,
@@ -13290,7 +13290,7 @@
     },
     "HSS14X10X5/8": {
       "key": "HSS14X10X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×10X5/8",
       "dims": {
         "Ht": 0.356,
@@ -13310,7 +13310,7 @@
     },
     "HSS14X10X1/2": {
       "key": "HSS14X10X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×10X1/2",
       "dims": {
         "Ht": 0.356,
@@ -13330,7 +13330,7 @@
     },
     "HSS14X10X3/8": {
       "key": "HSS14X10X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×10X3/8",
       "dims": {
         "Ht": 0.356,
@@ -13350,7 +13350,7 @@
     },
     "HSS14X10X5/16": {
       "key": "HSS14X10X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×10X5/16",
       "dims": {
         "Ht": 0.356,
@@ -13370,7 +13370,7 @@
     },
     "HSS14X10X1/4": {
       "key": "HSS14X10X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×10X1/4",
       "dims": {
         "Ht": 0.356,
@@ -13390,7 +13390,7 @@
     },
     "HSS14X8X5/8": {
       "key": "HSS14X8X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×8X5/8",
       "dims": {
         "Ht": 0.356,
@@ -13410,7 +13410,7 @@
     },
     "HSS14X8X1/2": {
       "key": "HSS14X8X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×8X1/2",
       "dims": {
         "Ht": 0.356,
@@ -13430,7 +13430,7 @@
     },
     "HSS14X8X3/8": {
       "key": "HSS14X8X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×8X3/8",
       "dims": {
         "Ht": 0.356,
@@ -13450,7 +13450,7 @@
     },
     "HSS14X8X5/16": {
       "key": "HSS14X8X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×8X5/16",
       "dims": {
         "Ht": 0.356,
@@ -13470,7 +13470,7 @@
     },
     "HSS14X8X1/4": {
       "key": "HSS14X8X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×8X1/4",
       "dims": {
         "Ht": 0.356,
@@ -13490,7 +13490,7 @@
     },
     "HSS14X8X3/16": {
       "key": "HSS14X8X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×8X3/16",
       "dims": {
         "Ht": 0.356,
@@ -13510,7 +13510,7 @@
     },
     "HSS14X6X5/8": {
       "key": "HSS14X6X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×6X5/8",
       "dims": {
         "Ht": 0.356,
@@ -13530,7 +13530,7 @@
     },
     "HSS14X6X1/2": {
       "key": "HSS14X6X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×6X1/2",
       "dims": {
         "Ht": 0.356,
@@ -13550,7 +13550,7 @@
     },
     "HSS14X6X3/8": {
       "key": "HSS14X6X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×6X3/8",
       "dims": {
         "Ht": 0.356,
@@ -13570,7 +13570,7 @@
     },
     "HSS14X6X5/16": {
       "key": "HSS14X6X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×6X5/16",
       "dims": {
         "Ht": 0.356,
@@ -13590,7 +13590,7 @@
     },
     "HSS14X6X1/4": {
       "key": "HSS14X6X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×6X1/4",
       "dims": {
         "Ht": 0.356,
@@ -13610,7 +13610,7 @@
     },
     "HSS14X6X3/16": {
       "key": "HSS14X6X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×6X3/16",
       "dims": {
         "Ht": 0.356,
@@ -13630,7 +13630,7 @@
     },
     "HSS14X4X5/8": {
       "key": "HSS14X4X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×4X5/8",
       "dims": {
         "Ht": 0.356,
@@ -13650,7 +13650,7 @@
     },
     "HSS14X4X1/2": {
       "key": "HSS14X4X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×4X1/2",
       "dims": {
         "Ht": 0.356,
@@ -13670,7 +13670,7 @@
     },
     "HSS14X4X3/8": {
       "key": "HSS14X4X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×4X3/8",
       "dims": {
         "Ht": 0.356,
@@ -13690,7 +13690,7 @@
     },
     "HSS14X4X5/16": {
       "key": "HSS14X4X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×4X5/16",
       "dims": {
         "Ht": 0.356,
@@ -13710,7 +13710,7 @@
     },
     "HSS14X4X1/4": {
       "key": "HSS14X4X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×4X1/4",
       "dims": {
         "Ht": 0.356,
@@ -13730,7 +13730,7 @@
     },
     "HSS14X4X3/16": {
       "key": "HSS14X4X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS14×4X3/16",
       "dims": {
         "Ht": 0.356,
@@ -13750,7 +13750,7 @@
     },
     "HSS12X12X1": {
       "key": "HSS12X12X1",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×12X1",
       "dims": {
         "Ht": 0.305,
@@ -13770,7 +13770,7 @@
     },
     "HSS12X12X7/8": {
       "key": "HSS12X12X7/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×12X7/8",
       "dims": {
         "Ht": 0.305,
@@ -13790,7 +13790,7 @@
     },
     "HSS12X12X3/4": {
       "key": "HSS12X12X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×12X3/4",
       "dims": {
         "Ht": 0.305,
@@ -13810,7 +13810,7 @@
     },
     "HSS12X12X5/8": {
       "key": "HSS12X12X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×12X5/8",
       "dims": {
         "Ht": 0.305,
@@ -13830,7 +13830,7 @@
     },
     "HSS12X12X1/2": {
       "key": "HSS12X12X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×12X1/2",
       "dims": {
         "Ht": 0.305,
@@ -13850,7 +13850,7 @@
     },
     "HSS12X12X3/8": {
       "key": "HSS12X12X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×12X3/8",
       "dims": {
         "Ht": 0.305,
@@ -13870,7 +13870,7 @@
     },
     "HSS12X12X5/16": {
       "key": "HSS12X12X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×12X5/16",
       "dims": {
         "Ht": 0.305,
@@ -13890,7 +13890,7 @@
     },
     "HSS12X12X1/4": {
       "key": "HSS12X12X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×12X1/4",
       "dims": {
         "Ht": 0.305,
@@ -13910,7 +13910,7 @@
     },
     "HSS12X12X3/16": {
       "key": "HSS12X12X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×12X3/16",
       "dims": {
         "Ht": 0.305,
@@ -13930,7 +13930,7 @@
     },
     "HSS12X10X5/8": {
       "key": "HSS12X10X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×10X5/8",
       "dims": {
         "Ht": 0.305,
@@ -13950,7 +13950,7 @@
     },
     "HSS12X10X1/2": {
       "key": "HSS12X10X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×10X1/2",
       "dims": {
         "Ht": 0.305,
@@ -13970,7 +13970,7 @@
     },
     "HSS12X10X3/8": {
       "key": "HSS12X10X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×10X3/8",
       "dims": {
         "Ht": 0.305,
@@ -13990,7 +13990,7 @@
     },
     "HSS12X10X5/16": {
       "key": "HSS12X10X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×10X5/16",
       "dims": {
         "Ht": 0.305,
@@ -14010,7 +14010,7 @@
     },
     "HSS12X10X1/4": {
       "key": "HSS12X10X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×10X1/4",
       "dims": {
         "Ht": 0.305,
@@ -14030,7 +14030,7 @@
     },
     "HSS12X10X3/16": {
       "key": "HSS12X10X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×10X3/16",
       "dims": {
         "Ht": 0.305,
@@ -14050,7 +14050,7 @@
     },
     "HSS12X8X5/8": {
       "key": "HSS12X8X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×8X5/8",
       "dims": {
         "Ht": 0.305,
@@ -14070,7 +14070,7 @@
     },
     "HSS12X8X1/2": {
       "key": "HSS12X8X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×8X1/2",
       "dims": {
         "Ht": 0.305,
@@ -14090,7 +14090,7 @@
     },
     "HSS12X8X3/8": {
       "key": "HSS12X8X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×8X3/8",
       "dims": {
         "Ht": 0.305,
@@ -14110,7 +14110,7 @@
     },
     "HSS12X8X5/16": {
       "key": "HSS12X8X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×8X5/16",
       "dims": {
         "Ht": 0.305,
@@ -14130,7 +14130,7 @@
     },
     "HSS12X8X1/4": {
       "key": "HSS12X8X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×8X1/4",
       "dims": {
         "Ht": 0.305,
@@ -14150,7 +14150,7 @@
     },
     "HSS12X8X3/16": {
       "key": "HSS12X8X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×8X3/16",
       "dims": {
         "Ht": 0.305,
@@ -14170,7 +14170,7 @@
     },
     "HSS12X6X5/8": {
       "key": "HSS12X6X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×6X5/8",
       "dims": {
         "Ht": 0.305,
@@ -14190,7 +14190,7 @@
     },
     "HSS12X6X1/2": {
       "key": "HSS12X6X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×6X1/2",
       "dims": {
         "Ht": 0.305,
@@ -14210,7 +14210,7 @@
     },
     "HSS12X6X3/8": {
       "key": "HSS12X6X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×6X3/8",
       "dims": {
         "Ht": 0.305,
@@ -14230,7 +14230,7 @@
     },
     "HSS12X6X5/16": {
       "key": "HSS12X6X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×6X5/16",
       "dims": {
         "Ht": 0.305,
@@ -14250,7 +14250,7 @@
     },
     "HSS12X6X1/4": {
       "key": "HSS12X6X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×6X1/4",
       "dims": {
         "Ht": 0.305,
@@ -14270,7 +14270,7 @@
     },
     "HSS12X6X3/16": {
       "key": "HSS12X6X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×6X3/16",
       "dims": {
         "Ht": 0.305,
@@ -14290,7 +14290,7 @@
     },
     "HSS12X4X5/8": {
       "key": "HSS12X4X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×4X5/8",
       "dims": {
         "Ht": 0.305,
@@ -14310,7 +14310,7 @@
     },
     "HSS12X4X1/2": {
       "key": "HSS12X4X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×4X1/2",
       "dims": {
         "Ht": 0.305,
@@ -14330,7 +14330,7 @@
     },
     "HSS12X4X3/8": {
       "key": "HSS12X4X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×4X3/8",
       "dims": {
         "Ht": 0.305,
@@ -14350,7 +14350,7 @@
     },
     "HSS12X4X5/16": {
       "key": "HSS12X4X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×4X5/16",
       "dims": {
         "Ht": 0.305,
@@ -14370,7 +14370,7 @@
     },
     "HSS12X4X1/4": {
       "key": "HSS12X4X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×4X1/4",
       "dims": {
         "Ht": 0.305,
@@ -14390,7 +14390,7 @@
     },
     "HSS12X4X3/16": {
       "key": "HSS12X4X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×4X3/16",
       "dims": {
         "Ht": 0.305,
@@ -14410,7 +14410,7 @@
     },
     "HSS12X3X5/16": {
       "key": "HSS12X3X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×3X5/16",
       "dims": {
         "Ht": 0.305,
@@ -14430,7 +14430,7 @@
     },
     "HSS12X3X1/4": {
       "key": "HSS12X3X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×3X1/4",
       "dims": {
         "Ht": 0.305,
@@ -14450,7 +14450,7 @@
     },
     "HSS12X3X3/16": {
       "key": "HSS12X3X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×3X3/16",
       "dims": {
         "Ht": 0.305,
@@ -14470,7 +14470,7 @@
     },
     "HSS12X2X5/16": {
       "key": "HSS12X2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×2X5/16",
       "dims": {
         "Ht": 0.305,
@@ -14490,7 +14490,7 @@
     },
     "HSS12X2X1/4": {
       "key": "HSS12X2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×2X1/4",
       "dims": {
         "Ht": 0.305,
@@ -14510,7 +14510,7 @@
     },
     "HSS12X2X3/16": {
       "key": "HSS12X2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS12×2X3/16",
       "dims": {
         "Ht": 0.305,
@@ -14530,7 +14530,7 @@
     },
     "HSS10X10X3/4": {
       "key": "HSS10X10X3/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×10X3/4",
       "dims": {
         "Ht": 0.254,
@@ -14550,7 +14550,7 @@
     },
     "HSS10X10X5/8": {
       "key": "HSS10X10X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×10X5/8",
       "dims": {
         "Ht": 0.254,
@@ -14570,7 +14570,7 @@
     },
     "HSS10X10X1/2": {
       "key": "HSS10X10X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×10X1/2",
       "dims": {
         "Ht": 0.254,
@@ -14590,7 +14590,7 @@
     },
     "HSS10X10X3/8": {
       "key": "HSS10X10X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×10X3/8",
       "dims": {
         "Ht": 0.254,
@@ -14610,7 +14610,7 @@
     },
     "HSS10X10X5/16": {
       "key": "HSS10X10X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×10X5/16",
       "dims": {
         "Ht": 0.254,
@@ -14630,7 +14630,7 @@
     },
     "HSS10X10X1/4": {
       "key": "HSS10X10X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×10X1/4",
       "dims": {
         "Ht": 0.254,
@@ -14650,7 +14650,7 @@
     },
     "HSS10X10X3/16": {
       "key": "HSS10X10X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×10X3/16",
       "dims": {
         "Ht": 0.254,
@@ -14670,7 +14670,7 @@
     },
     "HSS10X8X5/8": {
       "key": "HSS10X8X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×8X5/8",
       "dims": {
         "Ht": 0.254,
@@ -14690,7 +14690,7 @@
     },
     "HSS10X8X1/2": {
       "key": "HSS10X8X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×8X1/2",
       "dims": {
         "Ht": 0.254,
@@ -14710,7 +14710,7 @@
     },
     "HSS10X8X3/8": {
       "key": "HSS10X8X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×8X3/8",
       "dims": {
         "Ht": 0.254,
@@ -14730,7 +14730,7 @@
     },
     "HSS10X8X5/16": {
       "key": "HSS10X8X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×8X5/16",
       "dims": {
         "Ht": 0.254,
@@ -14750,7 +14750,7 @@
     },
     "HSS10X8X1/4": {
       "key": "HSS10X8X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×8X1/4",
       "dims": {
         "Ht": 0.254,
@@ -14770,7 +14770,7 @@
     },
     "HSS10X8X3/16": {
       "key": "HSS10X8X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×8X3/16",
       "dims": {
         "Ht": 0.254,
@@ -14790,7 +14790,7 @@
     },
     "HSS10X6X5/8": {
       "key": "HSS10X6X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×6X5/8",
       "dims": {
         "Ht": 0.254,
@@ -14810,7 +14810,7 @@
     },
     "HSS10X6X1/2": {
       "key": "HSS10X6X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×6X1/2",
       "dims": {
         "Ht": 0.254,
@@ -14830,7 +14830,7 @@
     },
     "HSS10X6X3/8": {
       "key": "HSS10X6X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×6X3/8",
       "dims": {
         "Ht": 0.254,
@@ -14850,7 +14850,7 @@
     },
     "HSS10X6X5/16": {
       "key": "HSS10X6X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×6X5/16",
       "dims": {
         "Ht": 0.254,
@@ -14870,7 +14870,7 @@
     },
     "HSS10X6X1/4": {
       "key": "HSS10X6X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×6X1/4",
       "dims": {
         "Ht": 0.254,
@@ -14890,7 +14890,7 @@
     },
     "HSS10X6X3/16": {
       "key": "HSS10X6X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×6X3/16",
       "dims": {
         "Ht": 0.254,
@@ -14910,7 +14910,7 @@
     },
     "HSS10X5X3/8": {
       "key": "HSS10X5X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×5X3/8",
       "dims": {
         "Ht": 0.254,
@@ -14930,7 +14930,7 @@
     },
     "HSS10X5X5/16": {
       "key": "HSS10X5X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×5X5/16",
       "dims": {
         "Ht": 0.254,
@@ -14950,7 +14950,7 @@
     },
     "HSS10X5X1/4": {
       "key": "HSS10X5X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×5X1/4",
       "dims": {
         "Ht": 0.254,
@@ -14970,7 +14970,7 @@
     },
     "HSS10X4X5/8": {
       "key": "HSS10X4X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×4X5/8",
       "dims": {
         "Ht": 0.254,
@@ -14990,7 +14990,7 @@
     },
     "HSS10X4X1/2": {
       "key": "HSS10X4X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×4X1/2",
       "dims": {
         "Ht": 0.254,
@@ -15010,7 +15010,7 @@
     },
     "HSS10X4X3/8": {
       "key": "HSS10X4X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×4X3/8",
       "dims": {
         "Ht": 0.254,
@@ -15030,7 +15030,7 @@
     },
     "HSS10X4X5/16": {
       "key": "HSS10X4X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×4X5/16",
       "dims": {
         "Ht": 0.254,
@@ -15050,7 +15050,7 @@
     },
     "HSS10X4X1/4": {
       "key": "HSS10X4X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×4X1/4",
       "dims": {
         "Ht": 0.254,
@@ -15070,7 +15070,7 @@
     },
     "HSS10X4X3/16": {
       "key": "HSS10X4X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×4X3/16",
       "dims": {
         "Ht": 0.254,
@@ -15090,7 +15090,7 @@
     },
     "HSS10X4X1/8": {
       "key": "HSS10X4X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×4X1/8",
       "dims": {
         "Ht": 0.254,
@@ -15110,7 +15110,7 @@
     },
     "HSS10X3-1/2X3/8": {
       "key": "HSS10X3-1/2X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×3-1/2X3/8",
       "dims": {
         "Ht": 0.254,
@@ -15130,7 +15130,7 @@
     },
     "HSS10X3-1/2X5/16": {
       "key": "HSS10X3-1/2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×3-1/2X5/16",
       "dims": {
         "Ht": 0.254,
@@ -15150,7 +15150,7 @@
     },
     "HSS10X3-1/2X1/4": {
       "key": "HSS10X3-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×3-1/2X1/4",
       "dims": {
         "Ht": 0.254,
@@ -15170,7 +15170,7 @@
     },
     "HSS10X3-1/2X3/16": {
       "key": "HSS10X3-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×3-1/2X3/16",
       "dims": {
         "Ht": 0.254,
@@ -15190,7 +15190,7 @@
     },
     "HSS10X3X3/8": {
       "key": "HSS10X3X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×3X3/8",
       "dims": {
         "Ht": 0.254,
@@ -15210,7 +15210,7 @@
     },
     "HSS10X3X5/16": {
       "key": "HSS10X3X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×3X5/16",
       "dims": {
         "Ht": 0.254,
@@ -15230,7 +15230,7 @@
     },
     "HSS10X3X1/4": {
       "key": "HSS10X3X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×3X1/4",
       "dims": {
         "Ht": 0.254,
@@ -15250,7 +15250,7 @@
     },
     "HSS10X3X3/16": {
       "key": "HSS10X3X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×3X3/16",
       "dims": {
         "Ht": 0.254,
@@ -15270,7 +15270,7 @@
     },
     "HSS10X3X1/8": {
       "key": "HSS10X3X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×3X1/8",
       "dims": {
         "Ht": 0.254,
@@ -15290,7 +15290,7 @@
     },
     "HSS10X2X3/8": {
       "key": "HSS10X2X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×2X3/8",
       "dims": {
         "Ht": 0.254,
@@ -15310,7 +15310,7 @@
     },
     "HSS10X2X5/16": {
       "key": "HSS10X2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×2X5/16",
       "dims": {
         "Ht": 0.254,
@@ -15330,7 +15330,7 @@
     },
     "HSS10X2X1/4": {
       "key": "HSS10X2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×2X1/4",
       "dims": {
         "Ht": 0.254,
@@ -15350,7 +15350,7 @@
     },
     "HSS10X2X3/16": {
       "key": "HSS10X2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×2X3/16",
       "dims": {
         "Ht": 0.254,
@@ -15370,7 +15370,7 @@
     },
     "HSS10X2X1/8": {
       "key": "HSS10X2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS10×2X1/8",
       "dims": {
         "Ht": 0.254,
@@ -15390,7 +15390,7 @@
     },
     "HSS9X9X5/8": {
       "key": "HSS9X9X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×9X5/8",
       "dims": {
         "Ht": 0.229,
@@ -15410,7 +15410,7 @@
     },
     "HSS9X9X1/2": {
       "key": "HSS9X9X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×9X1/2",
       "dims": {
         "Ht": 0.229,
@@ -15430,7 +15430,7 @@
     },
     "HSS9X9X3/8": {
       "key": "HSS9X9X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×9X3/8",
       "dims": {
         "Ht": 0.229,
@@ -15450,7 +15450,7 @@
     },
     "HSS9X9X5/16": {
       "key": "HSS9X9X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×9X5/16",
       "dims": {
         "Ht": 0.229,
@@ -15470,7 +15470,7 @@
     },
     "HSS9X9X1/4": {
       "key": "HSS9X9X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×9X1/4",
       "dims": {
         "Ht": 0.229,
@@ -15490,7 +15490,7 @@
     },
     "HSS9X9X3/16": {
       "key": "HSS9X9X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×9X3/16",
       "dims": {
         "Ht": 0.229,
@@ -15510,7 +15510,7 @@
     },
     "HSS9X9X1/8": {
       "key": "HSS9X9X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×9X1/8",
       "dims": {
         "Ht": 0.229,
@@ -15530,7 +15530,7 @@
     },
     "HSS9X7X5/8": {
       "key": "HSS9X7X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×7X5/8",
       "dims": {
         "Ht": 0.229,
@@ -15550,7 +15550,7 @@
     },
     "HSS9X7X1/2": {
       "key": "HSS9X7X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×7X1/2",
       "dims": {
         "Ht": 0.229,
@@ -15570,7 +15570,7 @@
     },
     "HSS9X7X3/8": {
       "key": "HSS9X7X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×7X3/8",
       "dims": {
         "Ht": 0.229,
@@ -15590,7 +15590,7 @@
     },
     "HSS9X7X5/16": {
       "key": "HSS9X7X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×7X5/16",
       "dims": {
         "Ht": 0.229,
@@ -15610,7 +15610,7 @@
     },
     "HSS9X7X1/4": {
       "key": "HSS9X7X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×7X1/4",
       "dims": {
         "Ht": 0.229,
@@ -15630,7 +15630,7 @@
     },
     "HSS9X7X3/16": {
       "key": "HSS9X7X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×7X3/16",
       "dims": {
         "Ht": 0.229,
@@ -15650,7 +15650,7 @@
     },
     "HSS9X5X5/8": {
       "key": "HSS9X5X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×5X5/8",
       "dims": {
         "Ht": 0.229,
@@ -15670,7 +15670,7 @@
     },
     "HSS9X5X1/2": {
       "key": "HSS9X5X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×5X1/2",
       "dims": {
         "Ht": 0.229,
@@ -15690,7 +15690,7 @@
     },
     "HSS9X5X3/8": {
       "key": "HSS9X5X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×5X3/8",
       "dims": {
         "Ht": 0.229,
@@ -15710,7 +15710,7 @@
     },
     "HSS9X5X5/16": {
       "key": "HSS9X5X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×5X5/16",
       "dims": {
         "Ht": 0.229,
@@ -15730,7 +15730,7 @@
     },
     "HSS9X5X1/4": {
       "key": "HSS9X5X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×5X1/4",
       "dims": {
         "Ht": 0.229,
@@ -15750,7 +15750,7 @@
     },
     "HSS9X5X3/16": {
       "key": "HSS9X5X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×5X3/16",
       "dims": {
         "Ht": 0.229,
@@ -15770,7 +15770,7 @@
     },
     "HSS9X3X1/2": {
       "key": "HSS9X3X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×3X1/2",
       "dims": {
         "Ht": 0.229,
@@ -15790,7 +15790,7 @@
     },
     "HSS9X3X3/8": {
       "key": "HSS9X3X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×3X3/8",
       "dims": {
         "Ht": 0.229,
@@ -15810,7 +15810,7 @@
     },
     "HSS9X3X5/16": {
       "key": "HSS9X3X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×3X5/16",
       "dims": {
         "Ht": 0.229,
@@ -15830,7 +15830,7 @@
     },
     "HSS9X3X1/4": {
       "key": "HSS9X3X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×3X1/4",
       "dims": {
         "Ht": 0.229,
@@ -15850,7 +15850,7 @@
     },
     "HSS9X3X3/16": {
       "key": "HSS9X3X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS9×3X3/16",
       "dims": {
         "Ht": 0.229,
@@ -15870,7 +15870,7 @@
     },
     "HSS8X8X5/8": {
       "key": "HSS8X8X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×8X5/8",
       "dims": {
         "Ht": 0.203,
@@ -15890,7 +15890,7 @@
     },
     "HSS8X8X1/2": {
       "key": "HSS8X8X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×8X1/2",
       "dims": {
         "Ht": 0.203,
@@ -15910,7 +15910,7 @@
     },
     "HSS8X8X3/8": {
       "key": "HSS8X8X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×8X3/8",
       "dims": {
         "Ht": 0.203,
@@ -15930,7 +15930,7 @@
     },
     "HSS8X8X5/16": {
       "key": "HSS8X8X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×8X5/16",
       "dims": {
         "Ht": 0.203,
@@ -15950,7 +15950,7 @@
     },
     "HSS8X8X1/4": {
       "key": "HSS8X8X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×8X1/4",
       "dims": {
         "Ht": 0.203,
@@ -15970,7 +15970,7 @@
     },
     "HSS8X8X3/16": {
       "key": "HSS8X8X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×8X3/16",
       "dims": {
         "Ht": 0.203,
@@ -15990,7 +15990,7 @@
     },
     "HSS8X8X1/8": {
       "key": "HSS8X8X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×8X1/8",
       "dims": {
         "Ht": 0.203,
@@ -16010,7 +16010,7 @@
     },
     "HSS8X6X5/8": {
       "key": "HSS8X6X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×6X5/8",
       "dims": {
         "Ht": 0.203,
@@ -16030,7 +16030,7 @@
     },
     "HSS8X6X1/2": {
       "key": "HSS8X6X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×6X1/2",
       "dims": {
         "Ht": 0.203,
@@ -16050,7 +16050,7 @@
     },
     "HSS8X6X3/8": {
       "key": "HSS8X6X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×6X3/8",
       "dims": {
         "Ht": 0.203,
@@ -16070,7 +16070,7 @@
     },
     "HSS8X6X5/16": {
       "key": "HSS8X6X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×6X5/16",
       "dims": {
         "Ht": 0.203,
@@ -16090,7 +16090,7 @@
     },
     "HSS8X6X1/4": {
       "key": "HSS8X6X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×6X1/4",
       "dims": {
         "Ht": 0.203,
@@ -16110,7 +16110,7 @@
     },
     "HSS8X6X3/16": {
       "key": "HSS8X6X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×6X3/16",
       "dims": {
         "Ht": 0.203,
@@ -16130,7 +16130,7 @@
     },
     "HSS8X4X5/8": {
       "key": "HSS8X4X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×4X5/8",
       "dims": {
         "Ht": 0.203,
@@ -16150,7 +16150,7 @@
     },
     "HSS8X4X1/2": {
       "key": "HSS8X4X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×4X1/2",
       "dims": {
         "Ht": 0.203,
@@ -16170,7 +16170,7 @@
     },
     "HSS8X4X3/8": {
       "key": "HSS8X4X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×4X3/8",
       "dims": {
         "Ht": 0.203,
@@ -16190,7 +16190,7 @@
     },
     "HSS8X4X5/16": {
       "key": "HSS8X4X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×4X5/16",
       "dims": {
         "Ht": 0.203,
@@ -16210,7 +16210,7 @@
     },
     "HSS8X4X1/4": {
       "key": "HSS8X4X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×4X1/4",
       "dims": {
         "Ht": 0.203,
@@ -16230,7 +16230,7 @@
     },
     "HSS8X4X3/16": {
       "key": "HSS8X4X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×4X3/16",
       "dims": {
         "Ht": 0.203,
@@ -16250,7 +16250,7 @@
     },
     "HSS8X4X1/8": {
       "key": "HSS8X4X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×4X1/8",
       "dims": {
         "Ht": 0.203,
@@ -16270,7 +16270,7 @@
     },
     "HSS8X3X1/2": {
       "key": "HSS8X3X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×3X1/2",
       "dims": {
         "Ht": 0.203,
@@ -16290,7 +16290,7 @@
     },
     "HSS8X3X3/8": {
       "key": "HSS8X3X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×3X3/8",
       "dims": {
         "Ht": 0.203,
@@ -16310,7 +16310,7 @@
     },
     "HSS8X3X5/16": {
       "key": "HSS8X3X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×3X5/16",
       "dims": {
         "Ht": 0.203,
@@ -16330,7 +16330,7 @@
     },
     "HSS8X3X1/4": {
       "key": "HSS8X3X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×3X1/4",
       "dims": {
         "Ht": 0.203,
@@ -16350,7 +16350,7 @@
     },
     "HSS8X3X3/16": {
       "key": "HSS8X3X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×3X3/16",
       "dims": {
         "Ht": 0.203,
@@ -16370,7 +16370,7 @@
     },
     "HSS8X3X1/8": {
       "key": "HSS8X3X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×3X1/8",
       "dims": {
         "Ht": 0.203,
@@ -16390,7 +16390,7 @@
     },
     "HSS8X2X1/2": {
       "key": "HSS8X2X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×2X1/2",
       "dims": {
         "Ht": 0.203,
@@ -16410,7 +16410,7 @@
     },
     "HSS8X2X3/8": {
       "key": "HSS8X2X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×2X3/8",
       "dims": {
         "Ht": 0.203,
@@ -16430,7 +16430,7 @@
     },
     "HSS8X2X5/16": {
       "key": "HSS8X2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×2X5/16",
       "dims": {
         "Ht": 0.203,
@@ -16450,7 +16450,7 @@
     },
     "HSS8X2X1/4": {
       "key": "HSS8X2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×2X1/4",
       "dims": {
         "Ht": 0.203,
@@ -16470,7 +16470,7 @@
     },
     "HSS8X2X3/16": {
       "key": "HSS8X2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×2X3/16",
       "dims": {
         "Ht": 0.203,
@@ -16490,7 +16490,7 @@
     },
     "HSS8X2X1/8": {
       "key": "HSS8X2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS8×2X1/8",
       "dims": {
         "Ht": 0.203,
@@ -16510,7 +16510,7 @@
     },
     "HSS7X7X5/8": {
       "key": "HSS7X7X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×7X5/8",
       "dims": {
         "Ht": 0.178,
@@ -16530,7 +16530,7 @@
     },
     "HSS7X7X1/2": {
       "key": "HSS7X7X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×7X1/2",
       "dims": {
         "Ht": 0.178,
@@ -16550,7 +16550,7 @@
     },
     "HSS7X7X3/8": {
       "key": "HSS7X7X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×7X3/8",
       "dims": {
         "Ht": 0.178,
@@ -16570,7 +16570,7 @@
     },
     "HSS7X7X5/16": {
       "key": "HSS7X7X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×7X5/16",
       "dims": {
         "Ht": 0.178,
@@ -16590,7 +16590,7 @@
     },
     "HSS7X7X1/4": {
       "key": "HSS7X7X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×7X1/4",
       "dims": {
         "Ht": 0.178,
@@ -16610,7 +16610,7 @@
     },
     "HSS7X7X3/16": {
       "key": "HSS7X7X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×7X3/16",
       "dims": {
         "Ht": 0.178,
@@ -16630,7 +16630,7 @@
     },
     "HSS7X7X1/8": {
       "key": "HSS7X7X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×7X1/8",
       "dims": {
         "Ht": 0.178,
@@ -16650,7 +16650,7 @@
     },
     "HSS7X5X1/2": {
       "key": "HSS7X5X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×5X1/2",
       "dims": {
         "Ht": 0.178,
@@ -16670,7 +16670,7 @@
     },
     "HSS7X5X3/8": {
       "key": "HSS7X5X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×5X3/8",
       "dims": {
         "Ht": 0.178,
@@ -16690,7 +16690,7 @@
     },
     "HSS7X5X5/16": {
       "key": "HSS7X5X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×5X5/16",
       "dims": {
         "Ht": 0.178,
@@ -16710,7 +16710,7 @@
     },
     "HSS7X5X1/4": {
       "key": "HSS7X5X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×5X1/4",
       "dims": {
         "Ht": 0.178,
@@ -16730,7 +16730,7 @@
     },
     "HSS7X5X3/16": {
       "key": "HSS7X5X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×5X3/16",
       "dims": {
         "Ht": 0.178,
@@ -16750,7 +16750,7 @@
     },
     "HSS7X5X1/8": {
       "key": "HSS7X5X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×5X1/8",
       "dims": {
         "Ht": 0.178,
@@ -16770,7 +16770,7 @@
     },
     "HSS7X4X1/2": {
       "key": "HSS7X4X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×4X1/2",
       "dims": {
         "Ht": 0.178,
@@ -16790,7 +16790,7 @@
     },
     "HSS7X4X3/8": {
       "key": "HSS7X4X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×4X3/8",
       "dims": {
         "Ht": 0.178,
@@ -16810,7 +16810,7 @@
     },
     "HSS7X4X5/16": {
       "key": "HSS7X4X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×4X5/16",
       "dims": {
         "Ht": 0.178,
@@ -16830,7 +16830,7 @@
     },
     "HSS7X4X1/4": {
       "key": "HSS7X4X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×4X1/4",
       "dims": {
         "Ht": 0.178,
@@ -16850,7 +16850,7 @@
     },
     "HSS7X4X3/16": {
       "key": "HSS7X4X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×4X3/16",
       "dims": {
         "Ht": 0.178,
@@ -16870,7 +16870,7 @@
     },
     "HSS7X4X1/8": {
       "key": "HSS7X4X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×4X1/8",
       "dims": {
         "Ht": 0.178,
@@ -16890,7 +16890,7 @@
     },
     "HSS7X3X1/2": {
       "key": "HSS7X3X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×3X1/2",
       "dims": {
         "Ht": 0.178,
@@ -16910,7 +16910,7 @@
     },
     "HSS7X3X3/8": {
       "key": "HSS7X3X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×3X3/8",
       "dims": {
         "Ht": 0.178,
@@ -16930,7 +16930,7 @@
     },
     "HSS7X3X5/16": {
       "key": "HSS7X3X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×3X5/16",
       "dims": {
         "Ht": 0.178,
@@ -16950,7 +16950,7 @@
     },
     "HSS7X3X1/4": {
       "key": "HSS7X3X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×3X1/4",
       "dims": {
         "Ht": 0.178,
@@ -16970,7 +16970,7 @@
     },
     "HSS7X3X3/16": {
       "key": "HSS7X3X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×3X3/16",
       "dims": {
         "Ht": 0.178,
@@ -16990,7 +16990,7 @@
     },
     "HSS7X3X1/8": {
       "key": "HSS7X3X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×3X1/8",
       "dims": {
         "Ht": 0.178,
@@ -17010,7 +17010,7 @@
     },
     "HSS7X2X1/4": {
       "key": "HSS7X2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×2X1/4",
       "dims": {
         "Ht": 0.178,
@@ -17030,7 +17030,7 @@
     },
     "HSS7X2X3/16": {
       "key": "HSS7X2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×2X3/16",
       "dims": {
         "Ht": 0.178,
@@ -17050,7 +17050,7 @@
     },
     "HSS7X2X1/8": {
       "key": "HSS7X2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS7×2X1/8",
       "dims": {
         "Ht": 0.178,
@@ -17070,7 +17070,7 @@
     },
     "HSS6X6X5/8": {
       "key": "HSS6X6X5/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×6X5/8",
       "dims": {
         "Ht": 0.152,
@@ -17090,7 +17090,7 @@
     },
     "HSS6X6X1/2": {
       "key": "HSS6X6X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×6X1/2",
       "dims": {
         "Ht": 0.152,
@@ -17110,7 +17110,7 @@
     },
     "HSS6X6X3/8": {
       "key": "HSS6X6X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×6X3/8",
       "dims": {
         "Ht": 0.152,
@@ -17130,7 +17130,7 @@
     },
     "HSS6X6X5/16": {
       "key": "HSS6X6X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×6X5/16",
       "dims": {
         "Ht": 0.152,
@@ -17150,7 +17150,7 @@
     },
     "HSS6X6X1/4": {
       "key": "HSS6X6X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×6X1/4",
       "dims": {
         "Ht": 0.152,
@@ -17170,7 +17170,7 @@
     },
     "HSS6X6X3/16": {
       "key": "HSS6X6X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×6X3/16",
       "dims": {
         "Ht": 0.152,
@@ -17190,7 +17190,7 @@
     },
     "HSS6X6X1/8": {
       "key": "HSS6X6X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×6X1/8",
       "dims": {
         "Ht": 0.152,
@@ -17210,7 +17210,7 @@
     },
     "HSS6X5X1/2": {
       "key": "HSS6X5X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×5X1/2",
       "dims": {
         "Ht": 0.152,
@@ -17230,7 +17230,7 @@
     },
     "HSS6X5X3/8": {
       "key": "HSS6X5X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×5X3/8",
       "dims": {
         "Ht": 0.152,
@@ -17250,7 +17250,7 @@
     },
     "HSS6X5X5/16": {
       "key": "HSS6X5X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×5X5/16",
       "dims": {
         "Ht": 0.152,
@@ -17270,7 +17270,7 @@
     },
     "HSS6X5X1/4": {
       "key": "HSS6X5X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×5X1/4",
       "dims": {
         "Ht": 0.152,
@@ -17290,7 +17290,7 @@
     },
     "HSS6X5X3/16": {
       "key": "HSS6X5X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×5X3/16",
       "dims": {
         "Ht": 0.152,
@@ -17310,7 +17310,7 @@
     },
     "HSS6X5X1/8": {
       "key": "HSS6X5X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×5X1/8",
       "dims": {
         "Ht": 0.152,
@@ -17330,7 +17330,7 @@
     },
     "HSS6X4X1/2": {
       "key": "HSS6X4X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×4X1/2",
       "dims": {
         "Ht": 0.152,
@@ -17350,7 +17350,7 @@
     },
     "HSS6X4X3/8": {
       "key": "HSS6X4X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×4X3/8",
       "dims": {
         "Ht": 0.152,
@@ -17370,7 +17370,7 @@
     },
     "HSS6X4X5/16": {
       "key": "HSS6X4X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×4X5/16",
       "dims": {
         "Ht": 0.152,
@@ -17390,7 +17390,7 @@
     },
     "HSS6X4X1/4": {
       "key": "HSS6X4X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×4X1/4",
       "dims": {
         "Ht": 0.152,
@@ -17410,7 +17410,7 @@
     },
     "HSS6X4X3/16": {
       "key": "HSS6X4X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×4X3/16",
       "dims": {
         "Ht": 0.152,
@@ -17430,7 +17430,7 @@
     },
     "HSS6X4X1/8": {
       "key": "HSS6X4X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×4X1/8",
       "dims": {
         "Ht": 0.152,
@@ -17450,7 +17450,7 @@
     },
     "HSS6X3X1/2": {
       "key": "HSS6X3X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×3X1/2",
       "dims": {
         "Ht": 0.152,
@@ -17470,7 +17470,7 @@
     },
     "HSS6X3X3/8": {
       "key": "HSS6X3X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×3X3/8",
       "dims": {
         "Ht": 0.152,
@@ -17490,7 +17490,7 @@
     },
     "HSS6X3X5/16": {
       "key": "HSS6X3X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×3X5/16",
       "dims": {
         "Ht": 0.152,
@@ -17510,7 +17510,7 @@
     },
     "HSS6X3X1/4": {
       "key": "HSS6X3X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×3X1/4",
       "dims": {
         "Ht": 0.152,
@@ -17530,7 +17530,7 @@
     },
     "HSS6X3X3/16": {
       "key": "HSS6X3X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×3X3/16",
       "dims": {
         "Ht": 0.152,
@@ -17550,7 +17550,7 @@
     },
     "HSS6X3X1/8": {
       "key": "HSS6X3X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×3X1/8",
       "dims": {
         "Ht": 0.152,
@@ -17570,7 +17570,7 @@
     },
     "HSS6X2X3/8": {
       "key": "HSS6X2X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×2X3/8",
       "dims": {
         "Ht": 0.152,
@@ -17590,7 +17590,7 @@
     },
     "HSS6X2X5/16": {
       "key": "HSS6X2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×2X5/16",
       "dims": {
         "Ht": 0.152,
@@ -17610,7 +17610,7 @@
     },
     "HSS6X2X1/4": {
       "key": "HSS6X2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×2X1/4",
       "dims": {
         "Ht": 0.152,
@@ -17630,7 +17630,7 @@
     },
     "HSS6X2X3/16": {
       "key": "HSS6X2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×2X3/16",
       "dims": {
         "Ht": 0.152,
@@ -17650,7 +17650,7 @@
     },
     "HSS6X2X1/8": {
       "key": "HSS6X2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS6×2X1/8",
       "dims": {
         "Ht": 0.152,
@@ -17670,7 +17670,7 @@
     },
     "HSS5-1/2X5-1/2X3/8": {
       "key": "HSS5-1/2X5-1/2X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5-1/2×5-1/2X3/8",
       "dims": {
         "Ht": 0.14,
@@ -17690,7 +17690,7 @@
     },
     "HSS5-1/2X5-1/2X5/16": {
       "key": "HSS5-1/2X5-1/2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5-1/2×5-1/2X5/16",
       "dims": {
         "Ht": 0.14,
@@ -17710,7 +17710,7 @@
     },
     "HSS5-1/2X5-1/2X1/4": {
       "key": "HSS5-1/2X5-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5-1/2×5-1/2X1/4",
       "dims": {
         "Ht": 0.14,
@@ -17730,7 +17730,7 @@
     },
     "HSS5-1/2X5-1/2X3/16": {
       "key": "HSS5-1/2X5-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5-1/2×5-1/2X3/16",
       "dims": {
         "Ht": 0.14,
@@ -17750,7 +17750,7 @@
     },
     "HSS5-1/2X5-1/2X1/8": {
       "key": "HSS5-1/2X5-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5-1/2×5-1/2X1/8",
       "dims": {
         "Ht": 0.14,
@@ -17770,7 +17770,7 @@
     },
     "HSS5X5X1/2": {
       "key": "HSS5X5X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×5X1/2",
       "dims": {
         "Ht": 0.127,
@@ -17790,7 +17790,7 @@
     },
     "HSS5X5X3/8": {
       "key": "HSS5X5X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×5X3/8",
       "dims": {
         "Ht": 0.127,
@@ -17810,7 +17810,7 @@
     },
     "HSS5X5X5/16": {
       "key": "HSS5X5X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×5X5/16",
       "dims": {
         "Ht": 0.127,
@@ -17830,7 +17830,7 @@
     },
     "HSS5X5X1/4": {
       "key": "HSS5X5X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×5X1/4",
       "dims": {
         "Ht": 0.127,
@@ -17850,7 +17850,7 @@
     },
     "HSS5X5X3/16": {
       "key": "HSS5X5X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×5X3/16",
       "dims": {
         "Ht": 0.127,
@@ -17870,7 +17870,7 @@
     },
     "HSS5X5X1/8": {
       "key": "HSS5X5X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×5X1/8",
       "dims": {
         "Ht": 0.127,
@@ -17890,7 +17890,7 @@
     },
     "HSS5X4X1/2": {
       "key": "HSS5X4X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×4X1/2",
       "dims": {
         "Ht": 0.127,
@@ -17910,7 +17910,7 @@
     },
     "HSS5X4X3/8": {
       "key": "HSS5X4X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×4X3/8",
       "dims": {
         "Ht": 0.127,
@@ -17930,7 +17930,7 @@
     },
     "HSS5X4X5/16": {
       "key": "HSS5X4X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×4X5/16",
       "dims": {
         "Ht": 0.127,
@@ -17950,7 +17950,7 @@
     },
     "HSS5X4X1/4": {
       "key": "HSS5X4X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×4X1/4",
       "dims": {
         "Ht": 0.127,
@@ -17970,7 +17970,7 @@
     },
     "HSS5X4X3/16": {
       "key": "HSS5X4X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×4X3/16",
       "dims": {
         "Ht": 0.127,
@@ -17990,7 +17990,7 @@
     },
     "HSS5X4X1/8": {
       "key": "HSS5X4X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×4X1/8",
       "dims": {
         "Ht": 0.127,
@@ -18010,7 +18010,7 @@
     },
     "HSS5X3X1/2": {
       "key": "HSS5X3X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×3X1/2",
       "dims": {
         "Ht": 0.127,
@@ -18030,7 +18030,7 @@
     },
     "HSS5X3X3/8": {
       "key": "HSS5X3X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×3X3/8",
       "dims": {
         "Ht": 0.127,
@@ -18050,7 +18050,7 @@
     },
     "HSS5X3X5/16": {
       "key": "HSS5X3X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×3X5/16",
       "dims": {
         "Ht": 0.127,
@@ -18070,7 +18070,7 @@
     },
     "HSS5X3X1/4": {
       "key": "HSS5X3X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×3X1/4",
       "dims": {
         "Ht": 0.127,
@@ -18090,7 +18090,7 @@
     },
     "HSS5X3X3/16": {
       "key": "HSS5X3X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×3X3/16",
       "dims": {
         "Ht": 0.127,
@@ -18110,7 +18110,7 @@
     },
     "HSS5X3X1/8": {
       "key": "HSS5X3X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×3X1/8",
       "dims": {
         "Ht": 0.127,
@@ -18130,7 +18130,7 @@
     },
     "HSS5X2-1/2X1/4": {
       "key": "HSS5X2-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×2-1/2X1/4",
       "dims": {
         "Ht": 0.127,
@@ -18150,7 +18150,7 @@
     },
     "HSS5X2-1/2X3/16": {
       "key": "HSS5X2-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×2-1/2X3/16",
       "dims": {
         "Ht": 0.127,
@@ -18170,7 +18170,7 @@
     },
     "HSS5X2-1/2X1/8": {
       "key": "HSS5X2-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×2-1/2X1/8",
       "dims": {
         "Ht": 0.127,
@@ -18190,7 +18190,7 @@
     },
     "HSS5X2X3/8": {
       "key": "HSS5X2X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×2X3/8",
       "dims": {
         "Ht": 0.127,
@@ -18210,7 +18210,7 @@
     },
     "HSS5X2X5/16": {
       "key": "HSS5X2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×2X5/16",
       "dims": {
         "Ht": 0.127,
@@ -18230,7 +18230,7 @@
     },
     "HSS5X2X1/4": {
       "key": "HSS5X2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×2X1/4",
       "dims": {
         "Ht": 0.127,
@@ -18250,7 +18250,7 @@
     },
     "HSS5X2X3/16": {
       "key": "HSS5X2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×2X3/16",
       "dims": {
         "Ht": 0.127,
@@ -18270,7 +18270,7 @@
     },
     "HSS5X2X1/8": {
       "key": "HSS5X2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS5×2X1/8",
       "dims": {
         "Ht": 0.127,
@@ -18290,7 +18290,7 @@
     },
     "HSS4-1/2X4-1/2X1/2": {
       "key": "HSS4-1/2X4-1/2X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4-1/2×4-1/2X1/2",
       "dims": {
         "Ht": 0.114,
@@ -18310,7 +18310,7 @@
     },
     "HSS4-1/2X4-1/2X3/8": {
       "key": "HSS4-1/2X4-1/2X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4-1/2×4-1/2X3/8",
       "dims": {
         "Ht": 0.114,
@@ -18330,7 +18330,7 @@
     },
     "HSS4-1/2X4-1/2X5/16": {
       "key": "HSS4-1/2X4-1/2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4-1/2×4-1/2X5/16",
       "dims": {
         "Ht": 0.114,
@@ -18350,7 +18350,7 @@
     },
     "HSS4-1/2X4-1/2X1/4": {
       "key": "HSS4-1/2X4-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4-1/2×4-1/2X1/4",
       "dims": {
         "Ht": 0.114,
@@ -18370,7 +18370,7 @@
     },
     "HSS4-1/2X4-1/2X3/16": {
       "key": "HSS4-1/2X4-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4-1/2×4-1/2X3/16",
       "dims": {
         "Ht": 0.114,
@@ -18390,7 +18390,7 @@
     },
     "HSS4-1/2X4-1/2X1/8": {
       "key": "HSS4-1/2X4-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4-1/2×4-1/2X1/8",
       "dims": {
         "Ht": 0.114,
@@ -18410,7 +18410,7 @@
     },
     "HSS4X4X1/2": {
       "key": "HSS4X4X1/2",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×4X1/2",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18430,7 +18430,7 @@
     },
     "HSS4X4X3/8": {
       "key": "HSS4X4X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×4X3/8",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18450,7 +18450,7 @@
     },
     "HSS4X4X5/16": {
       "key": "HSS4X4X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×4X5/16",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18470,7 +18470,7 @@
     },
     "HSS4X4X1/4": {
       "key": "HSS4X4X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×4X1/4",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18490,7 +18490,7 @@
     },
     "HSS4X4X3/16": {
       "key": "HSS4X4X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×4X3/16",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18510,7 +18510,7 @@
     },
     "HSS4X4X1/8": {
       "key": "HSS4X4X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×4X1/8",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18530,7 +18530,7 @@
     },
     "HSS4X3X3/8": {
       "key": "HSS4X3X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×3X3/8",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18550,7 +18550,7 @@
     },
     "HSS4X3X5/16": {
       "key": "HSS4X3X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×3X5/16",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18570,7 +18570,7 @@
     },
     "HSS4X3X1/4": {
       "key": "HSS4X3X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×3X1/4",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18590,7 +18590,7 @@
     },
     "HSS4X3X3/16": {
       "key": "HSS4X3X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×3X3/16",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18610,7 +18610,7 @@
     },
     "HSS4X3X1/8": {
       "key": "HSS4X3X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×3X1/8",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18630,7 +18630,7 @@
     },
     "HSS4X2-1/2X1/4": {
       "key": "HSS4X2-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×2-1/2X1/4",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18650,7 +18650,7 @@
     },
     "HSS4X2-1/2X3/16": {
       "key": "HSS4X2-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×2-1/2X3/16",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18670,7 +18670,7 @@
     },
     "HSS4X2-1/2X1/8": {
       "key": "HSS4X2-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×2-1/2X1/8",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18690,7 +18690,7 @@
     },
     "HSS4X2X3/8": {
       "key": "HSS4X2X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×2X3/8",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18710,7 +18710,7 @@
     },
     "HSS4X2X5/16": {
       "key": "HSS4X2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×2X5/16",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18730,7 +18730,7 @@
     },
     "HSS4X2X1/4": {
       "key": "HSS4X2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×2X1/4",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18750,7 +18750,7 @@
     },
     "HSS4X2X3/16": {
       "key": "HSS4X2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×2X3/16",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18770,7 +18770,7 @@
     },
     "HSS4X2X1/8": {
       "key": "HSS4X2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×2X1/8",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18790,7 +18790,7 @@
     },
     "HSS4X1-1/2X1/4": {
       "key": "HSS4X1-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×1-1/2X1/4",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18810,7 +18810,7 @@
     },
     "HSS4X1-1/2X3/16": {
       "key": "HSS4X1-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×1-1/2X3/16",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18830,7 +18830,7 @@
     },
     "HSS4X1-1/2X1/8": {
       "key": "HSS4X1-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS4×1-1/2X1/8",
       "dims": {
         "Ht": 0.10200000000000001,
@@ -18850,7 +18850,7 @@
     },
     "HSS3-1/2X3-1/2X3/8": {
       "key": "HSS3-1/2X3-1/2X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×3-1/2X3/8",
       "dims": {
         "Ht": 0.0889,
@@ -18870,7 +18870,7 @@
     },
     "HSS3-1/2X3-1/2X5/16": {
       "key": "HSS3-1/2X3-1/2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×3-1/2X5/16",
       "dims": {
         "Ht": 0.0889,
@@ -18890,7 +18890,7 @@
     },
     "HSS3-1/2X3-1/2X1/4": {
       "key": "HSS3-1/2X3-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×3-1/2X1/4",
       "dims": {
         "Ht": 0.0889,
@@ -18910,7 +18910,7 @@
     },
     "HSS3-1/2X3-1/2X3/16": {
       "key": "HSS3-1/2X3-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×3-1/2X3/16",
       "dims": {
         "Ht": 0.0889,
@@ -18930,7 +18930,7 @@
     },
     "HSS3-1/2X3-1/2X1/8": {
       "key": "HSS3-1/2X3-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×3-1/2X1/8",
       "dims": {
         "Ht": 0.0889,
@@ -18950,7 +18950,7 @@
     },
     "HSS3-1/2X2-1/2X3/8": {
       "key": "HSS3-1/2X2-1/2X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×2-1/2X3/8",
       "dims": {
         "Ht": 0.0889,
@@ -18970,7 +18970,7 @@
     },
     "HSS3-1/2X2-1/2X5/16": {
       "key": "HSS3-1/2X2-1/2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×2-1/2X5/16",
       "dims": {
         "Ht": 0.0889,
@@ -18990,7 +18990,7 @@
     },
     "HSS3-1/2X2-1/2X1/4": {
       "key": "HSS3-1/2X2-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×2-1/2X1/4",
       "dims": {
         "Ht": 0.0889,
@@ -19010,7 +19010,7 @@
     },
     "HSS3-1/2X2-1/2X3/16": {
       "key": "HSS3-1/2X2-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×2-1/2X3/16",
       "dims": {
         "Ht": 0.0889,
@@ -19030,7 +19030,7 @@
     },
     "HSS3-1/2X2-1/2X1/8": {
       "key": "HSS3-1/2X2-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×2-1/2X1/8",
       "dims": {
         "Ht": 0.0889,
@@ -19050,7 +19050,7 @@
     },
     "HSS3-1/2X2X1/4": {
       "key": "HSS3-1/2X2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×2X1/4",
       "dims": {
         "Ht": 0.0889,
@@ -19070,7 +19070,7 @@
     },
     "HSS3-1/2X2X3/16": {
       "key": "HSS3-1/2X2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×2X3/16",
       "dims": {
         "Ht": 0.0889,
@@ -19090,7 +19090,7 @@
     },
     "HSS3-1/2X2X1/8": {
       "key": "HSS3-1/2X2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×2X1/8",
       "dims": {
         "Ht": 0.0889,
@@ -19110,7 +19110,7 @@
     },
     "HSS3-1/2X1-1/2X1/4": {
       "key": "HSS3-1/2X1-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×1-1/2X1/4",
       "dims": {
         "Ht": 0.0889,
@@ -19130,7 +19130,7 @@
     },
     "HSS3-1/2X1-1/2X3/16": {
       "key": "HSS3-1/2X1-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×1-1/2X3/16",
       "dims": {
         "Ht": 0.0889,
@@ -19150,7 +19150,7 @@
     },
     "HSS3-1/2X1-1/2X1/8": {
       "key": "HSS3-1/2X1-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3-1/2×1-1/2X1/8",
       "dims": {
         "Ht": 0.0889,
@@ -19170,7 +19170,7 @@
     },
     "HSS3X3X3/8": {
       "key": "HSS3X3X3/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×3X3/8",
       "dims": {
         "Ht": 0.0762,
@@ -19190,7 +19190,7 @@
     },
     "HSS3X3X5/16": {
       "key": "HSS3X3X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×3X5/16",
       "dims": {
         "Ht": 0.0762,
@@ -19210,7 +19210,7 @@
     },
     "HSS3X3X1/4": {
       "key": "HSS3X3X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×3X1/4",
       "dims": {
         "Ht": 0.0762,
@@ -19230,7 +19230,7 @@
     },
     "HSS3X3X3/16": {
       "key": "HSS3X3X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×3X3/16",
       "dims": {
         "Ht": 0.0762,
@@ -19250,7 +19250,7 @@
     },
     "HSS3X3X1/8": {
       "key": "HSS3X3X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×3X1/8",
       "dims": {
         "Ht": 0.0762,
@@ -19270,7 +19270,7 @@
     },
     "HSS3X2-1/2X5/16": {
       "key": "HSS3X2-1/2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×2-1/2X5/16",
       "dims": {
         "Ht": 0.0762,
@@ -19290,7 +19290,7 @@
     },
     "HSS3X2-1/2X1/4": {
       "key": "HSS3X2-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×2-1/2X1/4",
       "dims": {
         "Ht": 0.0762,
@@ -19310,7 +19310,7 @@
     },
     "HSS3X2-1/2X3/16": {
       "key": "HSS3X2-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×2-1/2X3/16",
       "dims": {
         "Ht": 0.0762,
@@ -19330,7 +19330,7 @@
     },
     "HSS3X2-1/2X1/8": {
       "key": "HSS3X2-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×2-1/2X1/8",
       "dims": {
         "Ht": 0.0762,
@@ -19350,7 +19350,7 @@
     },
     "HSS3X2X5/16": {
       "key": "HSS3X2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×2X5/16",
       "dims": {
         "Ht": 0.0762,
@@ -19370,7 +19370,7 @@
     },
     "HSS3X2X1/4": {
       "key": "HSS3X2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×2X1/4",
       "dims": {
         "Ht": 0.0762,
@@ -19390,7 +19390,7 @@
     },
     "HSS3X2X3/16": {
       "key": "HSS3X2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×2X3/16",
       "dims": {
         "Ht": 0.0762,
@@ -19410,7 +19410,7 @@
     },
     "HSS3X2X1/8": {
       "key": "HSS3X2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×2X1/8",
       "dims": {
         "Ht": 0.0762,
@@ -19430,7 +19430,7 @@
     },
     "HSS3X1-1/2X1/4": {
       "key": "HSS3X1-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×1-1/2X1/4",
       "dims": {
         "Ht": 0.0762,
@@ -19450,7 +19450,7 @@
     },
     "HSS3X1-1/2X3/16": {
       "key": "HSS3X1-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×1-1/2X3/16",
       "dims": {
         "Ht": 0.0762,
@@ -19470,7 +19470,7 @@
     },
     "HSS3X1-1/2X1/8": {
       "key": "HSS3X1-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×1-1/2X1/8",
       "dims": {
         "Ht": 0.0762,
@@ -19490,7 +19490,7 @@
     },
     "HSS3X1X3/16": {
       "key": "HSS3X1X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×1X3/16",
       "dims": {
         "Ht": 0.0762,
@@ -19510,7 +19510,7 @@
     },
     "HSS3X1X1/8": {
       "key": "HSS3X1X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS3×1X1/8",
       "dims": {
         "Ht": 0.0762,
@@ -19530,7 +19530,7 @@
     },
     "HSS2-1/2X2-1/2X5/16": {
       "key": "HSS2-1/2X2-1/2X5/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/2×2-1/2X5/16",
       "dims": {
         "Ht": 0.0635,
@@ -19550,7 +19550,7 @@
     },
     "HSS2-1/2X2-1/2X1/4": {
       "key": "HSS2-1/2X2-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/2×2-1/2X1/4",
       "dims": {
         "Ht": 0.0635,
@@ -19570,7 +19570,7 @@
     },
     "HSS2-1/2X2-1/2X3/16": {
       "key": "HSS2-1/2X2-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/2×2-1/2X3/16",
       "dims": {
         "Ht": 0.0635,
@@ -19590,7 +19590,7 @@
     },
     "HSS2-1/2X2-1/2X1/8": {
       "key": "HSS2-1/2X2-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/2×2-1/2X1/8",
       "dims": {
         "Ht": 0.0635,
@@ -19610,7 +19610,7 @@
     },
     "HSS2-1/2X2X1/4": {
       "key": "HSS2-1/2X2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/2×2X1/4",
       "dims": {
         "Ht": 0.0635,
@@ -19630,7 +19630,7 @@
     },
     "HSS2-1/2X2X3/16": {
       "key": "HSS2-1/2X2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/2×2X3/16",
       "dims": {
         "Ht": 0.0635,
@@ -19650,7 +19650,7 @@
     },
     "HSS2-1/2X2X1/8": {
       "key": "HSS2-1/2X2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/2×2X1/8",
       "dims": {
         "Ht": 0.0635,
@@ -19670,7 +19670,7 @@
     },
     "HSS2-1/2X1-1/2X1/4": {
       "key": "HSS2-1/2X1-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/2×1-1/2X1/4",
       "dims": {
         "Ht": 0.0635,
@@ -19690,7 +19690,7 @@
     },
     "HSS2-1/2X1-1/2X3/16": {
       "key": "HSS2-1/2X1-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/2×1-1/2X3/16",
       "dims": {
         "Ht": 0.0635,
@@ -19710,7 +19710,7 @@
     },
     "HSS2-1/2X1-1/2X1/8": {
       "key": "HSS2-1/2X1-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/2×1-1/2X1/8",
       "dims": {
         "Ht": 0.0635,
@@ -19730,7 +19730,7 @@
     },
     "HSS2-1/2X1X3/16": {
       "key": "HSS2-1/2X1X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/2×1X3/16",
       "dims": {
         "Ht": 0.0635,
@@ -19750,7 +19750,7 @@
     },
     "HSS2-1/2X1X1/8": {
       "key": "HSS2-1/2X1X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/2×1X1/8",
       "dims": {
         "Ht": 0.0635,
@@ -19770,7 +19770,7 @@
     },
     "HSS2-1/4X2-1/4X1/4": {
       "key": "HSS2-1/4X2-1/4X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/4×2-1/4X1/4",
       "dims": {
         "Ht": 0.0572,
@@ -19790,7 +19790,7 @@
     },
     "HSS2-1/4X2-1/4X3/16": {
       "key": "HSS2-1/4X2-1/4X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/4×2-1/4X3/16",
       "dims": {
         "Ht": 0.0572,
@@ -19810,7 +19810,7 @@
     },
     "HSS2-1/4X2-1/4X1/8": {
       "key": "HSS2-1/4X2-1/4X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2-1/4×2-1/4X1/8",
       "dims": {
         "Ht": 0.0572,
@@ -19830,7 +19830,7 @@
     },
     "HSS2X2X1/4": {
       "key": "HSS2X2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2×2X1/4",
       "dims": {
         "Ht": 0.0508,
@@ -19850,7 +19850,7 @@
     },
     "HSS2X2X3/16": {
       "key": "HSS2X2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2×2X3/16",
       "dims": {
         "Ht": 0.0508,
@@ -19870,7 +19870,7 @@
     },
     "HSS2X2X1/8": {
       "key": "HSS2X2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2×2X1/8",
       "dims": {
         "Ht": 0.0508,
@@ -19890,7 +19890,7 @@
     },
     "HSS2X1-1/2X3/16": {
       "key": "HSS2X1-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2×1-1/2X3/16",
       "dims": {
         "Ht": 0.0508,
@@ -19910,7 +19910,7 @@
     },
     "HSS2X1-1/2X1/8": {
       "key": "HSS2X1-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2×1-1/2X1/8",
       "dims": {
         "Ht": 0.0508,
@@ -19930,7 +19930,7 @@
     },
     "HSS2X1X3/16": {
       "key": "HSS2X1X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2×1X3/16",
       "dims": {
         "Ht": 0.0508,
@@ -19950,7 +19950,7 @@
     },
     "HSS2X1X1/8": {
       "key": "HSS2X1X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS2×1X1/8",
       "dims": {
         "Ht": 0.0508,
@@ -19970,7 +19970,7 @@
     },
     "HSS1-1/2X1-1/2X1/4": {
       "key": "HSS1-1/2X1-1/2X1/4",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS1-1/2×1-1/2X1/4",
       "dims": {
         "Ht": 0.0381,
@@ -19990,7 +19990,7 @@
     },
     "HSS1-1/2X1-1/2X3/16": {
       "key": "HSS1-1/2X1-1/2X3/16",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS1-1/2×1-1/2X3/16",
       "dims": {
         "Ht": 0.0381,
@@ -20010,7 +20010,7 @@
     },
     "HSS1-1/2X1-1/2X1/8": {
       "key": "HSS1-1/2X1-1/2X1/8",
-      "variant": "STEEL_TUBE",
+      "variant": "STEEL_HSS_RECT",
       "label": "HSS1-1/2×1-1/2X1/8",
       "dims": {
         "Ht": 0.0381,
@@ -20030,7 +20030,7 @@
     },
     "HSS28.000X1.000": {
       "key": "HSS28.000X1.000",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS28.000×1.000",
       "dims": {
         "od": 0.711,
@@ -20048,7 +20048,7 @@
     },
     "HSS28.000X0.875": {
       "key": "HSS28.000X0.875",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS28.000×0.875",
       "dims": {
         "od": 0.711,
@@ -20066,7 +20066,7 @@
     },
     "HSS28.000X0.750": {
       "key": "HSS28.000X0.750",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS28.000×0.750",
       "dims": {
         "od": 0.711,
@@ -20084,7 +20084,7 @@
     },
     "HSS28.000X0.625": {
       "key": "HSS28.000X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS28.000×0.625",
       "dims": {
         "od": 0.711,
@@ -20102,7 +20102,7 @@
     },
     "HSS28.000X0.500": {
       "key": "HSS28.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS28.000×0.500",
       "dims": {
         "od": 0.711,
@@ -20120,7 +20120,7 @@
     },
     "HSS28.000X0.375": {
       "key": "HSS28.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS28.000×0.375",
       "dims": {
         "od": 0.711,
@@ -20138,7 +20138,7 @@
     },
     "HSS26.000X0.750": {
       "key": "HSS26.000X0.750",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS26.000×0.750",
       "dims": {
         "od": 0.66,
@@ -20156,7 +20156,7 @@
     },
     "HSS26.000X0.625": {
       "key": "HSS26.000X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS26.000×0.625",
       "dims": {
         "od": 0.66,
@@ -20174,7 +20174,7 @@
     },
     "HSS26.000X0.500": {
       "key": "HSS26.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS26.000×0.500",
       "dims": {
         "od": 0.66,
@@ -20192,7 +20192,7 @@
     },
     "HSS26.000X0.375": {
       "key": "HSS26.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS26.000×0.375",
       "dims": {
         "od": 0.66,
@@ -20210,7 +20210,7 @@
     },
     "HSS26.000X0.313": {
       "key": "HSS26.000X0.313",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS26.000×0.313",
       "dims": {
         "od": 0.66,
@@ -20228,7 +20228,7 @@
     },
     "HSS24.000X1.000": {
       "key": "HSS24.000X1.000",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS24.000×1.000",
       "dims": {
         "od": 0.61,
@@ -20246,7 +20246,7 @@
     },
     "HSS24.000X0.875": {
       "key": "HSS24.000X0.875",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS24.000×0.875",
       "dims": {
         "od": 0.61,
@@ -20264,7 +20264,7 @@
     },
     "HSS24.000X0.750": {
       "key": "HSS24.000X0.750",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS24.000×0.750",
       "dims": {
         "od": 0.61,
@@ -20282,7 +20282,7 @@
     },
     "HSS24.000X0.625": {
       "key": "HSS24.000X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS24.000×0.625",
       "dims": {
         "od": 0.61,
@@ -20300,7 +20300,7 @@
     },
     "HSS24.000X0.500": {
       "key": "HSS24.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS24.000×0.500",
       "dims": {
         "od": 0.61,
@@ -20318,7 +20318,7 @@
     },
     "HSS24.000X0.375": {
       "key": "HSS24.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS24.000×0.375",
       "dims": {
         "od": 0.61,
@@ -20336,7 +20336,7 @@
     },
     "HSS24.000X0.313": {
       "key": "HSS24.000X0.313",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS24.000×0.313",
       "dims": {
         "od": 0.61,
@@ -20354,7 +20354,7 @@
     },
     "HSS22.000X0.750": {
       "key": "HSS22.000X0.750",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS22.000×0.750",
       "dims": {
         "od": 0.559,
@@ -20372,7 +20372,7 @@
     },
     "HSS22.000X0.625": {
       "key": "HSS22.000X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS22.000×0.625",
       "dims": {
         "od": 0.559,
@@ -20390,7 +20390,7 @@
     },
     "HSS22.000X0.500": {
       "key": "HSS22.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS22.000×0.500",
       "dims": {
         "od": 0.559,
@@ -20408,7 +20408,7 @@
     },
     "HSS22.000X0.375": {
       "key": "HSS22.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS22.000×0.375",
       "dims": {
         "od": 0.559,
@@ -20426,7 +20426,7 @@
     },
     "HSS22.000X0.313": {
       "key": "HSS22.000X0.313",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS22.000×0.313",
       "dims": {
         "od": 0.559,
@@ -20444,7 +20444,7 @@
     },
     "HSS20.000X1.000": {
       "key": "HSS20.000X1.000",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS20.000×1.000",
       "dims": {
         "od": 0.508,
@@ -20462,7 +20462,7 @@
     },
     "HSS20.000X0.875": {
       "key": "HSS20.000X0.875",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS20.000×0.875",
       "dims": {
         "od": 0.508,
@@ -20480,7 +20480,7 @@
     },
     "HSS20.000X0.750": {
       "key": "HSS20.000X0.750",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS20.000×0.750",
       "dims": {
         "od": 0.508,
@@ -20498,7 +20498,7 @@
     },
     "HSS20.000X0.625": {
       "key": "HSS20.000X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS20.000×0.625",
       "dims": {
         "od": 0.508,
@@ -20516,7 +20516,7 @@
     },
     "HSS20.000X0.500": {
       "key": "HSS20.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS20.000×0.500",
       "dims": {
         "od": 0.508,
@@ -20534,7 +20534,7 @@
     },
     "HSS20.000X0.375": {
       "key": "HSS20.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS20.000×0.375",
       "dims": {
         "od": 0.508,
@@ -20552,7 +20552,7 @@
     },
     "HSS20.000X0.313": {
       "key": "HSS20.000X0.313",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS20.000×0.313",
       "dims": {
         "od": 0.508,
@@ -20570,7 +20570,7 @@
     },
     "HSS20.000X0.250": {
       "key": "HSS20.000X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS20.000×0.250",
       "dims": {
         "od": 0.508,
@@ -20588,7 +20588,7 @@
     },
     "HSS18.000X1.000": {
       "key": "HSS18.000X1.000",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS18.000×1.000",
       "dims": {
         "od": 0.457,
@@ -20606,7 +20606,7 @@
     },
     "HSS18.000X0.875": {
       "key": "HSS18.000X0.875",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS18.000×0.875",
       "dims": {
         "od": 0.457,
@@ -20624,7 +20624,7 @@
     },
     "HSS18.000X0.750": {
       "key": "HSS18.000X0.750",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS18.000×0.750",
       "dims": {
         "od": 0.457,
@@ -20642,7 +20642,7 @@
     },
     "HSS18.000X0.625": {
       "key": "HSS18.000X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS18.000×0.625",
       "dims": {
         "od": 0.457,
@@ -20660,7 +20660,7 @@
     },
     "HSS18.000X0.500": {
       "key": "HSS18.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS18.000×0.500",
       "dims": {
         "od": 0.457,
@@ -20678,7 +20678,7 @@
     },
     "HSS18.000X0.375": {
       "key": "HSS18.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS18.000×0.375",
       "dims": {
         "od": 0.457,
@@ -20696,7 +20696,7 @@
     },
     "HSS18.000X0.313": {
       "key": "HSS18.000X0.313",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS18.000×0.313",
       "dims": {
         "od": 0.457,
@@ -20714,7 +20714,7 @@
     },
     "HSS18.000X0.250": {
       "key": "HSS18.000X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS18.000×0.250",
       "dims": {
         "od": 0.457,
@@ -20732,7 +20732,7 @@
     },
     "HSS16.000X1.000": {
       "key": "HSS16.000X1.000",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS16.000×1.000",
       "dims": {
         "od": 0.406,
@@ -20750,7 +20750,7 @@
     },
     "HSS16.000X0.875": {
       "key": "HSS16.000X0.875",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS16.000×0.875",
       "dims": {
         "od": 0.406,
@@ -20768,7 +20768,7 @@
     },
     "HSS16.000X0.750": {
       "key": "HSS16.000X0.750",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS16.000×0.750",
       "dims": {
         "od": 0.406,
@@ -20786,7 +20786,7 @@
     },
     "HSS16.000X0.625": {
       "key": "HSS16.000X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS16.000×0.625",
       "dims": {
         "od": 0.406,
@@ -20804,7 +20804,7 @@
     },
     "HSS16.000X0.500": {
       "key": "HSS16.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS16.000×0.500",
       "dims": {
         "od": 0.406,
@@ -20822,7 +20822,7 @@
     },
     "HSS16.000X0.438": {
       "key": "HSS16.000X0.438",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS16.000×0.438",
       "dims": {
         "od": 0.406,
@@ -20840,7 +20840,7 @@
     },
     "HSS16.000X0.375": {
       "key": "HSS16.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS16.000×0.375",
       "dims": {
         "od": 0.406,
@@ -20858,7 +20858,7 @@
     },
     "HSS16.000X0.312": {
       "key": "HSS16.000X0.312",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS16.000×0.312",
       "dims": {
         "od": 0.406,
@@ -20876,7 +20876,7 @@
     },
     "HSS16.000X0.250": {
       "key": "HSS16.000X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS16.000×0.250",
       "dims": {
         "od": 0.406,
@@ -20894,7 +20894,7 @@
     },
     "HSS14.000X1.000": {
       "key": "HSS14.000X1.000",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS14.000×1.000",
       "dims": {
         "od": 0.356,
@@ -20912,7 +20912,7 @@
     },
     "HSS14.000X0.875": {
       "key": "HSS14.000X0.875",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS14.000×0.875",
       "dims": {
         "od": 0.356,
@@ -20930,7 +20930,7 @@
     },
     "HSS14.000X0.750": {
       "key": "HSS14.000X0.750",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS14.000×0.750",
       "dims": {
         "od": 0.356,
@@ -20948,7 +20948,7 @@
     },
     "HSS14.000X0.625": {
       "key": "HSS14.000X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS14.000×0.625",
       "dims": {
         "od": 0.356,
@@ -20966,7 +20966,7 @@
     },
     "HSS14.000X0.500": {
       "key": "HSS14.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS14.000×0.500",
       "dims": {
         "od": 0.356,
@@ -20984,7 +20984,7 @@
     },
     "HSS14.000X0.375": {
       "key": "HSS14.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS14.000×0.375",
       "dims": {
         "od": 0.356,
@@ -21002,7 +21002,7 @@
     },
     "HSS14.000X0.312": {
       "key": "HSS14.000X0.312",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS14.000×0.312",
       "dims": {
         "od": 0.356,
@@ -21020,7 +21020,7 @@
     },
     "HSS14.000X0.250": {
       "key": "HSS14.000X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS14.000×0.250",
       "dims": {
         "od": 0.356,
@@ -21038,7 +21038,7 @@
     },
     "HSS14.000X0.188": {
       "key": "HSS14.000X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS14.000×0.188",
       "dims": {
         "od": 0.356,
@@ -21056,7 +21056,7 @@
     },
     "HSS13.375X0.625": {
       "key": "HSS13.375X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS13.375×0.625",
       "dims": {
         "od": 0.34,
@@ -21074,7 +21074,7 @@
     },
     "HSS13.375X0.500": {
       "key": "HSS13.375X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS13.375×0.500",
       "dims": {
         "od": 0.34,
@@ -21092,7 +21092,7 @@
     },
     "HSS13.375X0.375": {
       "key": "HSS13.375X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS13.375×0.375",
       "dims": {
         "od": 0.34,
@@ -21110,7 +21110,7 @@
     },
     "HSS13.375X0.313": {
       "key": "HSS13.375X0.313",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS13.375×0.313",
       "dims": {
         "od": 0.34,
@@ -21128,7 +21128,7 @@
     },
     "HSS13.375X0.250": {
       "key": "HSS13.375X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS13.375×0.250",
       "dims": {
         "od": 0.34,
@@ -21146,7 +21146,7 @@
     },
     "HSS13.375X0.188": {
       "key": "HSS13.375X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS13.375×0.188",
       "dims": {
         "od": 0.34,
@@ -21164,7 +21164,7 @@
     },
     "HSS12.750X0.750": {
       "key": "HSS12.750X0.750",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS12.750×0.750",
       "dims": {
         "od": 0.324,
@@ -21182,7 +21182,7 @@
     },
     "HSS12.750X0.625": {
       "key": "HSS12.750X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS12.750×0.625",
       "dims": {
         "od": 0.324,
@@ -21200,7 +21200,7 @@
     },
     "HSS12.750X0.500": {
       "key": "HSS12.750X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS12.750×0.500",
       "dims": {
         "od": 0.324,
@@ -21218,7 +21218,7 @@
     },
     "HSS12.750X0.375": {
       "key": "HSS12.750X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS12.750×0.375",
       "dims": {
         "od": 0.324,
@@ -21236,7 +21236,7 @@
     },
     "HSS12.750X0.250": {
       "key": "HSS12.750X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS12.750×0.250",
       "dims": {
         "od": 0.324,
@@ -21254,7 +21254,7 @@
     },
     "HSS12.750X0.188": {
       "key": "HSS12.750X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS12.750×0.188",
       "dims": {
         "od": 0.324,
@@ -21272,7 +21272,7 @@
     },
     "HSS12.000X0.625": {
       "key": "HSS12.000X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS12.000×0.625",
       "dims": {
         "od": 0.305,
@@ -21290,7 +21290,7 @@
     },
     "HSS12.000X0.500": {
       "key": "HSS12.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS12.000×0.500",
       "dims": {
         "od": 0.305,
@@ -21308,7 +21308,7 @@
     },
     "HSS12.000X0.375": {
       "key": "HSS12.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS12.000×0.375",
       "dims": {
         "od": 0.305,
@@ -21326,7 +21326,7 @@
     },
     "HSS12.000X0.250": {
       "key": "HSS12.000X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS12.000×0.250",
       "dims": {
         "od": 0.305,
@@ -21344,7 +21344,7 @@
     },
     "HSS11.750X0.625": {
       "key": "HSS11.750X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS11.750×0.625",
       "dims": {
         "od": 0.3,
@@ -21362,7 +21362,7 @@
     },
     "HSS11.750X0.500": {
       "key": "HSS11.750X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS11.750×0.500",
       "dims": {
         "od": 0.3,
@@ -21380,7 +21380,7 @@
     },
     "HSS11.750X0.375": {
       "key": "HSS11.750X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS11.750×0.375",
       "dims": {
         "od": 0.3,
@@ -21398,7 +21398,7 @@
     },
     "HSS11.750X0.337": {
       "key": "HSS11.750X0.337",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS11.750×0.337",
       "dims": {
         "od": 0.3,
@@ -21416,7 +21416,7 @@
     },
     "HSS11.750X0.250": {
       "key": "HSS11.750X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS11.750×0.250",
       "dims": {
         "od": 0.3,
@@ -21434,7 +21434,7 @@
     },
     "HSS10.750X0.625": {
       "key": "HSS10.750X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS10.750×0.625",
       "dims": {
         "od": 0.273,
@@ -21452,7 +21452,7 @@
     },
     "HSS10.750X0.500": {
       "key": "HSS10.750X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS10.750×0.500",
       "dims": {
         "od": 0.273,
@@ -21470,7 +21470,7 @@
     },
     "HSS10.750X0.375": {
       "key": "HSS10.750X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS10.750×0.375",
       "dims": {
         "od": 0.273,
@@ -21488,7 +21488,7 @@
     },
     "HSS10.750X0.313": {
       "key": "HSS10.750X0.313",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS10.750×0.313",
       "dims": {
         "od": 0.273,
@@ -21506,7 +21506,7 @@
     },
     "HSS10.750X0.250": {
       "key": "HSS10.750X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS10.750×0.250",
       "dims": {
         "od": 0.273,
@@ -21524,7 +21524,7 @@
     },
     "HSS10.750X0.188": {
       "key": "HSS10.750X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS10.750×0.188",
       "dims": {
         "od": 0.273,
@@ -21542,7 +21542,7 @@
     },
     "HSS10.000X0.625": {
       "key": "HSS10.000X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS10.000×0.625",
       "dims": {
         "od": 0.254,
@@ -21560,7 +21560,7 @@
     },
     "HSS10.000X0.500": {
       "key": "HSS10.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS10.000×0.500",
       "dims": {
         "od": 0.254,
@@ -21578,7 +21578,7 @@
     },
     "HSS10.000X0.375": {
       "key": "HSS10.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS10.000×0.375",
       "dims": {
         "od": 0.254,
@@ -21596,7 +21596,7 @@
     },
     "HSS10.000X0.312": {
       "key": "HSS10.000X0.312",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS10.000×0.312",
       "dims": {
         "od": 0.254,
@@ -21614,7 +21614,7 @@
     },
     "HSS10.000X0.250": {
       "key": "HSS10.000X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS10.000×0.250",
       "dims": {
         "od": 0.254,
@@ -21632,7 +21632,7 @@
     },
     "HSS10.000X0.188": {
       "key": "HSS10.000X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS10.000×0.188",
       "dims": {
         "od": 0.254,
@@ -21650,7 +21650,7 @@
     },
     "HSS9.625X0.625": {
       "key": "HSS9.625X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS9.625×0.625",
       "dims": {
         "od": 0.244,
@@ -21668,7 +21668,7 @@
     },
     "HSS9.625X0.500": {
       "key": "HSS9.625X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS9.625×0.500",
       "dims": {
         "od": 0.244,
@@ -21686,7 +21686,7 @@
     },
     "HSS9.625X0.375": {
       "key": "HSS9.625X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS9.625×0.375",
       "dims": {
         "od": 0.244,
@@ -21704,7 +21704,7 @@
     },
     "HSS9.625X0.312": {
       "key": "HSS9.625X0.312",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS9.625×0.312",
       "dims": {
         "od": 0.244,
@@ -21722,7 +21722,7 @@
     },
     "HSS9.625X0.250": {
       "key": "HSS9.625X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS9.625×0.250",
       "dims": {
         "od": 0.244,
@@ -21740,7 +21740,7 @@
     },
     "HSS9.625X0.188": {
       "key": "HSS9.625X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS9.625×0.188",
       "dims": {
         "od": 0.244,
@@ -21758,7 +21758,7 @@
     },
     "HSS8.625X0.625": {
       "key": "HSS8.625X0.625",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS8.625×0.625",
       "dims": {
         "od": 0.219,
@@ -21776,7 +21776,7 @@
     },
     "HSS8.625X0.500": {
       "key": "HSS8.625X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS8.625×0.500",
       "dims": {
         "od": 0.219,
@@ -21794,7 +21794,7 @@
     },
     "HSS8.625X0.375": {
       "key": "HSS8.625X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS8.625×0.375",
       "dims": {
         "od": 0.219,
@@ -21812,7 +21812,7 @@
     },
     "HSS8.625X0.322": {
       "key": "HSS8.625X0.322",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS8.625×0.322",
       "dims": {
         "od": 0.219,
@@ -21830,7 +21830,7 @@
     },
     "HSS8.625X0.250": {
       "key": "HSS8.625X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS8.625×0.250",
       "dims": {
         "od": 0.219,
@@ -21848,7 +21848,7 @@
     },
     "HSS8.625X0.188": {
       "key": "HSS8.625X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS8.625×0.188",
       "dims": {
         "od": 0.219,
@@ -21866,7 +21866,7 @@
     },
     "HSS7.500X0.500": {
       "key": "HSS7.500X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS7.500×0.500",
       "dims": {
         "od": 0.191,
@@ -21884,7 +21884,7 @@
     },
     "HSS7.500X0.375": {
       "key": "HSS7.500X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS7.500×0.375",
       "dims": {
         "od": 0.191,
@@ -21902,7 +21902,7 @@
     },
     "HSS7.500X0.312": {
       "key": "HSS7.500X0.312",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS7.500×0.312",
       "dims": {
         "od": 0.191,
@@ -21920,7 +21920,7 @@
     },
     "HSS7.500X0.250": {
       "key": "HSS7.500X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS7.500×0.250",
       "dims": {
         "od": 0.191,
@@ -21938,7 +21938,7 @@
     },
     "HSS7.500X0.188": {
       "key": "HSS7.500X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS7.500×0.188",
       "dims": {
         "od": 0.191,
@@ -21956,7 +21956,7 @@
     },
     "HSS7.000X0.500": {
       "key": "HSS7.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS7.000×0.500",
       "dims": {
         "od": 0.178,
@@ -21974,7 +21974,7 @@
     },
     "HSS7.000X0.375": {
       "key": "HSS7.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS7.000×0.375",
       "dims": {
         "od": 0.178,
@@ -21992,7 +21992,7 @@
     },
     "HSS7.000X0.312": {
       "key": "HSS7.000X0.312",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS7.000×0.312",
       "dims": {
         "od": 0.178,
@@ -22010,7 +22010,7 @@
     },
     "HSS7.000X0.250": {
       "key": "HSS7.000X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS7.000×0.250",
       "dims": {
         "od": 0.178,
@@ -22028,7 +22028,7 @@
     },
     "HSS7.000X0.188": {
       "key": "HSS7.000X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS7.000×0.188",
       "dims": {
         "od": 0.178,
@@ -22046,7 +22046,7 @@
     },
     "HSS7.000X0.125": {
       "key": "HSS7.000X0.125",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS7.000×0.125",
       "dims": {
         "od": 0.178,
@@ -22064,7 +22064,7 @@
     },
     "HSS6.875X0.375": {
       "key": "HSS6.875X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.875×0.375",
       "dims": {
         "od": 0.17500000000000002,
@@ -22082,7 +22082,7 @@
     },
     "HSS6.875X0.312": {
       "key": "HSS6.875X0.312",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.875×0.312",
       "dims": {
         "od": 0.17500000000000002,
@@ -22100,7 +22100,7 @@
     },
     "HSS6.875X0.250": {
       "key": "HSS6.875X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.875×0.250",
       "dims": {
         "od": 0.17500000000000002,
@@ -22118,7 +22118,7 @@
     },
     "HSS6.875X0.188": {
       "key": "HSS6.875X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.875×0.188",
       "dims": {
         "od": 0.17500000000000002,
@@ -22136,7 +22136,7 @@
     },
     "HSS6.625X0.500": {
       "key": "HSS6.625X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.625×0.500",
       "dims": {
         "od": 0.168,
@@ -22154,7 +22154,7 @@
     },
     "HSS6.625X0.432": {
       "key": "HSS6.625X0.432",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.625×0.432",
       "dims": {
         "od": 0.168,
@@ -22172,7 +22172,7 @@
     },
     "HSS6.625X0.375": {
       "key": "HSS6.625X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.625×0.375",
       "dims": {
         "od": 0.168,
@@ -22190,7 +22190,7 @@
     },
     "HSS6.625X0.312": {
       "key": "HSS6.625X0.312",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.625×0.312",
       "dims": {
         "od": 0.168,
@@ -22208,7 +22208,7 @@
     },
     "HSS6.625X0.280": {
       "key": "HSS6.625X0.280",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.625×0.280",
       "dims": {
         "od": 0.168,
@@ -22226,7 +22226,7 @@
     },
     "HSS6.625X0.250": {
       "key": "HSS6.625X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.625×0.250",
       "dims": {
         "od": 0.168,
@@ -22244,7 +22244,7 @@
     },
     "HSS6.625X0.188": {
       "key": "HSS6.625X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.625×0.188",
       "dims": {
         "od": 0.168,
@@ -22262,7 +22262,7 @@
     },
     "HSS6.625X0.125": {
       "key": "HSS6.625X0.125",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.625×0.125",
       "dims": {
         "od": 0.168,
@@ -22280,7 +22280,7 @@
     },
     "HSS6.000X0.500": {
       "key": "HSS6.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.000×0.500",
       "dims": {
         "od": 0.152,
@@ -22298,7 +22298,7 @@
     },
     "HSS6.000X0.375": {
       "key": "HSS6.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.000×0.375",
       "dims": {
         "od": 0.152,
@@ -22316,7 +22316,7 @@
     },
     "HSS6.000X0.312": {
       "key": "HSS6.000X0.312",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.000×0.312",
       "dims": {
         "od": 0.152,
@@ -22334,7 +22334,7 @@
     },
     "HSS6.000X0.280": {
       "key": "HSS6.000X0.280",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.000×0.280",
       "dims": {
         "od": 0.152,
@@ -22352,7 +22352,7 @@
     },
     "HSS6.000X0.250": {
       "key": "HSS6.000X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.000×0.250",
       "dims": {
         "od": 0.152,
@@ -22370,7 +22370,7 @@
     },
     "HSS6.000X0.188": {
       "key": "HSS6.000X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.000×0.188",
       "dims": {
         "od": 0.152,
@@ -22388,7 +22388,7 @@
     },
     "HSS6.000X0.125": {
       "key": "HSS6.000X0.125",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS6.000×0.125",
       "dims": {
         "od": 0.152,
@@ -22406,7 +22406,7 @@
     },
     "HSS5.563X0.500": {
       "key": "HSS5.563X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.563×0.500",
       "dims": {
         "od": 0.14100000000000001,
@@ -22424,7 +22424,7 @@
     },
     "HSS5.563X0.375": {
       "key": "HSS5.563X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.563×0.375",
       "dims": {
         "od": 0.14100000000000001,
@@ -22442,7 +22442,7 @@
     },
     "HSS5.563X0.258": {
       "key": "HSS5.563X0.258",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.563×0.258",
       "dims": {
         "od": 0.14100000000000001,
@@ -22460,7 +22460,7 @@
     },
     "HSS5.563X0.188": {
       "key": "HSS5.563X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.563×0.188",
       "dims": {
         "od": 0.14100000000000001,
@@ -22478,7 +22478,7 @@
     },
     "HSS5.563X0.134": {
       "key": "HSS5.563X0.134",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.563×0.134",
       "dims": {
         "od": 0.14100000000000001,
@@ -22496,7 +22496,7 @@
     },
     "HSS5.500X0.500": {
       "key": "HSS5.500X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.500×0.500",
       "dims": {
         "od": 0.14,
@@ -22514,7 +22514,7 @@
     },
     "HSS5.500X0.375": {
       "key": "HSS5.500X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.500×0.375",
       "dims": {
         "od": 0.14,
@@ -22532,7 +22532,7 @@
     },
     "HSS5.500X0.258": {
       "key": "HSS5.500X0.258",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.500×0.258",
       "dims": {
         "od": 0.14,
@@ -22550,7 +22550,7 @@
     },
     "HSS5.000X0.500": {
       "key": "HSS5.000X0.500",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.000×0.500",
       "dims": {
         "od": 0.127,
@@ -22568,7 +22568,7 @@
     },
     "HSS5.000X0.375": {
       "key": "HSS5.000X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.000×0.375",
       "dims": {
         "od": 0.127,
@@ -22586,7 +22586,7 @@
     },
     "HSS5.000X0.312": {
       "key": "HSS5.000X0.312",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.000×0.312",
       "dims": {
         "od": 0.127,
@@ -22604,7 +22604,7 @@
     },
     "HSS5.000X0.258": {
       "key": "HSS5.000X0.258",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.000×0.258",
       "dims": {
         "od": 0.127,
@@ -22622,7 +22622,7 @@
     },
     "HSS5.000X0.250": {
       "key": "HSS5.000X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.000×0.250",
       "dims": {
         "od": 0.127,
@@ -22640,7 +22640,7 @@
     },
     "HSS5.000X0.188": {
       "key": "HSS5.000X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.000×0.188",
       "dims": {
         "od": 0.127,
@@ -22658,7 +22658,7 @@
     },
     "HSS5.000X0.125": {
       "key": "HSS5.000X0.125",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS5.000×0.125",
       "dims": {
         "od": 0.127,
@@ -22676,7 +22676,7 @@
     },
     "HSS4.500X0.375": {
       "key": "HSS4.500X0.375",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS4.500×0.375",
       "dims": {
         "od": 0.114,
@@ -22694,7 +22694,7 @@
     },
     "HSS4.500X0.337": {
       "key": "HSS4.500X0.337",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS4.500×0.337",
       "dims": {
         "od": 0.114,
@@ -22712,7 +22712,7 @@
     },
     "HSS4.500X0.237": {
       "key": "HSS4.500X0.237",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS4.500×0.237",
       "dims": {
         "od": 0.114,
@@ -22730,7 +22730,7 @@
     },
     "HSS4.500X0.188": {
       "key": "HSS4.500X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS4.500×0.188",
       "dims": {
         "od": 0.114,
@@ -22748,7 +22748,7 @@
     },
     "HSS4.500X0.125": {
       "key": "HSS4.500X0.125",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS4.500×0.125",
       "dims": {
         "od": 0.114,
@@ -22766,7 +22766,7 @@
     },
     "HSS4.000X0.313": {
       "key": "HSS4.000X0.313",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS4.000×0.313",
       "dims": {
         "od": 0.10200000000000001,
@@ -22784,7 +22784,7 @@
     },
     "HSS4.000X0.250": {
       "key": "HSS4.000X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS4.000×0.250",
       "dims": {
         "od": 0.10200000000000001,
@@ -22802,7 +22802,7 @@
     },
     "HSS4.000X0.237": {
       "key": "HSS4.000X0.237",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS4.000×0.237",
       "dims": {
         "od": 0.10200000000000001,
@@ -22820,7 +22820,7 @@
     },
     "HSS4.000X0.226": {
       "key": "HSS4.000X0.226",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS4.000×0.226",
       "dims": {
         "od": 0.10200000000000001,
@@ -22838,7 +22838,7 @@
     },
     "HSS4.000X0.220": {
       "key": "HSS4.000X0.220",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS4.000×0.220",
       "dims": {
         "od": 0.10200000000000001,
@@ -22856,7 +22856,7 @@
     },
     "HSS4.000X0.188": {
       "key": "HSS4.000X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS4.000×0.188",
       "dims": {
         "od": 0.10200000000000001,
@@ -22874,7 +22874,7 @@
     },
     "HSS4.000X0.125": {
       "key": "HSS4.000X0.125",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS4.000×0.125",
       "dims": {
         "od": 0.10200000000000001,
@@ -22892,7 +22892,7 @@
     },
     "HSS3.500X0.313": {
       "key": "HSS3.500X0.313",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.500×0.313",
       "dims": {
         "od": 0.0889,
@@ -22910,7 +22910,7 @@
     },
     "HSS3.500X0.300": {
       "key": "HSS3.500X0.300",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.500×0.300",
       "dims": {
         "od": 0.0889,
@@ -22928,7 +22928,7 @@
     },
     "HSS3.500X0.250": {
       "key": "HSS3.500X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.500×0.250",
       "dims": {
         "od": 0.0889,
@@ -22946,7 +22946,7 @@
     },
     "HSS3.500X0.216": {
       "key": "HSS3.500X0.216",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.500×0.216",
       "dims": {
         "od": 0.0889,
@@ -22964,7 +22964,7 @@
     },
     "HSS3.500X0.203": {
       "key": "HSS3.500X0.203",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.500×0.203",
       "dims": {
         "od": 0.0889,
@@ -22982,7 +22982,7 @@
     },
     "HSS3.500X0.188": {
       "key": "HSS3.500X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.500×0.188",
       "dims": {
         "od": 0.0889,
@@ -23000,7 +23000,7 @@
     },
     "HSS3.500X0.125": {
       "key": "HSS3.500X0.125",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.500×0.125",
       "dims": {
         "od": 0.0889,
@@ -23018,7 +23018,7 @@
     },
     "HSS3.000X0.250": {
       "key": "HSS3.000X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.000×0.250",
       "dims": {
         "od": 0.0762,
@@ -23036,7 +23036,7 @@
     },
     "HSS3.000X0.216": {
       "key": "HSS3.000X0.216",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.000×0.216",
       "dims": {
         "od": 0.0762,
@@ -23054,7 +23054,7 @@
     },
     "HSS3.000X0.203": {
       "key": "HSS3.000X0.203",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.000×0.203",
       "dims": {
         "od": 0.0762,
@@ -23072,7 +23072,7 @@
     },
     "HSS3.000X0.188": {
       "key": "HSS3.000X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.000×0.188",
       "dims": {
         "od": 0.0762,
@@ -23090,7 +23090,7 @@
     },
     "HSS3.000X0.152": {
       "key": "HSS3.000X0.152",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.000×0.152",
       "dims": {
         "od": 0.0762,
@@ -23108,7 +23108,7 @@
     },
     "HSS3.000X0.134": {
       "key": "HSS3.000X0.134",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.000×0.134",
       "dims": {
         "od": 0.0762,
@@ -23126,7 +23126,7 @@
     },
     "HSS3.000X0.125": {
       "key": "HSS3.000X0.125",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS3.000×0.125",
       "dims": {
         "od": 0.0762,
@@ -23144,7 +23144,7 @@
     },
     "HSS2.875X0.250": {
       "key": "HSS2.875X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS2.875×0.250",
       "dims": {
         "od": 0.073,
@@ -23162,7 +23162,7 @@
     },
     "HSS2.875X0.203": {
       "key": "HSS2.875X0.203",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS2.875×0.203",
       "dims": {
         "od": 0.073,
@@ -23180,7 +23180,7 @@
     },
     "HSS2.875X0.188": {
       "key": "HSS2.875X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS2.875×0.188",
       "dims": {
         "od": 0.073,
@@ -23198,7 +23198,7 @@
     },
     "HSS2.875X0.125": {
       "key": "HSS2.875X0.125",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS2.875×0.125",
       "dims": {
         "od": 0.073,
@@ -23216,7 +23216,7 @@
     },
     "HSS2.500X0.250": {
       "key": "HSS2.500X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS2.500×0.250",
       "dims": {
         "od": 0.0635,
@@ -23234,7 +23234,7 @@
     },
     "HSS2.500X0.188": {
       "key": "HSS2.500X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS2.500×0.188",
       "dims": {
         "od": 0.0635,
@@ -23252,7 +23252,7 @@
     },
     "HSS2.500X0.125": {
       "key": "HSS2.500X0.125",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS2.500×0.125",
       "dims": {
         "od": 0.0635,
@@ -23270,7 +23270,7 @@
     },
     "HSS2.375X0.250": {
       "key": "HSS2.375X0.250",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS2.375×0.250",
       "dims": {
         "od": 0.0603,
@@ -23288,7 +23288,7 @@
     },
     "HSS2.375X0.218": {
       "key": "HSS2.375X0.218",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS2.375×0.218",
       "dims": {
         "od": 0.0603,
@@ -23306,7 +23306,7 @@
     },
     "HSS2.375X0.188": {
       "key": "HSS2.375X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS2.375×0.188",
       "dims": {
         "od": 0.0603,
@@ -23324,7 +23324,7 @@
     },
     "HSS2.375X0.154": {
       "key": "HSS2.375X0.154",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS2.375×0.154",
       "dims": {
         "od": 0.0603,
@@ -23342,7 +23342,7 @@
     },
     "HSS2.375X0.125": {
       "key": "HSS2.375X0.125",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS2.375×0.125",
       "dims": {
         "od": 0.0603,
@@ -23360,7 +23360,7 @@
     },
     "HSS1.900X0.188": {
       "key": "HSS1.900X0.188",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS1.900×0.188",
       "dims": {
         "od": 0.048299999999999996,
@@ -23378,7 +23378,7 @@
     },
     "HSS1.900X0.145": {
       "key": "HSS1.900X0.145",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS1.900×0.145",
       "dims": {
         "od": 0.048299999999999996,
@@ -23396,7 +23396,7 @@
     },
     "HSS1.900X0.120": {
       "key": "HSS1.900X0.120",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS1.900×0.120",
       "dims": {
         "od": 0.048299999999999996,
@@ -23414,7 +23414,7 @@
     },
     "HSS1.660X0.140": {
       "key": "HSS1.660X0.140",
-      "variant": "STEEL_PIPE",
+      "variant": "STEEL_HSS_ROUND",
       "label": "HSS1.660×0.140",
       "dims": {
         "od": 0.0422,

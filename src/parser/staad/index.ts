@@ -577,18 +577,30 @@ function buildDefaultSteelProfile(sectionKey: string): ParseSection | null {
     variant = 'STEEL_ANGLE';
     dims = { leg: DEFAULT_SIZE, t: DEFAULT_THK };
     dimNames = ['Leg', 'Thickness'];
+  } else if (upper.startsWith('MC')) {
+    variant = 'STEEL_CHANNEL';
+    dims = { d: DEFAULT_SIZE, bf: DEFAULT_SIZE * 0.5, tw: DEFAULT_THK, tf: DEFAULT_THK };
+    dimNames = ['Depth', 'Flange Width', 'Web Thickness', 'Flange Thickness'];
   } else if (upper.startsWith('C')) {
     variant = 'STEEL_CHANNEL';
     dims = { d: DEFAULT_SIZE, bf: DEFAULT_SIZE * 0.5, tw: DEFAULT_THK, tf: DEFAULT_THK };
     dimNames = ['Depth', 'Flange Width', 'Web Thickness', 'Flange Thickness'];
-  } else if (upper.startsWith('W')) {
+  } else if (upper.startsWith('W') || upper.startsWith('S') || upper.startsWith('M')) {
     variant = 'STEEL_WIDE_FLANGE';
     dims = { d: DEFAULT_SIZE, bf: DEFAULT_SIZE * 0.8, tw: DEFAULT_THK * 0.5, tf: DEFAULT_THK };
     dimNames = ['Depth', 'Flange Width', 'Web Thickness', 'Flange Thickness'];
   } else if (upper.startsWith('HSS')) {
-    variant = 'STEEL_TUBE';
-    dims = { Ht: DEFAULT_SIZE, B: DEFAULT_SIZE, t: DEFAULT_THK };
-    dimNames = ['Height', 'Width', 'Wall Thickness'];
+    // 1 X → round (diameter×thickness), 2 X → rectangular (height×width×thickness)
+    const xCount = (upper.match(/X/g) || []).length;
+    if (xCount === 1) {
+      variant = 'STEEL_HSS_ROUND';
+      dims = { od: DEFAULT_SIZE, t: DEFAULT_THK };
+      dimNames = ['Outer Diameter', 'Wall Thickness'];
+    } else {
+      variant = 'STEEL_HSS_RECT';
+      dims = { Ht: DEFAULT_SIZE, B: DEFAULT_SIZE, t: DEFAULT_THK };
+      dimNames = ['Height', 'Width', 'Wall Thickness'];
+    }
   } else if (upper.startsWith('PIPE')) {
     variant = 'STEEL_PIPE';
     dims = { od: DEFAULT_SIZE, t: DEFAULT_THK };

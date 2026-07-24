@@ -1,3 +1,5 @@
+import type { SectionType, SectionProfile, SectionMeta } from '../parser/types';
+
 // Normalized geometry model types (format-independent)
 
 export interface ModelNode {
@@ -19,12 +21,11 @@ export interface ModelMember {
 }
 
 export interface MemberSection {
-  type: 'RECTANGULAR' | 'CIRCULAR' | 'TRAPEZOIDAL' | 'TSHAPE' | 'CUSTOM' | 'TAPERED' | 'USER' | 'UNKNOWN'
-    | 'STEEL_ANGLE' | 'STEEL_DOUBLE_ANGLE' | 'STEEL_WIDE_FLANGE' | 'STEEL_CHANNEL' | 'STEEL_PIPE' | 'STEEL_TUBE' | 'STEEL_GENERIC';
+  type: SectionType;
   /** Cross-section polygon */
-  profile?: import('../parser/types').SectionProfile;
+  profile?: SectionProfile;
   /** Human-readable metadata for InfoPanel */
-  meta?: import('../parser/types').SectionMeta;
+  meta?: SectionMeta;
   /** Canonical steel section key */
   sectionKey?: string;
   /** Fallback description */

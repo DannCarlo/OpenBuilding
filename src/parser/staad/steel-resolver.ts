@@ -37,43 +37,76 @@ export function resolveStaadSteelKey(
   tableName: string,
   _spacingConversion: number = 1
 ): ResolvedSteelKey {
-  const cleaned = tableName.trim();
+  // Strip material grade suffixes (_A1085, _A500, etc.)
+  const cleaned = tableName.trim().replace(/_[A-Z]\d+$/i, '');
   const upper = cleaned.toUpperCase();
 
-  // ── Angle: match angle code L\d+ anywhere in the string
-  //    Works for: ST L20203, L L20203, L20203
+
+  // ── MC Channel (must precede C/W patterns) ────────────────────
+  const mcMatch = upper.match(/\bMC(\d+)X([\d.]+)\b/i);
+  if (mcMatch) {
+    return { sectionKey: `MC${mcMatch[1]}X${mcMatch[2]}` };
+  }
+
+  // ── S-Shape ────────────────────────────────────────────────────
+  const sMatch = upper.match(/\bS(\d+)X([\d.]+)\b/i);
+  if (sMatch) {
+    return { sectionKey: `S${sMatch[1]}X${sMatch[2]}` };
+  }
+
+  // ── M-Shape ────────────────────────────────────────────────────
+  const mMatch = upper.match(/\bM(\d+)X([\d.]+)\b/i);
+  if (mMatch) {
+    return { sectionKey: `M${mMatch[1]}X${mMatch[2]}` };
+  }
+
+  // ── Angle: match angle code L\d+ anywhere in the string ────────
   const lMatch = upper.match(/\bL(\d+)\b/i);
   if (lMatch) {
     const angleKey = unpackAngleCode(lMatch[1]);
     return { sectionKey: angleKey };
   }
 
-  // ── Wide Flange: ST W6X9, ST W12X26, W12X26 ──────────────────
+  // ── Wide Flange ────────────────────────────────────────────────
   const wMatch = upper.match(/\bW(\d+)X([\d.]+)\b/i);
   if (wMatch) {
     return { sectionKey: `W${wMatch[1]}X${wMatch[2]}` };
   }
 
-  // ── Channel: ST C6X8.2, C6X8.2 ────────────────────────────────
+  // ── Channel ────────────────────────────────────────────────────
   const cMatch = upper.match(/\bC(\d+)X([\d.]+)\b/i);
   if (cMatch) {
     return { sectionKey: `C${cMatch[1]}X${cMatch[2]}` };
   }
 
-  // ── Pipe: ST P4, ST PIPE4 ─────────────────────────────────────
-  const pMatch = upper.match(/\b(?:PIPE)?P(\d+)\b/i);
-  if (pMatch) {
-    return { sectionKey: `Pipe${pMatch[1]}STD` };
+  // ── HSST (HSS Rectangular Tube) ────────────────────────────────
+  const hsstMatch = upper.match(/\b(?:HSST|HSS)\s*(\d+(?:\.\d+)?)X(\d+(?:\.\d+)?)X([\d.]+)\b/i);
+  if (hsstMatch) {
+    const h = hsstMatch[1], w = hsstMatch[2];
+    const tFrac = decimalToImperialFraction(parseFloat(hsstMatch[3]));
+    return { sectionKey: `HSS${h}X${w}X${tFrac}` };
   }
 
-  // ── HSS / Tube: TUB4X2X0.25, HSS4X4X0.25 ─────────────────────
-  const hssMatch = upper.match(/\b(?:TUB\s*)?(?:HSS)?(\d+(?:\.\d+)?)X(\d+(?:\.\d+)?)X([\d.]+)\b/i);
-  if (hssMatch) {
-    const h = hssMatch[1];
-    const w = hssMatch[2];
-    const t = hssMatch[3];
-    const tFrac = decimalToImperialFraction(parseFloat(t));
+  // ── HSSP (HSS Round / Pipe) ───────────────────────────────────
+  const hsspMatch = upper.match(/\b(?:HSSP)\s*(\d+(?:\.\d+)?)X([\d.]+)\b/i);
+  if (hsspMatch) {
+    const od = hsspMatch[1], t = hsspMatch[2];
+    // Round HSS uses decimal thickness in AISC keys (unlike rectangular which uses fractions)
+    return { sectionKey: `HSS${od}X${t}` };
+  }
+
+  // ── TUB (legacy STAAD tube notation) ──────────────────────────
+  const tubMatch = upper.match(/\b(?:TUB)\s*(\d+(?:\.\d+)?)X(\d+(?:\.\d+)?)X([\d.]+)\b/i);
+  if (tubMatch) {
+    const h = tubMatch[1], w = tubMatch[2];
+    const tFrac = decimalToImperialFraction(parseFloat(tubMatch[3]));
     return { sectionKey: `HSS${h}X${w}X${tFrac}` };
+  }
+
+  // ── Pipe: P4, PIPE4, PIPS7 ────────────────────────────────────
+  const pMatch = upper.match(/\b(?:PIPE|PIPS|P)(\d+)\b/i);
+  if (pMatch) {
+    return { sectionKey: `Pipe${pMatch[1]}STD` };
   }
 
   // ── Unrecognized ──────────────────────────────────────────────

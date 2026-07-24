@@ -6,21 +6,11 @@
  * All polygon builders are private to this module.
  */
 
-import type { SectionProfile, SectionMeta, SectionDim } from '../parser/types';
+import type { SectionProfile, SectionMeta, SectionDim, SteelSectionVariant } from '../parser/types';
 import aiscData from '../data/aisc-sections.json';
 
-// ---------------------------------------------------------------------------
-// Steel section type variants (survives Phase 4)
-// ---------------------------------------------------------------------------
-
-export type SteelSectionVariant =
-  | 'STEEL_ANGLE'
-  | 'STEEL_DOUBLE_ANGLE'
-  | 'STEEL_WIDE_FLANGE'
-  | 'STEEL_CHANNEL'
-  | 'STEEL_PIPE'
-  | 'STEEL_TUBE'
-  | 'STEEL_GENERIC';
+// Re-export for convenience (source of truth is parser/types.ts)
+export type { SteelSectionVariant };
 
 // ---------------------------------------------------------------------------
 // SteelSectionEntry — the registry item (Phase 3)
@@ -179,7 +169,20 @@ export function buildSteelProfile(params: BuildSteelProfileParams): {
       if (t > 0) {
         profile.holes = [[[-bi, -hi], [bi, -hi], [bi, hi], [-bi, hi]]];
       }
-      family = 'HSS';
+      family = 'Tube';
+      break;
+    }
+    case 'STEEL_HSS_RECT': {
+      const H = dims.Ht, B = dims.B, t = dims.t;
+      const hH = H / 2, hB = B / 2;
+      const hi = (H - 2 * t) / 2, bi = (B - 2 * t) / 2;
+      profile = {
+        outer: [[-hB, -hH], [hB, -hH], [hB, hH], [-hB, hH]],
+      };
+      if (t > 0) {
+        profile.holes = [[[-bi, -hi], [bi, -hi], [bi, hi], [-bi, hi]]];
+      }
+      family = 'HSS Rect';
       break;
     }
     case 'STEEL_PIPE': {
@@ -190,6 +193,16 @@ export function buildSteelProfile(params: BuildSteelProfileParams): {
         profile.holes = [polygonCircle(ri)];
       }
       family = 'Pipe';
+      break;
+    }
+    case 'STEEL_HSS_ROUND': {
+      const od = dims.od, t = dims.t;
+      const ro = od / 2, ri = t > 0 ? ro - t : 0;
+      profile = { outer: polygonCircle(ro) };
+      if (ri > 0) {
+        profile.holes = [polygonCircle(ri)];
+      }
+      family = 'HSS Round';
       break;
     }
     default:
