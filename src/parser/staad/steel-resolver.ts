@@ -15,90 +15,63 @@
 export interface ResolvedSteelKey {
   /** Canonical AISC key for STEEL_REGISTRY lookup, or null if unrecognized */
   sectionKey: string | null;
-  /** Back-to-back spacing in meters (double angles only) */
-  spacing?: number;
-  /** STAAD "SP" value as-is in current units (for display) */
-  spacingRaw?: number;
-  /** Configuration type: "LD" (long leg back-to-back), "SD" (short leg back-to-back) */
-  config?: 'LD' | 'SD';
 }
 
 /**
  * Map a STAAD TABLE designation to a canonical AISC section key.
  *
- * STAAD quirks handled:
- *   "ST W12X26"        → key="W12X26"
- *   "W W12X26"         → key="W12X26"
- *   "LD L20203 SP 5"   → key="L2X2X3/16", config="LD", spacing=5×unitConversion
- *   "SD L20203 SP 5"   → key="L2X2X3/16", config="SD", spacing=5×unitConversion
- *   "L L20203"         → key="L2X2X3/16"  (single angle)
+ * Supported STAAD TABLE formats:
+ *   "ST W6X9"          → key="W6X9"
+ *   "ST L20203"        → key="L2X2X3/16"  (single angle)
+ *   "L L20203"         → key="L2X2X3/16"
  *   "ST C6X8.2"        → key="C6X8.2"
  *   "ST P4"            → key="Pipe4STD"
- *   "ST PIPE4"         → key="Pipe4STD"
- *   "TUB TUB4X2X0.25"  → key="HSS4X2X1/4"
- *   "ST HSS4X4X0.25"   → key="HSS4X4X1/4"
+ *   "TUB4X2X0.25"      → key="HSS4X2X1/4"
+ *   "HSS4X4X0.25"      → key="HSS4X4X1/4"
+ *
+ * Not yet supported: LD/SD double angles, pipe schedules beyond STD.
  *
  * @param tableName  Raw STAAD TABLE string (everything after the TABLE keyword)
- * @param spacingConversion  Length conversion factor for SP value (e.g. inches → meters)
  */
 export function resolveStaadSteelKey(
   tableName: string,
-  spacingConversion: number = 1
+  _spacingConversion: number = 1
 ): ResolvedSteelKey {
   const cleaned = tableName.trim();
   const upper = cleaned.toUpperCase();
 
-  // ── Double Angle: LD/SD L20203 SP 0.005 ──────────────────────
-  const daMatch = upper.match(/^(LD|SD)\s+L(\d+)(?:\s+SP\s+([\d.]+))?/i);
-  if (daMatch) {
-    const config = daMatch[1].toUpperCase() as 'LD' | 'SD';
-    const angleCode = daMatch[2];
-    const spRaw = daMatch[3] ? parseFloat(daMatch[3]) : undefined;
-    const angleKey = unpackAngleCode(angleCode);
-    if (angleKey) {
-      return {
-        sectionKey: angleKey,
-        spacing: spRaw != null ? spRaw * spacingConversion : undefined,
-        spacingRaw: spRaw,
-        config,
-      };
-    }
-    return { sectionKey: null };
-  }
-
-  // ── Single Angle: L L20203 ────────────────────────────────────
-  const lMatch = upper.match(/^L\s+L(\d+)/i);
+  // ── Angle: match angle code L\d+ anywhere in the string
+  //    Works for: ST L20203, L L20203, L20203
+  const lMatch = upper.match(/\bL(\d+)\b/i);
   if (lMatch) {
     const angleKey = unpackAngleCode(lMatch[1]);
     return { sectionKey: angleKey };
   }
 
-  // ── Wide Flange: ST W12X26 or W W12X26 ────────────────────────
-  const wMatch = upper.match(/(?:ST\s+)?(W\d+X[\d.]+)/i);
+  // ── Wide Flange: ST W6X9, ST W12X26, W12X26 ──────────────────
+  const wMatch = upper.match(/\bW(\d+)X([\d.]+)\b/i);
   if (wMatch) {
-    return { sectionKey: wMatch[1].replace(/\s+/g, '') };
+    return { sectionKey: `W${wMatch[1]}X${wMatch[2]}` };
   }
 
-  // ── Channel: ST C6X8.2 ────────────────────────────────────────
-  const cMatch = upper.match(/(?:ST\s+)?(C\d+X[\d.]+)/i);
+  // ── Channel: ST C6X8.2, C6X8.2 ────────────────────────────────
+  const cMatch = upper.match(/\bC(\d+)X([\d.]+)\b/i);
   if (cMatch) {
-    return { sectionKey: cMatch[1].replace(/\s+/g, '') };
+    return { sectionKey: `C${cMatch[1]}X${cMatch[2]}` };
   }
 
-  // ── Pipe: ST P4 or ST PIPE4 ───────────────────────────────────
-  const pMatch = upper.match(/(?:ST\s+)?(?:PIPE)?P(\d+)/i);
+  // ── Pipe: ST P4, ST PIPE4 ─────────────────────────────────────
+  const pMatch = upper.match(/\b(?:PIPE)?P(\d+)\b/i);
   if (pMatch) {
-    // Map to AISC pipe naming: P4 → Pipe4STD
     return { sectionKey: `Pipe${pMatch[1]}STD` };
   }
 
-  // ── HSS / Tube: TUB TUB4X2X0.25 or HSS4X4X0.25 ────────────────
-  const hssMatch = upper.match(/(?:ST\s+)?(?:TUB\s+)?(?:TUB)?(HSS)?(\d+(?:\.\d+)?)X(\d+(?:\.\d+)?)X([\d.]+)/i);
+  // ── HSS / Tube: TUB4X2X0.25, HSS4X4X0.25 ─────────────────────
+  const hssMatch = upper.match(/\b(?:TUB\s*)?(?:HSS)?(\d+(?:\.\d+)?)X(\d+(?:\.\d+)?)X([\d.]+)\b/i);
   if (hssMatch) {
-    const h = hssMatch[2];
-    const w = hssMatch[3];
-    const t = hssMatch[4];
-    // Convert decimal thickness to fraction if possible
+    const h = hssMatch[1];
+    const w = hssMatch[2];
+    const t = hssMatch[3];
     const tFrac = decimalToImperialFraction(parseFloat(t));
     return { sectionKey: `HSS${h}X${w}X${tFrac}` };
   }

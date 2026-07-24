@@ -7,7 +7,7 @@ import { parseMemberLine } from './commands/member-incidences';
 import { parseMemberPropertyLine } from './commands/member-properties';
 import { parseSupportLine } from './commands/supports';
 import { parseGroupBlock } from './commands/group-definitions';
-import { lookupSteelSection } from '../../lib/steel-db';
+import { lookupSteelSection, buildSteelProfile, type SteelSectionVariant } from '../../lib/steel-db';
 import { resolveStaadSteelKey } from './steel-resolver';
 import { computeSectionProperties, polygonCircle } from '../../lib/section-profiles';
 import type { SectionProfile, SectionMeta } from '../types';
@@ -322,35 +322,17 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
     if (prop.type === 'TABLE' && prop.tableName) {
       const resolved = resolveStaadSteelKey(prop.tableName, dimConv);
       if (resolved.sectionKey) {
-        const entry = lookupSteelSection(resolved.sectionKey);
+        let entry = lookupSteelSection(resolved.sectionKey);
+        // Fuzzy fallback: STAAD sometimes rounds channel weights (C6X10 → C6X10.5)
+        if (!entry) {
+          entry = lookupSteelSection(resolved.sectionKey + '.5');
+        }
         if (entry) {
-          // Build section from registry, customizing meta for double-angle configs
-          let meta = entry.meta;
-          if (resolved.config) {
-            // Double angle: two angles back-to-back. Area = 2× single angle.
-            // Ix/Iy omitted — require composite section analysis (parallel axis theorem
-            // with spacing) for correct values.
-            const configLabel = resolved.config === 'LD' ? 'Double Angle (LLBB)' : 'Double Angle (SLBB)';
-            const gap = resolved.spacing;
-            const dims = [
-              ...entry.meta.dims,
-              ...(gap != null
-                ? [{ name: 'Back-to-Back Gap' as string, value: gap }]
-                : []),
-            ];
-            meta = {
-              ...entry.meta,
-              label: `2${entry.meta.label}`,
-              family: configLabel,
-              dims,
-              area: (entry.meta.area ?? 0) * 2,
-            };
-          }
           const section: ParseSection = {
             type: entry.variant,
-            description: meta.label,
-            profile: entry.profile,  // known gap: single L-shape, not paired
-            meta,
+            description: entry.meta.label,
+            profile: entry.profile,
+            meta: entry.meta,
             sectionKey: entry.key,
           };
           for (const mid of prop.memberIds) {
@@ -358,8 +340,24 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
           }
           continue;
         }
+        // Registry miss — build a default-shaped profile so the member still
+        // renders as the correct cross-section type (L, C, W, etc.)
+        const fallback = buildDefaultSteelProfile(resolved.sectionKey);
+        if (fallback) {
+          for (const mid of prop.memberIds) {
+            sectionMap.set(mid, fallback);
+          }
+          continue;
+        }
       }
-      // Registry lookup failed — fall through to generic handling
+      // Registry lookup failed — try to guess shape from tableName
+      const guessed = buildDefaultSteelProfile(prop.tableName.replace(/^(ST|LD|SD|TUB)\s+/i, ''));
+      if (guessed) {
+        for (const mid of prop.memberIds) {
+          sectionMap.set(mid, guessed);
+        }
+        continue;
+      }
     }
 
     const sectionType = mapSectionType(prop);
@@ -559,6 +557,59 @@ function mapSectionType(prop: import('./types').StaadMemberProperty): ParseSecti
     case 'USER': return 'USER';
     default: return 'UNKNOWN';
   }
+}
+
+/**
+ * Build a default ParseSection for a steel section recognized by the resolver
+ * but not found in the AISC registry. Delegates to buildSteelProfile() in
+ * steel-db.ts so all polygon construction lives in one place.
+ */
+function buildDefaultSteelProfile(sectionKey: string): ParseSection | null {
+  const upper = sectionKey.toUpperCase();
+  const DEFAULT_SIZE = 0.075; // 75mm
+  const DEFAULT_THK  = 0.008; // 8mm
+
+  let variant: SteelSectionVariant;
+  let dims: Record<string, number>;
+  let dimNames: string[];
+
+  if (upper.startsWith('L')) {
+    variant = 'STEEL_ANGLE';
+    dims = { leg: DEFAULT_SIZE, t: DEFAULT_THK };
+    dimNames = ['Leg', 'Thickness'];
+  } else if (upper.startsWith('C')) {
+    variant = 'STEEL_CHANNEL';
+    dims = { d: DEFAULT_SIZE, bf: DEFAULT_SIZE * 0.5, tw: DEFAULT_THK, tf: DEFAULT_THK };
+    dimNames = ['Depth', 'Flange Width', 'Web Thickness', 'Flange Thickness'];
+  } else if (upper.startsWith('W')) {
+    variant = 'STEEL_WIDE_FLANGE';
+    dims = { d: DEFAULT_SIZE, bf: DEFAULT_SIZE * 0.8, tw: DEFAULT_THK * 0.5, tf: DEFAULT_THK };
+    dimNames = ['Depth', 'Flange Width', 'Web Thickness', 'Flange Thickness'];
+  } else if (upper.startsWith('HSS')) {
+    variant = 'STEEL_TUBE';
+    dims = { Ht: DEFAULT_SIZE, B: DEFAULT_SIZE, t: DEFAULT_THK };
+    dimNames = ['Height', 'Width', 'Wall Thickness'];
+  } else if (upper.startsWith('PIPE')) {
+    variant = 'STEEL_PIPE';
+    dims = { od: DEFAULT_SIZE, t: DEFAULT_THK };
+    dimNames = ['Outer Diameter', 'Wall Thickness'];
+  } else {
+    return null;
+  }
+
+  const { profile, meta } = buildSteelProfile({
+    variant, dims, dimNames,
+    label: `${sectionKey} (approx)`,
+    source: 'Default',
+  });
+
+  return {
+    type: variant,
+    description: meta.label,
+    profile,
+    meta,
+    sectionKey,
+  };
 }
 
 /** Map STAAD support type → format-agnostic type */

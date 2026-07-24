@@ -46,13 +46,76 @@ function polygonCircle(r: number, n: number = 24): [number, number][] {
   });
 }
 
-/** Build a SectionProfile + SectionMeta from a raw JSON entry */
+/** Build a SteelSectionEntry from a raw JSON row — delegates to buildSteelProfile. */
 function buildEntry(raw: {
   key: string; variant: string; label: string;
   dims: Record<string, number>; dimNames: string[];
   area: number; ix?: number; iy?: number;
 }): SteelSectionEntry {
   const { key, variant, label, dims, dimNames, area, ix, iy } = raw;
+  const { profile, meta } = buildSteelProfile({
+    variant: variant as SteelSectionVariant,
+    dims, dimNames, label,
+    area, ix, iy,
+    source: 'AISC',
+  });
+  return { key, label, variant: variant as SteelSectionVariant, profile, meta };
+}
+
+/** Build the registry from JSON data */
+function buildRegistry(): Map<string, SteelSectionEntry> {
+  const map = new Map<string, SteelSectionEntry>();
+  for (const [key, raw] of Object.entries(aiscData.sections)) {
+    try {
+      map.set(key, buildEntry(raw as Parameters<typeof buildEntry>[0]));
+    } catch {
+      // skip malformed entries silently
+    }
+  }
+  return map;
+}
+
+const STEEL_REGISTRY: Map<string, SteelSectionEntry> = buildRegistry();
+
+// ---------------------------------------------------------------------------
+// Public API (Phase 3+)
+// ---------------------------------------------------------------------------
+
+/** Look up a steel section by canonical AISC key. Returns undefined if not found. */
+export function lookupSteelSection(key: string): SteelSectionEntry | undefined {
+  return STEEL_REGISTRY.get(key);
+}
+
+/** Check if a canonical key exists in the registry. */
+export function hasSteelSection(key: string): boolean {
+  return STEEL_REGISTRY.has(key);
+}
+
+// ---------------------------------------------------------------------------
+// buildSteelProfile — shared core (used by registry + parser fallback)
+// ---------------------------------------------------------------------------
+
+export interface BuildSteelProfileParams {
+  variant: SteelSectionVariant;
+  dims: Record<string, number>;
+  dimNames: string[];
+  label: string;
+  area?: number;
+  ix?: number;
+  iy?: number;
+  source?: string;
+}
+
+/**
+ * Build a SectionProfile + SectionMeta for any steel variant.
+ * This is the single source of truth for steel polygon construction.
+ * Used by the registry (buildEntry) and by parser fallbacks.
+ */
+export function buildSteelProfile(params: BuildSteelProfileParams): {
+  profile: SectionProfile;
+  meta: SectionMeta;
+} {
+  const { variant, dims, dimNames, label, area, ix, iy, source = 'AISC' } = params;
   let profile: SectionProfile;
   let family: string;
 
@@ -100,7 +163,7 @@ function buildEntry(raw: {
           [ h - t, -h + t], [ h - t,  h],
         ],
       };
-      family = 'Single Angle';
+      family = 'Angle';
       break;
     }
     case 'STEEL_TUBE': {
@@ -113,7 +176,7 @@ function buildEntry(raw: {
       if (t > 0) {
         profile.holes = [[[-bi, -hi], [bi, -hi], [bi, hi], [-bi, hi]]];
       }
-      family = 'HSS Rectangular';
+      family = 'HSS';
       break;
     }
     case 'STEEL_PIPE': {
@@ -133,7 +196,6 @@ function buildEntry(raw: {
         const hy = dims.d / 2, hz = dims.bf / 2;
         profile = { outer: [[-hz, -hy], [hz, -hy], [hz, hy], [-hz, hy]] };
       } else {
-        // Nothing to go on — tiny placeholder
         profile = { outer: [[-0.01, -0.01], [0.01, -0.01], [0.01, 0.01], [-0.01, 0.01]] };
       }
   }
@@ -149,43 +211,14 @@ function buildEntry(raw: {
   const meta: SectionMeta = {
     label,
     family,
-    source: 'AISC',
+    source,
     dims: metaDims,
-    area,
+    ...(area != null ? { area } : {}),
     ...(ix != null ? { ix } : {}),
     ...(iy != null ? { iy } : {}),
   };
 
-  return { key, label, variant: variant as SteelSectionVariant, profile, meta };
-}
-
-/** Build the registry from JSON data */
-function buildRegistry(): Map<string, SteelSectionEntry> {
-  const map = new Map<string, SteelSectionEntry>();
-  for (const [key, raw] of Object.entries(aiscData.sections)) {
-    try {
-      map.set(key, buildEntry(raw as Parameters<typeof buildEntry>[0]));
-    } catch {
-      // skip malformed entries silently
-    }
-  }
-  return map;
-}
-
-const STEEL_REGISTRY: Map<string, SteelSectionEntry> = buildRegistry();
-
-// ---------------------------------------------------------------------------
-// Public API (Phase 3+)
-// ---------------------------------------------------------------------------
-
-/** Look up a steel section by canonical AISC key. Returns undefined if not found. */
-export function lookupSteelSection(key: string): SteelSectionEntry | undefined {
-  return STEEL_REGISTRY.get(key);
-}
-
-/** Check if a canonical key exists in the registry. */
-export function hasSteelSection(key: string): boolean {
-  return STEEL_REGISTRY.has(key);
+  return { profile, meta };
 }
 
 // ===========================================================================
