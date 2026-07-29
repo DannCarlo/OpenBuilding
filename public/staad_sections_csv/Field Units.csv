@@ -1,0 +1,15 @@
+TableName,Field0,Field1,Field2,Field3,Field4,Field5,Field6,Field7,Field8,Field9,Field10,Field11,Field12,Field13,Field14,Field15,Field16,Field17,Field18,Field19,Field20,Field21,Field22,Field23,Field24,Field25,Field26,Field27,Field28,IconName
+Angle,NUMBER,TEXT,TEXT,in,in,in,in^2,in,,,,,,,,,,,,,,,,,,,,,,angle
+B Shape,NUMBER,TEXT,TEXT,in^2,in,in,in,in,in^4,in^4,in,in^4,in^3,in^3,,,,,,,,,,,,,,,,beam
+Castellated Comp Beam,NUMBER,TEXT,TEXT,TEXT,TEXT,in,in,in,in,deg,in,lb/ft,in^2,in^2,in^4,In^4,In^3,In^3,in,In^4,In^3,NUMBER,in,in^2,NUMBER,In^4,In^3,In^3,In^3,beam
+Castellated NonComp Beam,NUMBER,TEXT,TEXT,TEXT,in,in,in,in,deg,in,in^2,in^2,in^4,in^4,in^3,in^3,in,in,in^4,in^3,in,in,in,,,,,,,beam
+Channel,NUMBER,TEXT,TEXT,in^2,in,in,in,in,in^4,in^4,in,in^4,in^3,in^3,,,,,,,,,,,,,,,,channel
+HP Shape,NUMBER,TEXT,TEXT,in^2,in,in,in,in,in^4,in^4,in,in^4,in^3,in^3,in,in,in,,,,,,,,,,,,,beam
+HSS Rectangle,NUMBER,TEXT,TEXT,in^2,in,in,in,in^4,in^4,in^4,in^3,in^3,in^3,,,,,,,,,,,,,,,,,tube
+HSS Round,NUMBER,TEXT,TEXT,in,in,in^2,in^4,in^3,in^3,,,,,,,,,,,,,,,,,,,,,pipe
+M Shape,NUMBER,TEXT,TEXT,in^2,in,in,in,in,in^4,in^4,in,in^4,in^3,in^3,in,in,in,,,,,,,,,,,,,beam
+MC Channel,NUMBER,TEXT,TEXT,in^2,in,in,in,in,in^4,in^4,in,in^4,in^3,in^3,,,,,,,,,,,,,,,,channel
+Pipe,NUMBER,TEXT,TEXT,in,in,in^2,in^4,in^3,,,,,,,,,,,,,,,,,,,,,,pipe
+S Shape,NUMBER,TEXT,TEXT,in^2,in,in,in,in,in^4,in^4,in,in^4,in^3,in^3,in,in,,,,,,,,,,,,,,beam
+Tube,NUMBER,TEXT,TEXT,in^2,in,in,in,in^4,in^4,in^4,in^3,in^3,,,,,,,,,,,,,,,,,,pipe
+W Shape,NUMBER,TEXT,TEXT,in^2,in,in,in,in,in^4,in^4,in,in^4,in^3,in^3,in,in,in,,,,,,,,,,,,,beam

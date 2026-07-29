@@ -7,10 +7,10 @@ import { parseMemberLine } from './commands/member-incidences';
 import { parseMemberPropertyLine } from './commands/member-properties';
 import { parseSupportLine } from './commands/supports';
 import { parseGroupBlock } from './commands/group-definitions';
-import { lookupSteelSection, buildSteelProfile, type SteelSectionVariant } from '../../lib/steel-db';
-import { resolveStaadSteelKey } from './steel-resolver';
+import { lookupSteelSection } from '../../lib/steel-db';
 import { computeSectionProperties, polygonCircle } from '../../lib/section-profiles';
 import type { SectionProfile, SectionMeta } from '../types';
+import staadToAisc from '../../data/staad-to-aisc.json';
 
 /**
  * Parse a STAAD .std input file and return a format-agnostic BaseParseResult.
@@ -318,15 +318,13 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
     let depthYB = prop.yb != null ? prop.yb * dimConv : undefined;
     let depthZB = prop.zb != null ? prop.zb * dimConv : undefined;
 
-    // Phase 3 — TABLE (steel) sections: resolver → registry lookup
+    // Phase 3 — TABLE (steel) sections: STAAD name → mapping → registry lookup
     if (prop.type === 'TABLE' && prop.tableName) {
-      const resolved = resolveStaadSteelKey(prop.tableName, dimConv);
-      if (resolved.sectionKey) {
-        let entry = lookupSteelSection(resolved.sectionKey);
-        // Fuzzy fallback: STAAD sometimes rounds channel weights (C6X10 → C6X10.5)
-        if (!entry) {
-          entry = lookupSteelSection(resolved.sectionKey + '.5');
-        }
+      // Strip format prefix (ST, LD, SD, TUB) to get the raw STAAD name
+      const staadName = prop.tableName.replace(/^(ST|LD|SD|TUB)\s+/i, '').trim();
+      const aiscKey = (staadToAisc as Record<string, string>)[staadName];
+      if (aiscKey) {
+        const entry = lookupSteelSection(aiscKey);
         if (entry) {
           const section: ParseSection = {
             type: entry.variant,
@@ -340,23 +338,6 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
           }
           continue;
         }
-        // Registry miss — build a default-shaped profile so the member still
-        // renders as the correct cross-section type (L, C, W, etc.)
-        const fallback = buildDefaultSteelProfile(resolved.sectionKey);
-        if (fallback) {
-          for (const mid of prop.memberIds) {
-            sectionMap.set(mid, fallback);
-          }
-          continue;
-        }
-      }
-      // Registry lookup failed — try to guess shape from tableName
-      const guessed = buildDefaultSteelProfile(prop.tableName.replace(/^(ST|LD|SD|TUB)\s+/i, ''));
-      if (guessed) {
-        for (const mid of prop.memberIds) {
-          sectionMap.set(mid, guessed);
-        }
-        continue;
       }
     }
 
@@ -557,71 +538,6 @@ function mapSectionType(prop: import('./types').StaadMemberProperty): ParseSecti
     case 'USER': return 'USER';
     default: return 'UNKNOWN';
   }
-}
-
-/**
- * Build a default ParseSection for a steel section recognized by the resolver
- * but not found in the AISC registry. Delegates to buildSteelProfile() in
- * steel-db.ts so all polygon construction lives in one place.
- */
-function buildDefaultSteelProfile(sectionKey: string): ParseSection | null {
-  const upper = sectionKey.toUpperCase();
-  const DEFAULT_SIZE = 0.075; // 75mm
-  const DEFAULT_THK  = 0.008; // 8mm
-
-  let variant: SteelSectionVariant;
-  let dims: Record<string, number>;
-  let dimNames: string[];
-
-  if (upper.startsWith('L')) {
-    variant = 'STEEL_ANGLE';
-    dims = { leg: DEFAULT_SIZE, t: DEFAULT_THK };
-    dimNames = ['Leg', 'Thickness'];
-  } else if (upper.startsWith('MC')) {
-    variant = 'STEEL_CHANNEL';
-    dims = { d: DEFAULT_SIZE, bf: DEFAULT_SIZE * 0.5, tw: DEFAULT_THK, tf: DEFAULT_THK };
-    dimNames = ['Depth', 'Flange Width', 'Web Thickness', 'Flange Thickness'];
-  } else if (upper.startsWith('C')) {
-    variant = 'STEEL_CHANNEL';
-    dims = { d: DEFAULT_SIZE, bf: DEFAULT_SIZE * 0.5, tw: DEFAULT_THK, tf: DEFAULT_THK };
-    dimNames = ['Depth', 'Flange Width', 'Web Thickness', 'Flange Thickness'];
-  } else if (upper.startsWith('W') || upper.startsWith('S') || upper.startsWith('M')) {
-    variant = 'STEEL_WIDE_FLANGE';
-    dims = { d: DEFAULT_SIZE, bf: DEFAULT_SIZE * 0.8, tw: DEFAULT_THK * 0.5, tf: DEFAULT_THK };
-    dimNames = ['Depth', 'Flange Width', 'Web Thickness', 'Flange Thickness'];
-  } else if (upper.startsWith('HSS')) {
-    // 1 X → round (diameter×thickness), 2 X → rectangular (height×width×thickness)
-    const xCount = (upper.match(/X/g) || []).length;
-    if (xCount === 1) {
-      variant = 'STEEL_HSS_ROUND';
-      dims = { od: DEFAULT_SIZE, t: DEFAULT_THK };
-      dimNames = ['Outer Diameter', 'Wall Thickness'];
-    } else {
-      variant = 'STEEL_HSS_RECT';
-      dims = { Ht: DEFAULT_SIZE, B: DEFAULT_SIZE, t: DEFAULT_THK };
-      dimNames = ['Height', 'Width', 'Wall Thickness'];
-    }
-  } else if (upper.startsWith('PIPE')) {
-    variant = 'STEEL_PIPE';
-    dims = { od: DEFAULT_SIZE, t: DEFAULT_THK };
-    dimNames = ['Outer Diameter', 'Wall Thickness'];
-  } else {
-    return null;
-  }
-
-  const { profile, meta } = buildSteelProfile({
-    variant, dims, dimNames,
-    label: `${sectionKey} (approx)`,
-    source: 'Default',
-  });
-
-  return {
-    type: variant,
-    description: meta.label,
-    profile,
-    meta,
-    sectionKey,
-  };
 }
 
 /** Map STAAD support type → format-agnostic type */
