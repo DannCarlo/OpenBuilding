@@ -1,4 +1,4 @@
-import type { SectionType, SectionProfile, SectionMeta } from '../parser/types';
+import type { SectionType, SectionProfile, SectionMeta, SectionConfig } from '../parser/types';
 
 // Normalized geometry model types (format-independent)
 
@@ -30,6 +30,10 @@ export interface MemberSection {
   sectionKey?: string;
   /** Fallback description */
   description: string;
+  /** STAAD section arrangement config (compound, back-to-back, reversed axis, etc.). */
+  config?: SectionConfig;
+  /** Human-readable warning when the section cannot be rendered accurately. */
+  renderWarning?: string;
 }
 
 export interface ModelSupport {

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useModelStore } from '../../store/modelStore';
 import { DEFAULT_MEMBER_RADIUS } from '../../lib/constants';
-import { getMemberColor, getSupportColor } from '../../lib/colors';
+import { getMemberColor, getSupportColor, RENDER_WARNING_COLOR } from '../../lib/colors';
 import { useViewStore } from '../../store/viewStore';
 import { useUIStore } from '../../store/uiStore';
 import * as THREE from 'three';
@@ -20,6 +20,8 @@ export interface MemberGeometryData {
   color: string;
   memberId: number;
   sectionType?: string;
+  /** Warning message when the section cannot be rendered accurately. */
+  renderWarning?: string;
 }
 
 /**
@@ -112,17 +114,20 @@ export function useSceneGeometry() {
 
       const radius = DEFAULT_MEMBER_RADIUS;
 
-      // Color
+      // Color — use warning color for members with rendering limitations
       let color = getMemberColor(member.section?.type);
+      const hasWarning = !!member.section?.renderWarning;
       if (member.id === selectedMemberId) {
         color = '#FFD700';
       } else if (member.id === hoveredMemberId) {
         color = '#66AAFF';
+      } else if (hasWarning) {
+        color = RENDER_WARNING_COLOR;
       }
 
       // Check if this is a column (mostly vertical) or beam (mostly horizontal)
       const absY = Math.abs(dir.y);
-      if (absY > 0.8 && member.id !== selectedMemberId && member.id !== hoveredMemberId) {
+      if (absY > 0.8 && member.id !== selectedMemberId && member.id !== hoveredMemberId && !hasWarning) {
         color = '#E85D47'; // coral for columns
       }
 
@@ -137,6 +142,7 @@ export function useSceneGeometry() {
         color,
         memberId: member.id,
         sectionType: member.section?.type,
+        renderWarning: member.section?.renderWarning,
       });
     }
 

@@ -36,6 +36,9 @@ export const SUPPORT_COLORS: Record<string, string> = {
   UNKNOWN: '#888888',
 };
 
+/** Warning color for members with rendering limitations (double angles, missing sections, etc.). */
+export const RENDER_WARNING_COLOR = '#FF8C00'; // dark orange
+
 // Get a color for a member based on its section type
 export function getMemberColor(sectionType?: string): string {
   if (!sectionType) return MEMBER_COLORS.default;

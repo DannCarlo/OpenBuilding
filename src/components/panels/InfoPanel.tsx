@@ -3,6 +3,7 @@ import { X } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { useUIStore } from '../../store/uiStore';
 import { useModelStore } from '../../store/modelStore';
+import type { SectionConfigProp } from '../../parser/types';
 
 /**
  * Format a dimension for display.
@@ -14,6 +15,34 @@ function fmt(v: number | null | undefined): string {
   if (v == null) return '—';
   if (v >= 1) return `${v.toFixed(2)} m`;
   return `${(v * 1000).toFixed(1)} mm`;
+}
+
+/** Format a config prop using its unit hint (defaults to mm since config values are small). */
+function fmtConfigProp(p: SectionConfigProp): string {
+  const unit = p.unit ?? 'mm';
+  if (unit === 'mm') return `${(p.value * 1000).toFixed(1)} mm`;
+  if (unit === 'm') return `${p.value.toFixed(3)} m`;
+  return `${p.value.toFixed(3)} ${unit}`;
+}
+
+/**
+ * Format a steel section label for readability:
+ *   "L2-1/2X3-1/2X3-1/8" → "L 2-1/2 x 3-1/2 x 3-1/8"
+ *   "W12X26"              → "W 12 x 26"
+ *   "HSS20X12X5/8"        → "HSS 20 x 12 x 5/8"
+ *   "Pipe4STD"            → "Pipe 4 STD"
+ */
+function fmtSectionLabel(raw: string): string {
+  let s = raw
+    // Space after letter prefix: "W12" → "W 12", "HSS20" → "HSS 20"
+    .replace(/^([A-Za-z]+)(\d)/, '$1 $2')
+    // Space around X separators: "12X26" → "12 x 26"
+    .replace(/(\S)([Xx×])(\S)/g, '$1 $2 $3')
+    // Lowercase the x for readability
+    .replace(/ [Xx] /g, ' × ')
+    // Space before pipe schedule: "Pipe4STD" → "Pipe 4 STD"
+    .replace(/(\d)(STD|XS|XXS)$/, '$1 $2');
+  return s;
 }
 
 /**
@@ -83,7 +112,7 @@ export function InfoPanel() {
       </div>
 
       <div className="space-y-2.5 text-xs">
-        <InfoRow label="Type" value={member.section?.description || 'Unknown'} />
+        <InfoRow label="Type" value={fmtSectionLabel(member.section?.description || 'Unknown')} />
         <InfoRow label="Start Node" value={String(member.startNodeId)} />
         <InfoRow label="End Node" value={String(member.endNodeId)} />
         {startNode && endNode && (
@@ -98,12 +127,13 @@ export function InfoPanel() {
         {member.beta != null && (
           <InfoRow label="Beta Angle" value={`${member.beta}°`} />
         )}
+
         {member.section && (
           <>
             <div className="w-full h-px bg-border my-1" />
             {member.section.meta ? (
               <>
-                <InfoRow label="Section" value={member.section.meta.label} />
+                <InfoRow label="Section" value={fmtSectionLabel(member.section.meta.label)} />
                 <InfoRow label="Family" value={member.section.meta.family} />
                 {member.section.meta.dims.map(d => (
                   <InfoRow key={d.name} label={d.name} value={fmt(d.value)} />
@@ -111,11 +141,27 @@ export function InfoPanel() {
                 {member.section.meta.area != null && (
                   <InfoRow label="Area" value={`${(member.section.meta.area * 1e6).toFixed(1)} mm²`} />
                 )}
+                {/* ── SectionConfig extras (dynamic, like dims) ─── */}
+                {member.section.config?.label && (
+                  <InfoRow label="Style" value={member.section.config.label} />
+                )}
+                {member.section.config?.props.map(p => (
+                  <InfoRow key={p.name} label={p.name} value={fmtConfigProp(p)} />
+                ))}
               </>
             ) : (
               <InfoRow label="Type" value={member.section.description || 'Unknown'} />
             )}
           </>
+        )}
+
+        {/* ── Render warning — supplementary, shown at bottom ── */}
+        {member.section?.renderWarning && (
+          <div className="mt-2 rounded-md bg-amber-500/15 border border-amber-500/40 px-3 py-2">
+            <p className="text-amber-700 text-xs leading-relaxed">
+              ⚠ {member.section.renderWarning}
+            </p>
+          </div>
         )}
       </div>
     </GlassPanel>

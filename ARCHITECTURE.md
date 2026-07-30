@@ -16,8 +16,10 @@ structure_viewer/
 │   ├── index.css                        # Tailwind v4 entry + @theme design tokens + global resets
 │   │
 │   ├── data/
-│   │   └── aisc-sections.json           # ★ AISC 16.0 steel database — 1,223 sections (W, C, L, HSS, Pipe)
-│   │                                    #   Each entry: key, variant, dims, dimNames, area, ix, iy
+│   │   ├── aisc-sections.json           # ★ AISC 16.0 steel database — 1,223 sections (W, C, L, HSS, Pipe)
+│   │   │                                #   Each entry: key, variant, dims, dimNames, area, ix, iy
+│   │   └── staad-to-aisc.json           # ★ STAAD name → AISC key mapping (1,408 entries)
+│   │                                    #   Built by scripts/build-staad-mapping.mjs from CSV data
 │   │
 │   ├── parser/                          # ★ Multi-format parser (client-side, pure TypeScript)
 │   │   ├── index.ts                     # Format dispatcher
@@ -25,30 +27,30 @@ structure_viewer/
 │   │   │                                #   SectionProfile  — polygon boundary + holes
 │   │   │                                #   SectionMeta     — label, family, dims[], source, area/ix/iy
 │   │   │                                #   SectionDim      — { name, value }
-│   │   │                                #   ParseSection    — { type, profile?, meta?, sectionKey?, description }
+│   │   │                                #   SectionConfig   — { arrangement, label?, props[] } (compound/b2b)
+│   │   │                                #   ParseSection    — { type, profile?, meta?, sectionKey?,
+│   │   │                                #                        description, config?, renderWarning? }
 │   │   │                                #   ParseMember, ParseNode, ParseSupport, ParsePlate
 │   │   │                                #   BaseParseResult — universal parser output
 │   │   ├── utils.ts                     # getLengthConversion() — shared utility
 │   │   └── staad/                       # STAAD .std parser
 │   │       ├── index.ts                 # parseStaadFile → toBaseResult() → BaseParseResult
-│   │       │                            #   PRIS sections: inline polygon construction + computeSectionProperties()
-│   │       │                            #   TABLE sections: resolveStaadSteelKey() → lookupSteelSection()
+│   │       │                            #   PRIS sections: inline polygon construction
+│   │       │                            #   TABLE sections: direct lookup via staad-to-aisc.json
+│   │       │                            #   Angle config detection: ST/LD/SD/SA/RA → SectionConfig
+│   │       │                            #   Render warnings: double angle, missing DB, unknown PRIS
 │   │       ├── types.ts                 # STAAD-internal types (StaadJoint, StaadMember, etc.)
 │   │       ├── utils.ts                 # parseUnitLine, expandRange, stripComments
-│   │       ├── steel-resolver.ts        # ★ STAAD TABLE name → canonical AISC key
-│   │       │                            #   e.g. "LD L20203 SP 0.005" → "L2X2X3/16"
-│   │       │                            #        "ST W12X26"          → "W12X26"
-│   │       │                            #        "ST P4"              → "Pipe4STD"
 │   │       └── commands/
 │   │           ├── joint-coordinates.ts
 │   │           ├── member-incidences.ts
-│   │           ├── member-properties.ts
+│   │           ├── member-properties.ts  # Extracts tableName + prefix + SP spacing
 │   │           ├── supports.ts
 │   │           └── group-definitions.ts
 │   │
 │   ├── model/
 │   │   ├── types.ts                     # ParsedModel, ModelMember { section: MemberSection | null }
-│   │   │                                # MemberSection mirrors ParseSection (profile, meta, sectionKey, type)
+│   │   │                                # MemberSection mirrors ParseSection (+ config?, renderWarning?)
 │   │   └── builder.ts                   # BaseParseResult → ParsedModel (pure assembly)
 │   │
 │   ├── store/
@@ -103,21 +105,32 @@ structure_viewer/
 │       │                                #   SteelSectionEntry { key, label, variant, profile, meta }
 │       ├── geometry-utils.ts            # ★ buildExtrudedProfile(profile, length) → BufferGeometry
 │       │                                #   The one renderer function. Handles outer + holes.
-│       ├── colors.ts                    # SECTION_COLORS (keyed by variant), getMemberColor()
+│       ├── colors.ts                    # SECTION_COLORS, getMemberColor(), RENDER_WARNING_COLOR (#FF8C00)
 │       └── constants.ts                 # App name, GRID_COLORS, DEFAULT_MEMBER_RADIUS
 │
 ├── scripts/
-│   └── convert-aisc.mjs                 # Converts AISC CSV → aisc-sections.json (re-runnable)
+│   ├── convert-aisc.mjs                 # Converts AISC CSV → aisc-sections.json (re-runnable)
+│   └── build-staad-mapping.mjs          # Builds staad-to-aisc.json from sections_csv/*.csv (re-runnable)
 │
 ├── public/
 │   ├── aisc-shapes-database-v160-2 - Database v16.0.csv  # Source AISC data
+│   ├── sections_csv/                    # STAAD section tables (18 CSVs, StaadName → Name)
+│   │   ├── W Shape.csv                  #   W shapes (320 rows)
+│   │   ├── Channel.csv                  #   C channels
+│   │   ├── Angle.csv                    #   L angles (packed notation)
+│   │   ├── HSS Rectangle.csv            #   HSS rectangular
+│   │   ├── HSS Round.csv                #   HSS round
+│   │   ├── Pipe.csv                     #   Pipe (SCH40/SCH80 → STD/XS)
+│   │   ├── Tube.csv / Tube Old.csv      #   Legacy tube notation → HSS
+│   │   ├── S Shape.csv / M Shape.csv    #   (not in AISC DB — renderWarning)
+│   │   ├── HP Shape.csv / MC Channel.csv#   (not in AISC DB — renderWarning)
+│   │   └── ...                          #   B Shape, Castellated, etc.
 │   ├── Readme.html                      # AISC CSV column guide
 │   └── favicon.svg
 │
-├── sample.std                           # RC frame fixture (30 joints, 45 members, 8 supports)
-├── sample-steel.STD                     # Steel truss fixture (42 nodes, 81 members, 4 supports)
-├── toolbar.md                           # Bottom toolbar design plan + design tokens
-├── REFACTOR.md                          # ✅ All 4 phases complete — profile-polygon refactor
+├── sample.std                           # RC frame fixture
+├── sample-steel.STD                     # Steel truss fixture
+├── TODO.md                              # ★ Known gaps: double-angle render, missing DB shapes, etc.
 └── ARCHITECTURE.md                      # ← You are here
 ```
 
@@ -150,19 +163,24 @@ parser/staad/index.ts (toBaseResult)
   │
   ├── PRIS sections → inline polygon math → SectionProfile + SectionMeta
   │    computeSectionProperties() → area, ix, iy stored in meta
+  │    Missing/incomplete PRIS → renderWarning set, cylinder fallback
   │
-  └── TABLE sections → steel-resolver.ts → canonical key
-                         ↓
-                       steel-db.ts / STEEL_REGISTRY
-                         ↓
-                       SectionProfile (polygon from AISC dims)
-                       SectionMeta   (AISC tabulated area/ix/iy)
+  └── TABLE sections → tokens parsed for prefix + name + SP spacing
+       │
+       ├── staad-to-aisc.json lookup (1,408 entries, pre-built from CSV)
+       │    ↓
+       ├── steel-db.ts / STEEL_REGISTRY → SectionProfile + SectionMeta
+       │    Angle sections: ST/LD/SD/SA/RA → SectionConfig attached
+       │    Double/compound → renderWarning set, shown in orange
+       │
+       └── Not found → renderWarning set, cylinder fallback (orange)
   ↓
-ParseSection { type, profile, meta, sectionKey, description }
+ParseSection { type, profile, meta, sectionKey, description, config?, renderWarning? }
   ↓
 model/builder.ts → MemberSection (identical shape)
   ↓
-useSceneGeometry.ts → MemberGeometryData { profile, meta, ... }
+useSceneGeometry.ts → MemberGeometryData { profile, meta, renderWarning, ... }
+  │                    renderWarning → orange color (#FF8C00)
   ↓
 Members.tsx / createSectionGeometry:
   if (profile) return buildExtrudedProfile(profile, length)  ← one path
@@ -170,13 +188,13 @@ Members.tsx / createSectionGeometry:
   ↓
 InfoPanel.tsx:
   member.section.meta.dims.map(d => <InfoRow .../>)          ← generic
-```
+  member.section.renderWarning → amber banner at bottom       ← supplementary
 
 **Adding a new section shape** = only the parser producing that shape changes. Renderer untouched. InfoPanel untouched.
 
 **Adding a new format** (ETABS, SAP2000):
-1. Create `parser/etabs/index.ts` + `parser/etabs/steel-resolver.ts`
-2. Resolve to the same `SectionProfile` + `SectionMeta`
+1. Create `parser/etabs/index.ts` with a `toBaseResult()` that produces the same `BaseParseResult`
+2. Resolve to the same `SectionProfile` + `SectionMeta` (share `steel-db.ts`, `staad-to-aisc.json`)
 3. Nothing else changes.
 
 ---
@@ -230,21 +248,53 @@ All dimensions from published AISC Steel Construction Manual v16. Area/Ix/Iy are
 
 **Adding a new section:** edit `src/data/aisc-sections.json`, re-run `node scripts/convert-aisc.mjs`.
 
+### SectionConfigProp / SectionConfig — compound / arrangement metadata
+```typescript
+interface SectionConfigProp {
+  name: string;    // "Spacing", "Gap", etc.
+  value: number;   // meters
+  unit?: string;   // "mm" (display hint)
+}
+
+interface SectionConfig {
+  arrangement: string;   // "ST", "LD", "SD", "SA", "RA", "D", etc.
+  label?: string;        // "Long Legs B2B" — InfoPanel Style row
+  props: SectionConfigProp[];  // dynamic, like meta.dims
+}
+```
+Set by the parser for angle arrangements. Extended for channels (D), built-up W-shapes, etc. Stored on both `ParseSection.config` and `MemberSection.config`. InfoPanel renders `config.label` as a Style row, then maps over `config.props` for Spacing etc.
+
+### Render Warnings
+```typescript
+// On ParseSection, MemberSection, and MemberGeometryData:
+renderWarning?: string;  // e.g. "Double angle (LD) — rendering as single angle profile."
+```
+- **Parser** sets `renderWarning` for: double angles, reversed axis, missing DB sections, unknown PRIS, TAPERED/USER types
+- **Viewer** renders warned members in orange (`#FF8C00`)
+- **InfoPanel** shows an amber banner at the bottom with the warning text
+
 ---
 
-## STAAD Steel Resolver
+## STAAD Steel Mapping
 
-`parser/staad/steel-resolver.ts` → `resolveStaadSteelKey(tableName)` handles all STAAD naming quirks:
+`src/data/staad-to-aisc.json` is a pre-built JSON mapping (1,408 entries) from STAAD names to canonical AISC keys. Built by `scripts/build-staad-mapping.mjs` from the 18 CSV files in `public/sections_csv/`.
 
-| STAAD TABLE string | Canonical key |
-|---|---|
-| `ST W12X26` | `W12X26` |
-| `LD L20203 SP 0.005` | `L2X2X3/16` (+ spacing extracted) |
-| `L L20203` | `L2X2X3/16` |
-| `ST C6X8.2` | `C6X8.2` |
-| `ST P4` | `Pipe4STD` |
-| `TUB TUB4X2X0.25` | `HSS4X2X1/4` |
-| `ST HSS4X4X0.25` | `HSS4X4X1/4` |
+The parser strips the arrangement prefix (`ST`/`LD`/`SD`/`SA`/`RA`) and looks up the section name directly:
+
+```
+"ST W12X26"         → strip prefix → "W12X26"        → "W12X26"
+"LD L20203 SP 0.005"→ strip prefix → "L20203"        → "L2X2X3/16"  (+ SP extracted)
+"ST C6X8.2"         → strip prefix → "C6X8.2"        → "C6X8.2"
+"ST PIPS5"          → strip prefix → "PIPS5"         → "Pipe1/2STD"
+"ST HSST20X12X0.625"→ strip prefix → "HSST20X12X0.625"→ "HSS20X12X5/8"
+```
+
+Arrangement prefixes are detected via `mapAngleArrangement()` and result in:
+- `SectionConfig` with `arrangement`, `label` (e.g. "Long Legs B2B"), and `props` (e.g. Spacing)
+- `sectionType` set to `STEEL_DOUBLE_ANGLE` for LD/SD/SA
+- `meta.family` overridden to "Double Angle" for clean InfoPanel display
+
+Sections not found in the mapping (S, M, HP, MC shapes, etc.) get `renderWarning` set and render as orange cylinders.
 
 ---
 
@@ -262,16 +312,24 @@ All results stored in `meta.area / meta.ix / meta.iy` at parse time. The rendere
 
 ## InfoPanel — Generic Section Display
 
-InfoPanel has no section-family special-casing. It renders whatever `meta.dims` contains:
+InfoPanel has no section-family special-casing. It renders whatever `meta.dims`, `config.label`, and `config.props` contain:
 
 ```tsx
 {member.section.meta.dims.map(d => (
   <InfoRow key={d.name} label={d.name} value={fmt(d.value)} />
 ))}
-{member.section.meta.area != null && (
-  <InfoRow label="Area" value={`${(meta.area * 1e6).toFixed(1)} mm²`} />
+{member.section.config?.label && (
+  <InfoRow label="Style" value={member.section.config.label} />
 )}
+{member.section.config?.props.map(p => (
+  <InfoRow key={p.name} label={p.name} value={fmtConfigProp(p)} />
+))}
 ```
+
+Section labels are formatted for readability via `fmtSectionLabel()`:
+- `W12X26` → `W 12 × 26`
+- `L2-1/2X3-1/2X3-1/8` → `L 2-1/2 × 3-1/2 × 3-1/8`
+- `Pipe4STD` → `Pipe 4 STD`
 
 Adding a new section type with 10 custom dimensions requires zero InfoPanel changes.
 

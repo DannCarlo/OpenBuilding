@@ -54,6 +54,26 @@ export type SectionType =
 /** Convenience: only the steel sub-variants (derived, stays in sync automatically). */
 export type SteelSectionVariant = Extract<SectionType, `STEEL_${string}`>;
 
+// ── Section configuration (STAAD compound / arrangement) ──────────────────
+
+/** A single config property for InfoPanel display (mirrors SectionDim pattern). */
+export interface SectionConfigProp {
+  name: string;    // "Spacing", "Gap", etc.
+  value: number;   // meters
+  unit?: string;   // "mm" (display hint — value will be converted)
+}
+
+/** Per-section arrangement & spacing — used for angles, channels, and any
+ *  future compound / back-to-back configurations. */
+export interface SectionConfig {
+  /** General symbols inspired by STAAD arrangement prefix (ST, LD, SD, SA, RA, D, etc.) */
+  arrangement: string;
+  /** Human-readable style label for InfoPanel (e.g. "Long Legs B2B"). */
+  label?: string;
+  /** Named config properties for InfoPanel (spacing, etc.). */
+  props: SectionConfigProp[];
+}
+
 // ── Updated ParseSection ──────────────────────────────────────────────────
 
 /** Section data already normalized to format-agnostic terminology */
@@ -72,6 +92,11 @@ export interface ParseSection {
 
   /** Fallback description (used when meta is not present). */
   description: string;
+
+  /** STAAD section arrangement config (compound, back-to-back, reversed axis, etc.). */
+  config?: SectionConfig;
+  /** Human-readable warning when the section cannot be rendered accurately (e.g. double angle). */
+  renderWarning?: string;
 }
 
 /** A structural member with connectivity and optional section */

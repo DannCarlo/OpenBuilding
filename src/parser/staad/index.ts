@@ -318,24 +318,98 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
     let depthYB = prop.yb != null ? prop.yb * dimConv : undefined;
     let depthZB = prop.zb != null ? prop.zb * dimConv : undefined;
 
-    // Phase 3 — TABLE (steel) sections: STAAD name → mapping → registry lookup
+    // TABLE (steel) sections: STAAD name → mapping → registry lookup
     if (prop.type === 'TABLE' && prop.tableName) {
-      // Strip format prefix (ST, LD, SD, TUB) to get the raw STAAD name
-      const staadName = prop.tableName.replace(/^(ST|LD|SD|TUB)\s+/i, '').trim();
-      const aiscKey = (staadToAisc as Record<string, string>)[staadName];
-      if (aiscKey) {
-        const entry = lookupSteelSection(aiscKey);
-        if (entry) {
-          const section: ParseSection = {
-            type: entry.variant,
-            description: entry.meta.label,
-            profile: entry.profile,
-            meta: entry.meta,
-            sectionKey: entry.key,
+      const tokens = prop.tableName.trim().split(/\s+/);
+      if (tokens.length >= 2) {
+        const prefix = tokens[0].toUpperCase();       // ST, LD, SD, SA, RA, TUB
+        const staadName = tokens[1];                   // e.g. L20203, W12X26
+
+        // Extract SP <spacing> if present (double angles)
+        let spacing: number | undefined;
+        const spIdx = tokens.findIndex(t => t.toUpperCase() === 'SP');
+        if (spIdx >= 0 && spIdx < tokens.length - 1) {
+          const sp = parseFloat(tokens[spIdx + 1]);
+          if (!isNaN(sp)) spacing = sp * dimConv;        // convert to meters
+        }
+
+        const aiscKey = (staadToAisc as Record<string, string>)[staadName];
+        if (aiscKey) {
+          const entry = lookupSteelSection(aiscKey);
+          if (entry) {
+            let sectionType = entry.variant;
+            let sectionConfig: import('../../parser/types').SectionConfig | undefined;
+            let renderWarning: string | undefined;
+            let meta = entry.meta;  // may be overridden for double angles
+
+            // ── Angle-specific arrangement detection ──────────────
+            if (entry.variant === 'STEEL_ANGLE') {
+              const arrangement = mapAngleArrangement(prefix);
+              const isDouble = arrangement === 'LD' || arrangement === 'SD' || arrangement === 'SA';
+
+              if (arrangement !== 'ST' || isDouble) {
+                const props: import('../../parser/types').SectionConfigProp[] = [];
+                if (isDouble && spacing != null) {
+                  props.push({ name: 'Spacing', value: spacing, unit: 'mm' });
+                }
+                sectionConfig = {
+                  arrangement,
+                  label: angleStyleLabel(arrangement),
+                  props,
+                };
+              }
+              if (isDouble) {
+                sectionType = 'STEEL_DOUBLE_ANGLE';
+                // Override family + label so InfoPanel shows "Double Angle"
+                meta = {
+                  ...entry.meta,
+                  family: angleFamilyLabel(arrangement),
+                  label: `${entry.meta.label} (${arrangement})`,
+                };
+                if (arrangement === 'SA') {
+                  renderWarning = 'Star angle arrangement — rendering as single angle.';
+                } else {
+                  renderWarning = `Double angle (${arrangement}) — rendering as single angle profile.`;
+                }
+              }
+            }
+
+            const section: ParseSection = {
+              type: sectionType,
+              description: meta.label,
+              profile: entry.profile,
+              meta,
+              sectionKey: entry.key,
+              config: sectionConfig,
+              renderWarning,
+            };
+            for (const mid of prop.memberIds) {
+              sectionMap.set(mid, section);
+            }
+            continue;
+          }
+          // aiscKey found in mapping but not in registry — data integrity issue
+          const missingSection: ParseSection = {
+            type: 'UNKNOWN',
+            description: `${staadName} (mapped to ${aiscKey})`,
+            renderWarning: `Section "${staadName}" is in the STAAD mapping but missing from the AISC database.`,
           };
           for (const mid of prop.memberIds) {
-            sectionMap.set(mid, section);
+            sectionMap.set(mid, missingSection);
           }
+          warnings.push(`Member ${prop.memberIds.join(',')}: section "${staadName}" mapped to "${aiscKey}" but not found in AISC database`);
+          continue;
+        } else {
+          // Not in mapping — unknown STAAD section (S, M, HP, MC, etc.)
+          const missingSection: ParseSection = {
+            type: 'UNKNOWN',
+            description: prop.tableName.trim(),
+            renderWarning: `Section "${staadName}" is not in the AISC database — rendering as generic cylinder.`,
+          };
+          for (const mid of prop.memberIds) {
+            sectionMap.set(mid, missingSection);
+          }
+          warnings.push(`Member ${prop.memberIds.join(',')}: STAAD section "${staadName}" not recognized`);
           continue;
         }
       }
@@ -347,87 +421,95 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
       description: prop.description || sectionType,
     };
 
-    // ── PRIS profile generation (Phase 2) ──────────────────────────
-    if (prop.type === 'PRIS' && depthY != null) {
-      let profile: SectionProfile | undefined;
-      let meta: SectionMeta | undefined;
-
-      if (prop.zd == null) {
-        // Circular: YD = diameter
-        const d = depthY, r = d / 2;
-        profile = { outer: polygonCircle(r) };
-        meta = {
-          label: `Ø${(d * 1000).toFixed(0)} mm Circle`,
-          family: 'Circle',
-          source: 'STAAD-PRIS',
-          dims: [{ name: 'Diameter', value: d }],
-        };
-      } else if (depthYB != null && depthZB != null) {
-        // T-shape: YD total depth, ZD flange width, YB web depth, ZB web width
-        const yd = depthY, zd = depthZ!, yb = depthYB, zb = depthZB;
-        const hy = yd / 2, hFl = zd / 2, hWb = zb / 2, fh = yd - yb;
-        profile = {
-          outer: [
-            [-hFl,  hy], [ hFl,  hy],
-            [ hFl,  hy - fh], [ hWb,  hy - fh],
-            [ hWb, -hy], [-hWb, -hy],
-            [-hWb,  hy - fh], [-hFl,  hy - fh],
-          ],
-        };
-        meta = {
-          label: `T ${(zd * 1000).toFixed(0)}×${(yd * 1000).toFixed(0)}/${(yb * 1000).toFixed(0)}×${(zb * 1000).toFixed(0)} mm`,
-          family: 'T-Shape',
-          source: 'STAAD-PRIS',
-          dims: [
-            { name: 'Total Depth', value: yd },
-            { name: 'Flange Width', value: zd },
-            { name: 'Web Depth', value: yb },
-            { name: 'Web Width', value: zb },
-          ],
-        };
-      } else if (depthZB != null) {
-        // Trapezoid: YD height, ZD top width, ZB bottom width
-        const yd = depthY, zd = depthZ!, zb = depthZB;
-        const hy = yd / 2, hTop = zd / 2, hBot = zb / 2;
-        profile = {
-          outer: [
-            [-hTop,  hy], [ hTop,  hy],
-            [ hBot, -hy], [-hBot, -hy],
-          ],
-        };
-        meta = {
-          label: `Trap ${(zd * 1000).toFixed(0)}/${(zb * 1000).toFixed(0)}×${(yd * 1000).toFixed(0)} mm`,
-          family: 'Trapezoid',
-          source: 'STAAD-PRIS',
-          dims: [
-            { name: 'Height', value: yd },
-            { name: 'Top Width', value: zd },
-            { name: 'Bottom Width', value: zb },
-          ],
-        };
+    // ── PRIS profile generation ──────────────────────────
+    if (prop.type === 'PRIS') {
+      if (depthY == null) {
+        // Missing required YD dimension — cannot determine shape
+        section.renderWarning = `PRIS section missing YD dimension — rendering as generic cylinder.`;
       } else {
-        // Rectangle: YD × ZD
-        const yd = depthY, zd = depthZ!;
-        const hy = yd / 2, hz = zd / 2;
-        profile = {
-          outer: [[-hz, -hy], [hz, -hy], [hz, hy], [-hz, hy]],
-        };
-        meta = {
-          label: `${(zd * 1000).toFixed(0)}×${(yd * 1000).toFixed(0)} mm Rect`,
-          family: 'Rectangle',
-          source: 'STAAD-PRIS',
-          dims: [
-            { name: 'Height', value: yd },
-            { name: 'Width', value: zd },
-          ],
-        };
-      }
+        let profile: SectionProfile | undefined;
+        let meta: SectionMeta | undefined;
 
-      if (profile && meta) {
-        const props = computeSectionProperties(profile);
-        section.profile = profile;
-        section.meta = { ...meta, area: props.area, ix: props.ix, iy: props.iy };
+        if (prop.zd == null) {
+          // Circular: YD = diameter
+          const d = depthY, r = d / 2;
+          profile = { outer: polygonCircle(r) };
+          meta = {
+            label: `Ø${(d * 1000).toFixed(0)} mm Circle`,
+            family: 'Circle',
+            source: 'STAAD-PRIS',
+            dims: [{ name: 'Diameter', value: d }],
+          };
+        } else if (depthYB != null && depthZB != null) {
+          // T-shape: YD total depth, ZD flange width, YB web depth, ZB web width
+          const yd = depthY, zd = depthZ!, yb = depthYB, zb = depthZB;
+          const hy = yd / 2, hFl = zd / 2, hWb = zb / 2, fh = yd - yb;
+          profile = {
+            outer: [
+              [-hFl,  hy], [ hFl,  hy],
+              [ hFl,  hy - fh], [ hWb,  hy - fh],
+              [ hWb, -hy], [-hWb, -hy],
+              [-hWb,  hy - fh], [-hFl,  hy - fh],
+            ],
+          };
+          meta = {
+            label: `T ${(zd * 1000).toFixed(0)}×${(yd * 1000).toFixed(0)}/${(yb * 1000).toFixed(0)}×${(zb * 1000).toFixed(0)} mm`,
+            family: 'T-Shape',
+            source: 'STAAD-PRIS',
+            dims: [
+              { name: 'Total Depth', value: yd },
+              { name: 'Flange Width', value: zd },
+              { name: 'Web Depth', value: yb },
+              { name: 'Web Width', value: zb },
+            ],
+          };
+        } else if (depthZB != null) {
+          // Trapezoid: YD height, ZD top width, ZB bottom width
+          const yd = depthY, zd = depthZ!, zb = depthZB;
+          const hy = yd / 2, hTop = zd / 2, hBot = zb / 2;
+          profile = {
+            outer: [
+              [-hTop,  hy], [ hTop,  hy],
+              [ hBot, -hy], [-hBot, -hy],
+            ],
+          };
+          meta = {
+            label: `Trap ${(zd * 1000).toFixed(0)}/${(zb * 1000).toFixed(0)}×${(yd * 1000).toFixed(0)} mm`,
+            family: 'Trapezoid',
+            source: 'STAAD-PRIS',
+            dims: [
+              { name: 'Height', value: yd },
+              { name: 'Top Width', value: zd },
+              { name: 'Bottom Width', value: zb },
+            ],
+          };
+        } else {
+          // Rectangle: YD × ZD
+          const yd = depthY, zd = depthZ!;
+          const hy = yd / 2, hz = zd / 2;
+          profile = {
+            outer: [[-hz, -hy], [hz, -hy], [hz, hy], [-hz, hy]],
+          };
+          meta = {
+            label: `${(zd * 1000).toFixed(0)}×${(yd * 1000).toFixed(0)} mm Rect`,
+            family: 'Rectangle',
+            source: 'STAAD-PRIS',
+            dims: [
+              { name: 'Height', value: yd },
+              { name: 'Width', value: zd },
+            ],
+          };
+        }
+
+        if (profile && meta) {
+          const props = computeSectionProperties(profile);
+          section.profile = profile;
+          section.meta = { ...meta, area: props.area, ix: props.ix, iy: props.iy };
+        }
       }
+    } else if (prop.type === 'TAPERED' || prop.type === 'USER') {
+      // These types have no built-in profile — render as generic cylinder
+      section.renderWarning = `${prop.type} section — profile not available, rendering as generic cylinder.`;
     }
 
     for (const mid of prop.memberIds) {
@@ -537,6 +619,36 @@ function mapSectionType(prop: import('./types').StaadMemberProperty): ParseSecti
     case 'TAPERED': return 'TAPERED';
     case 'USER': return 'USER';
     default: return 'UNKNOWN';
+  }
+}
+
+/** Map STAAD TABLE prefix → angle arrangement code. */
+function mapAngleArrangement(prefix: string): string {
+  switch (prefix.toUpperCase()) {
+    case 'ST': return 'ST';
+    case 'RA': return 'RA';
+    case 'LD': return 'LD';
+    case 'SD': return 'SD';
+    case 'SA': return 'SA';
+    default:  return 'ST';  // unknown prefix → treat as single
+  }
+}
+
+/** Human-readable family label for angle arrangement (InfoPanel display). */
+function angleFamilyLabel(arrangement: string): string {
+  switch (arrangement) {
+    case 'LD': case 'SD': case 'SA': return 'Double Angle';
+    default:  return 'Angle';
+  }
+}
+
+/** Human-readable style description for double-angle arrangement. */
+function angleStyleLabel(arrangement: string): string {
+  switch (arrangement) {
+    case 'LD': return 'Long Legs B2B';
+    case 'SD': return 'Short Legs B2B';
+    case 'SA': return 'Star';
+    default:  return '';
   }
 }
 
