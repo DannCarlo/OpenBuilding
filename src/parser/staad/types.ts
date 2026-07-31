@@ -64,6 +64,13 @@ export interface StaadMaterial {
   e?: number;             // elastic modulus
   density?: number;       // density
   poisson?: number;       // Poisson ratio
+  strength?: {
+    fy?: number;          // yield strength
+    fu?: number;          // ultimate tensile strength
+    fcu?: number;         // compressive strength (concrete cube)
+    ry?: number;          // yield ratio
+    rt?: number;          // tensile ratio
+  };
 }
 
 export interface StaadParseResult {

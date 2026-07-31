@@ -63,6 +63,13 @@ export interface Material {
   e?: number;             // elastic modulus (kN/m²)
   density?: number;       // density (kg/m³)
   poisson?: number;       // Poisson ratio
+  strength?: {
+    fy?: number;          // yield strength
+    fu?: number;          // ultimate tensile strength
+    fcu?: number;         // compressive strength (concrete cube)
+    ry?: number;          // yield ratio
+    rt?: number;          // tensile ratio
+  };
 }
 
 // ── Section configuration (STAAD compound / arrangement) ──────────────────
@@ -135,6 +142,10 @@ export interface ParsePlate {
   id: number;
   nodeIds: number[];
   thicknesses: number[];
+  /** Material assigned to this plate. */
+  material?: Material;
+  /** Human-readable warnings when the plate cannot be rendered accurately. */
+  renderWarnings?: string[];
 }
 
 /** Universal parse result — every format parser outputs this shape */

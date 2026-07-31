@@ -3,7 +3,7 @@ import { X, Box, Layers } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { useUIStore } from '../../store/uiStore';
 import { useModelStore } from '../../store/modelStore';
-import type { SectionConfigProp } from '../../parser/types';
+import type { SectionConfigProp, Material } from '../../parser/types';
 
 /**
  * Format a dimension for display.
@@ -44,6 +44,19 @@ function fmtDensity(d: number, units?: { length: string; force: string }): strin
   if (len === 'METER') return `${d.toFixed(1)} kg/m³`;
   if (len === 'FEET' || len === 'FT') return `${d.toFixed(3)} kip-s²/ft⁴`;
   return `${d.toFixed(1)}`;
+}
+
+/** Format strength value based on model units. */
+function fmtStrength(v: number, units?: { length: string; force: string }): string {
+  const len = units?.length?.toUpperCase() ?? 'METER';
+  const force = units?.force?.toUpperCase() ?? 'KN';
+  // METER/KN → kN/m² → divide by 1000 for MPa
+  if (len === 'METER' && force === 'KN') return `${(v / 1000).toFixed(1)} MPa`;
+  // FEET/KIP → kip/ft² → divide by 144 for ksi
+  if ((len === 'FEET' || len === 'FT') && force === 'KIP') return `${(v / 144).toFixed(1)} ksi`;
+  // INCH/KIP → ksi directly
+  if ((len === 'INCH' || len === 'IN') && force === 'KIP') return `${v.toFixed(1)} ksi`;
+  return `${v.toFixed(1)} ${force}/${len}²`;
 }
 
 /**
@@ -88,19 +101,29 @@ export function InfoPanel() {
 
     const panelContent = (
       <GlassPanel className="p-5 sm:p-6 w-full sm:w-72">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-[var(--color-text-primary)]">Plate {plate.id}</h3>
-          <button onClick={() => selectPlate(null)} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors p-1">
-            <X size={14} />
-          </button>
-        </div>
+        <PanelHeader title={`Plate ${plate.id}`} onClose={() => selectPlate(null)} />
         <div className="space-y-2.5 text-xs">
           <InfoRow label="Type" value={plate.nodeIds.length === 4 ? 'Quad Shell' : 'Tri Plate'} />
           <InfoRow label="Nodes" value={plate.nodeIds.join(', ')} />
           <InfoRow label="Avg Thickness" value={fmt(avgThick)} />
           {plate.thicknesses.length > 0 && (
-            <InfoRow label="Node Thicknesses" value={plate.thicknesses.map(t => fmt(t)).join(', ')} />
+            <div className="flex justify-between gap-3">
+              <span className="text-text-secondary shrink-0">Node Thk</span>
+              <div className="text-text-primary font-mono text-right space-y-0.5">
+                {plate.thicknesses.map((t, i) => (
+                  <div key={i}>{fmt(t)}</div>
+                ))}
+              </div>
+            </div>
           )}
+
+          {/* ── Material ──────────────────────────────────── */}
+          {plate.material && (
+            <MaterialSection material={plate.material} units={model.units} />
+          )}
+
+          {/* ── Warnings ──────────────────────────────────── */}
+          <WarningsSection warnings={plate.renderWarnings} />
         </div>
       </GlassPanel>
     );
@@ -118,17 +141,7 @@ export function InfoPanel() {
 
   const panelContent = (
     <GlassPanel className="p-5 sm:p-6 w-full sm:w-72">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-text-primary">
-          Member {member.id}
-        </h3>
-        <button
-          onClick={() => selectMember(null)}
-          className="text-text-secondary hover:text-text-primary transition-colors p-1"
-        >
-          <X size={14} />
-        </button>
-      </div>
+      <PanelHeader title={`Member ${member.id}`} onClose={() => selectMember(null)} />
 
       <div className="space-y-2.5 text-xs">
         {/* ── Member identity ───────────────────────────── */}
@@ -171,16 +184,7 @@ export function InfoPanel() {
 
         {/* ── Material ──────────────────────────────────── */}
         {member.section?.material && (
-          <>
-            <SectionHeader icon={Layers} label="Material" />
-            <InfoRow label="Name" value={member.section.material.name} />
-            {member.section.material.e != null && (
-              <InfoRow label="E" value={fmtElastic(member.section.material.e, model.units)} />
-            )}
-            {member.section.material.density != null && (
-              <InfoRow label="Density" value={fmtDensity(member.section.material.density, model.units)} />
-            )}
-          </>
+          <MaterialSection material={member.section.material} units={model.units} />
         )}
 
         {!member.section?.meta && member.section && (
@@ -190,16 +194,8 @@ export function InfoPanel() {
           </>
         )}
 
-        {/* ── Render warnings — supplementary, shown at bottom ── */}
-        {member.section?.renderWarnings && member.section.renderWarnings.length > 0 && (
-          <div className="mt-2 rounded-md bg-amber-500/15 border border-amber-500/40 px-3 py-2 space-y-1.5">
-            {member.section.renderWarnings.map((w, i) => (
-              <p key={i} className="text-amber-700 text-xs leading-relaxed">
-                ⚠ {w}
-              </p>
-            ))}
-          </div>
-        )}
+        {/* ── Render warnings ───────────────────────────── */}
+        <WarningsSection warnings={member.section?.renderWarnings} />
       </div>
     </GlassPanel>
   );
@@ -249,6 +245,49 @@ function SectionHeader({ icon: Icon, label }: { icon: React.ComponentType<{ size
       <Icon size={12} className="text-text-secondary shrink-0" />
       <span className="text-[11px] font-semibold text-text-secondary uppercase tracking-wider">{label}</span>
       <div className="flex-1 h-px bg-border ml-1" />
+    </div>
+  );
+}
+
+/** Shared material display — used by both member and plate panels. */
+function MaterialSection({ material, units }: { material: Material; units?: { length: string; force: string } }) {
+  return (
+    <>
+      <SectionHeader icon={Layers} label="Material" />
+      <InfoRow label="Name" value={material.name} />
+      {material.e != null && <InfoRow label="E" value={fmtElastic(material.e, units)} />}
+      {material.density != null && <InfoRow label="Density" value={fmtDensity(material.density, units)} />}
+      {material.strength && (
+        <>
+          {material.strength.fy != null && <InfoRow label="Fy" value={fmtStrength(material.strength.fy, units)} />}
+          {material.strength.fu != null && <InfoRow label="Fu" value={fmtStrength(material.strength.fu, units)} />}
+          {material.strength.fcu != null && <InfoRow label="Fcu" value={fmtStrength(material.strength.fcu, units)} />}
+        </>
+      )}
+    </>
+  );
+}
+
+/** Shared warnings display — used by both member and plate panels. */
+function WarningsSection({ warnings }: { warnings?: string[] }) {
+  if (!warnings || warnings.length === 0) return null;
+  return (
+    <div className="mt-2 rounded-md bg-amber-500/15 border border-amber-500/40 px-3 py-2 space-y-1.5">
+      {warnings.map((w, i) => (
+        <p key={i} className="text-amber-700 text-xs leading-relaxed">⚠ {w}</p>
+      ))}
+    </div>
+  );
+}
+
+/** Shared panel header with title + close button. */
+function PanelHeader({ title, onClose }: { title: string; onClose: () => void }) {
+  return (
+    <div className="flex items-center justify-between mb-4">
+      <h3 className="text-sm font-semibold text-text-primary">{title}</h3>
+      <button onClick={onClose} className="text-text-secondary hover:text-text-primary transition-colors p-1">
+        <X size={14} />
+      </button>
     </div>
   );
 }

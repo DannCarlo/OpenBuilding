@@ -40,6 +40,19 @@ export function parseMaterialDefinitions(lines: string[]): Map<string, StaadMate
       } else if (upper === 'TYPE' && tokens.length >= 2) {
         const t = tokens[1].toUpperCase();
         current.type = (t === 'STEEL' || t === 'CONCRETE') ? t : 'OTHER';
+      } else if (upper === 'STRENGTH' && tokens.length >= 3) {
+        if (!current.strength) current.strength = {};
+        for (let i = 1; i < tokens.length - 1; i += 2) {
+          const key = tokens[i].toUpperCase();
+          const val = parseFloat(tokens[i + 1]);
+          if (!isNaN(val)) {
+            if (key === 'FY') current.strength.fy = val;
+            else if (key === 'FU') current.strength.fu = val;
+            else if (key === 'FCU') current.strength.fcu = val;
+            else if (key === 'RY') current.strength.ry = val;
+            else if (key === 'RT') current.strength.rt = val;
+          }
+        }
       }
     }
   }
@@ -60,6 +73,7 @@ function finalizeMaterial(name: string, raw: Partial<StaadMaterial>): StaadMater
     e: raw.e,
     density: raw.density,
     poisson: raw.poisson,
+    strength: raw.strength,
   };
 }
 

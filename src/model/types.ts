@@ -47,6 +47,10 @@ export interface ModelPlate {
   id: number;
   nodeIds: number[];
   thicknesses: number[];
+  /** Material assigned to this plate. */
+  material?: Material;
+  /** Human-readable warnings. */
+  renderWarnings?: string[];
 }
 
 export interface ParsedModel {

@@ -1,5 +1,5 @@
-import type { StaadParseResult, ParserMode } from './types';
-import type { BaseParseResult, ParseNode, ParseMember, ParseSection, ParseSupport } from '../types';
+import type { StaadParseResult, ParserMode, StaadMemberOffset, StaadPlate, StaadPlateProperty, StaadMemberProperty } from './types';
+import type { BaseParseResult, ParseNode, ParseMember, ParseSection, ParseSupport, ParsePlate, SectionProfile, SectionMeta, SectionConfig, SectionConfigProp } from '../types';
 import { parseUnitLine, normalizeJoint, isContinuation, isEmptyOrComment, expandRange } from './utils';
 import { getLengthConversion } from '../utils';
 import { parseJointLine } from './commands/joint-coordinates';
@@ -10,7 +10,6 @@ import { parseGroupBlock } from './commands/group-definitions';
 import { parseMaterialDefinitions } from './commands/material-definitions';
 import { lookupSteelSection } from '../../lib/steel-db';
 import { computeSectionProperties, polygonCircle } from '../../lib/section-profiles';
-import type { SectionProfile, SectionMeta } from '../types';
 import staadToAisc from '../../data/staad-to-aisc.json';
 
 /**
@@ -246,7 +245,7 @@ function parseConstantLine(
 }
 
 /** Parse a MEMBER OFFSET line. Format: <id-list> START x y z [END x y z] */
-function parseMemberOffsetLine(line: string): import('./types').StaadMemberOffset | null {
+function parseMemberOffsetLine(line: string): StaadMemberOffset | null {
   const cleaned = line.replace(/<!\s*[\s\S]*?\s*!>/g, '').trim();
   if (!cleaned) return null;
 
@@ -266,7 +265,7 @@ function parseMemberOffsetLine(line: string): import('./types').StaadMemberOffse
   const memberIds = expandRange(idTokens);
   if (memberIds.length === 0) return null;
 
-  const result: import('./types').StaadMemberOffset = { memberIds };
+  const result: StaadMemberOffset = { memberIds };
 
   // Parse START offset
   if (startIdx >= 0) {
@@ -290,11 +289,11 @@ function parseMemberOffsetLine(line: string): import('./types').StaadMemberOffse
 
   return result;
 }
-function parseElementLine(line: string): import('./types').StaadPlate[] {
+function parseElementLine(line: string): StaadPlate[] {
   const cleaned = line.replace(/<!\s*[\s\S]*?\s*!>/g, '').trim();
   if (!cleaned) return [];
 
-  const plates: import('./types').StaadPlate[] = [];
+  const plates: StaadPlate[] = [];
 
   for (const entry of cleaned.split(';')) {
     const trimmed = entry.trim();
@@ -316,7 +315,7 @@ function parseElementLine(line: string): import('./types').StaadPlate[] {
 }
 
 /** Parse an ELEMENT PROPERTY line. Format: <id-list> THICKNESS t1 [t2 t3 t4] */
-function parseElementPropertyLine(line: string): import('./types').StaadPlateProperty | null {
+function parseElementPropertyLine(line: string): StaadPlateProperty | null {
   const cleaned = line.replace(/<!\s*[\s\S]*?\s*!>/g, '').trim();
   if (!cleaned) return null;
 
@@ -383,7 +382,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
           const entry = lookupSteelSection(aiscKey);
           if (entry) {
             let sectionType = entry.variant;
-            let sectionConfig: import('../../parser/types').SectionConfig | undefined;
+            let sectionConfig: SectionConfig | undefined;
             const renderWarnings: string[] = [];
             let meta = entry.meta;  // may be overridden for double angles
 
@@ -393,7 +392,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
               const isDouble = arrangement === 'LD' || arrangement === 'SD' || arrangement === 'SA';
 
               if (arrangement !== 'ST' || isDouble) {
-                const props: import('../../parser/types').SectionConfigProp[] = [];
+                const props: SectionConfigProp[] = [];
                 if (isDouble && spacing != null) {
                   props.push({ name: 'Spacing', value: spacing, unit: 'mm' });
                 }
@@ -620,6 +619,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
           e: mat.e,
           density: mat.density,
           poisson: mat.poisson,
+          strength: mat.strength,
         };
         if (mat.type === 'OTHER') {
           if (!section.renderWarnings) section.renderWarnings = [];
@@ -645,8 +645,8 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
     });
   }
 
-  // 5. Plates: map joint IDs → node IDs, pass thicknesses through
-  const plates: import('../types').ParsePlate[] = [];
+  // 5. Plates: map joint IDs → node IDs, pass thicknesses + material
+  const plates: ParsePlate[] = [];
   const thicknessMap = new Map<number, number[]>();
   for (const pp of staad.plateProperties) {
     for (const pid of pp.plateIds) {
@@ -659,11 +659,33 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
       warnings.push(`Plate ${pl.id}: joints not found: ${missing.join(', ')}`);
       continue;
     }
-    plates.push({
+    const plate: ParsePlate = {
       id: pl.id,
       nodeIds: pl.jointIds,
       thicknesses: thicknessMap.get(pl.id) || [],
-    });
+    };
+
+    // ── Attach material to plate ────────────────────────
+    const materialName = staad.memberMaterials.get(pl.id)
+      ?? staad.memberMaterials.get(-1);
+    if (materialName) {
+      const mat = staad.materials.get(materialName);
+      if (mat) {
+        plate.material = {
+          name: mat.name,
+          type: mat.type,
+          e: mat.e,
+          density: mat.density,
+          poisson: mat.poisson,
+          strength: mat.strength,
+        };
+        if (mat.type === 'OTHER') {
+          plate.renderWarnings = [`Cannot determine material type for "${mat.name}" — defaulting to OTHER.`];
+        }
+      }
+    }
+
+    plates.push(plate);
   }
 
   // 6. Supports: expand joint ranges → individual node IDs, normalize types
@@ -685,7 +707,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
 }
 
 /** Map STAAD section type → format-agnostic type (PRIS only; TABLE handled by registry). */
-function mapSectionType(prop: import('./types').StaadMemberProperty): ParseSection['type'] {
+function mapSectionType(prop: StaadMemberProperty): ParseSection['type'] {
   if (prop.type === 'PRIS') {
     if (prop.zd == null) return 'CIRCULAR';
     if (prop.yb != null && prop.zb != null) return 'TSHAPE';
