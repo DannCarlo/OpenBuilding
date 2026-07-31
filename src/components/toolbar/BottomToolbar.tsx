@@ -38,24 +38,24 @@ function modeBtnClass(active: boolean) {
   return `flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium
     transition-all duration-150
     ${active
-      ? 'bg-slate-900 text-white shadow-sm'
-      : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}`;
+      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm'
+      : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-slate-200'}`;
 }
 
 function toggleBtnClass(active: boolean) {
   return `flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-medium
     transition-all duration-150
     ${active
-      ? 'bg-blue-50 text-blue-600'
-      : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600'}`;
+      ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400'
+      : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:text-slate-500 dark:hover:bg-white/10 dark:hover:text-slate-300'}`;
 }
 
 function actionBtnClass(disabled = false) {
   return `flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-medium
     transition-all duration-150
     ${disabled
-      ? 'text-slate-300 cursor-default'
-      : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}`;
+      ? 'text-slate-300 dark:text-slate-600 cursor-default'
+      : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-slate-200'}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -67,14 +67,14 @@ function popoverItemClass(active: boolean, variant: 'mode' | 'toggle') {
     return `w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-left
       transition-all duration-150
       ${active
-        ? 'bg-slate-900 text-white'
-        : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}`;
+        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
+        : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-slate-200'}`;
   }
   return `w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-left
     transition-all duration-150
     ${active
-      ? 'bg-blue-50 text-blue-600'
-      : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600'}`;
+      ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400'
+      : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:text-slate-500 dark:hover:bg-white/10 dark:hover:text-slate-300'}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -109,7 +109,7 @@ export function BottomToolbar() {
   const desktopContent = (
     <>
       {/* Group 1: Nav Mode */}
-      <div className="flex items-center gap-0.5 pr-2 mr-2 border-r border-slate-200">
+      <div className="flex items-center gap-0.5 pr-2 mr-2 border-r border-slate-200 dark:border-white/10">
         {navModes.map(({ mode, icon, label }) => (
           <button
             key={mode}
@@ -124,7 +124,7 @@ export function BottomToolbar() {
       </div>
 
       {/* Group 2: Display Mode */}
-      <div className="flex items-center gap-0.5 pr-2 mr-2 border-r border-slate-200">
+      <div className="flex items-center gap-0.5 pr-2 mr-2 border-r border-slate-200 dark:border-white/10">
         {displayModes.map(({ mode, icon, label }) => (
           <button
             key={mode}
@@ -139,7 +139,7 @@ export function BottomToolbar() {
       </div>
 
       {/* Group 3: View Toggles */}
-      <div className="flex items-center gap-0.5 pr-2 mr-2 border-r border-slate-200">
+      <div className="flex items-center gap-0.5 pr-2 mr-2 border-r border-slate-200 dark:border-white/10">
         <button onClick={toggleGrid} className={toggleBtnClass(showGrid)} title="Toggle grid">
           <Grid3X3 size={14} />
           <span className="hidden sm:inline">Grid</span>
@@ -155,7 +155,7 @@ export function BottomToolbar() {
       </div>
 
       {/* Group 4: Fit View */}
-      <div className="flex items-center gap-0.5 pr-2 mr-2 border-r border-slate-200">
+      <div className="flex items-center gap-0.5 pr-2 mr-2 border-r border-slate-200 dark:border-white/10">
         <button onClick={triggerFitView} className={actionBtnClass()} title="Fit view (F)">
           <Maximize2 size={14} />
           <span className="hidden sm:inline">Fit</span>
@@ -174,7 +174,7 @@ export function BottomToolbar() {
               animate={{ width: 'auto', opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="flex items-center gap-3 pl-3 ml-2 border-l border-slate-200 overflow-hidden whitespace-nowrap"
+              className="flex items-center gap-3 pl-3 ml-2 border-l border-slate-200 dark:border-white/10 overflow-hidden whitespace-nowrap"
             >
               <StatDot color={STAT_COLORS.nodes} value={nodeCount} label="Nodes" />
               <StatDot color={STAT_COLORS.members} value={memberCount} label="Members" />
@@ -203,6 +203,7 @@ export function BottomToolbar() {
                         border border-slate-200/50
                         rounded-2xl px-2 py-2
                         shadow-lg shadow-slate-200/50
+                        dark:bg-black/40 dark:border-white/10 dark:shadow-black/30
                         pointer-events-auto">
           {desktopContent}
         </div>
@@ -212,6 +213,7 @@ export function BottomToolbar() {
       <div className="fixed bottom-0 inset-x-0 z-50 xl:hidden
                       bg-white/80 backdrop-blur-xl
                       border-t border-slate-200/50
+                      dark:bg-black/50 dark:border-white/10
                       overflow-x-auto scrollbar-hide">
         <div className="flex items-center gap-1 px-3 py-2.5 min-w-max">
 
@@ -233,7 +235,7 @@ export function BottomToolbar() {
             ))}
           </Popover>
 
-          <div className="w-px h-5 bg-slate-200 shrink-0" />
+          <div className="w-px h-5 bg-slate-200 dark:bg-white/10 shrink-0" />
 
           {/* View Dropdown */}
           <Popover
@@ -253,7 +255,7 @@ export function BottomToolbar() {
             ))}
           </Popover>
 
-          <div className="w-px h-5 bg-slate-200 shrink-0" />
+          <div className="w-px h-5 bg-slate-200 dark:bg-white/10 shrink-0" />
 
           {/* Util Dropdown */}
           <Popover
@@ -282,7 +284,7 @@ export function BottomToolbar() {
             </button>
           </Popover>
 
-          <div className="w-px h-5 bg-slate-200 shrink-0" />
+          <div className="w-px h-5 bg-slate-200 dark:bg-white/10 shrink-0" />
 
           {/* Fit View */}
           <button onClick={triggerFitView} className={actionBtnClass()} title="Fit view">
@@ -290,7 +292,7 @@ export function BottomToolbar() {
             <span>Fit</span>
           </button>
 
-          <div className="w-px h-5 bg-slate-200 shrink-0" />
+          <div className="w-px h-5 bg-slate-200 dark:bg-white/10 shrink-0" />
 
           {/* Stats Toggle + Inline */}
           <button onClick={toggleStats} className={actionBtnClass()} title="Toggle stats">
@@ -329,8 +331,8 @@ function StatDot({ color, value, label }: { color: string; value: number; label:
   return (
     <div className="flex items-center gap-1.5">
       <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: color }} />
-      <span className="text-[11px] text-slate-400">{label}</span>
-      <span className="text-[11px] text-slate-600 font-mono tabular-nums font-semibold">{value}</span>
+      <span className="text-[11px] text-slate-400 dark:text-slate-500">{label}</span>
+      <span className="text-[11px] text-slate-600 dark:text-slate-300 font-mono tabular-nums font-semibold">{value}</span>
     </div>
   );
 }
