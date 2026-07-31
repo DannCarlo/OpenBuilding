@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, Box, Layers } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { useUIStore } from '../../store/uiStore';
 import { useModelStore } from '../../store/modelStore';
@@ -25,6 +25,27 @@ function fmtConfigProp(p: SectionConfigProp): string {
   return `${p.value.toFixed(3)} ${unit}`;
 }
 
+/** Format elastic modulus based on model units. */
+function fmtElastic(e: number, units?: { length: string; force: string }): string {
+  const len = units?.length?.toUpperCase() ?? 'METER';
+  const force = units?.force?.toUpperCase() ?? 'KN';
+  // METER/KN → kN/m² → divide by 1e6 for GPa
+  if (len === 'METER') return `${(e / 1e6).toFixed(1)} GPa`;
+  // FEET/KIP → kip/ft²
+  if (len === 'FEET' || len === 'FT') return `${e.toFixed(1)} kip/ft²`;
+  // INCH → ksi
+  if (len === 'INCH' || len === 'IN') return `${e.toFixed(1)} ksi`;
+  return `${e.toFixed(1)} ${force}/${len}²`;
+}
+
+/** Format density based on model units. */
+function fmtDensity(d: number, units?: { length: string; force: string }): string {
+  const len = units?.length?.toUpperCase() ?? 'METER';
+  if (len === 'METER') return `${d.toFixed(1)} kg/m³`;
+  if (len === 'FEET' || len === 'FT') return `${d.toFixed(3)} kip-s²/ft⁴`;
+  return `${d.toFixed(1)}`;
+}
+
 /**
  * Format a steel section label for readability:
  *   "L2-1/2X3-1/2X3-1/8" → "L 2-1/2 x 3-1/2 x 3-1/8"
@@ -36,10 +57,8 @@ function fmtSectionLabel(raw: string): string {
   let s = raw
     // Space after letter prefix: "W12" → "W 12", "HSS20" → "HSS 20"
     .replace(/^([A-Za-z]+)(\d)/, '$1 $2')
-    // Space around X separators: "12X26" → "12 x 26"
-    .replace(/(\S)([Xx×])(\S)/g, '$1 $2 $3')
-    // Lowercase the x for readability
-    .replace(/ [Xx] /g, ' × ')
+    // Replace all X/x separators with ×
+    .replace(/[Xx×]/g, ' × ')
     // Space before pipe schedule: "Pipe4STD" → "Pipe 4 STD"
     .replace(/(\d)(STD|XS|XXS)$/, '$1 $2');
   return s;
@@ -112,6 +131,7 @@ export function InfoPanel() {
       </div>
 
       <div className="space-y-2.5 text-xs">
+        {/* ── Member identity ───────────────────────────── */}
         <InfoRow label="Type" value={fmtSectionLabel(member.section?.description || 'Unknown')} />
         <InfoRow label="Start Node" value={String(member.startNodeId)} />
         <InfoRow label="End Node" value={String(member.endNodeId)} />
@@ -128,39 +148,56 @@ export function InfoPanel() {
           <InfoRow label="Beta Angle" value={`${member.beta}°`} />
         )}
 
-        {member.section && (
+        {member.section?.meta && (
           <>
-            <div className="w-full h-px bg-border my-1" />
-            {member.section.meta ? (
-              <>
-                <InfoRow label="Section" value={fmtSectionLabel(member.section.meta.label)} />
-                <InfoRow label="Family" value={member.section.meta.family} />
-                {member.section.meta.dims.map(d => (
-                  <InfoRow key={d.name} label={d.name} value={fmt(d.value)} />
-                ))}
-                {member.section.meta.area != null && (
-                  <InfoRow label="Area" value={`${(member.section.meta.area * 1e6).toFixed(1)} mm²`} />
-                )}
-                {/* ── SectionConfig extras (dynamic, like dims) ─── */}
-                {member.section.config?.label && (
-                  <InfoRow label="Style" value={member.section.config.label} />
-                )}
-                {member.section.config?.props.map(p => (
-                  <InfoRow key={p.name} label={p.name} value={fmtConfigProp(p)} />
-                ))}
-              </>
-            ) : (
-              <InfoRow label="Type" value={member.section.description || 'Unknown'} />
+            {/* ── Geometry ───────────────────────────────── */}
+            <SectionHeader icon={Box} label="Geometry" />
+            <InfoRow label="Section" value={fmtSectionLabel(member.section.meta.label)} />
+            <InfoRow label="Family" value={member.section.meta.family} />
+            {member.section.meta.dims.map(d => (
+              <InfoRow key={d.name} label={d.name} value={fmt(d.value)} />
+            ))}
+            {member.section.meta.area != null && (
+              <InfoRow label="Area" value={`${(member.section.meta.area * 1e6).toFixed(1)} mm²`} />
+            )}
+            {member.section.config?.label && (
+              <InfoRow label="Style" value={member.section.config.label} />
+            )}
+            {member.section.config?.props.map(p => (
+              <InfoRow key={p.name} label={p.name} value={fmtConfigProp(p)} />
+            ))}
+          </>
+        )}
+
+        {/* ── Material ──────────────────────────────────── */}
+        {member.section?.material && (
+          <>
+            <SectionHeader icon={Layers} label="Material" />
+            <InfoRow label="Name" value={member.section.material.name} />
+            {member.section.material.e != null && (
+              <InfoRow label="E" value={fmtElastic(member.section.material.e, model.units)} />
+            )}
+            {member.section.material.density != null && (
+              <InfoRow label="Density" value={fmtDensity(member.section.material.density, model.units)} />
             )}
           </>
         )}
 
-        {/* ── Render warning — supplementary, shown at bottom ── */}
-        {member.section?.renderWarning && (
-          <div className="mt-2 rounded-md bg-amber-500/15 border border-amber-500/40 px-3 py-2">
-            <p className="text-amber-700 text-xs leading-relaxed">
-              ⚠ {member.section.renderWarning}
-            </p>
+        {!member.section?.meta && member.section && (
+          <>
+            <div className="w-full h-px bg-border my-1" />
+            <InfoRow label="Type" value={member.section.description || 'Unknown'} />
+          </>
+        )}
+
+        {/* ── Render warnings — supplementary, shown at bottom ── */}
+        {member.section?.renderWarnings && member.section.renderWarnings.length > 0 && (
+          <div className="mt-2 rounded-md bg-amber-500/15 border border-amber-500/40 px-3 py-2 space-y-1.5">
+            {member.section.renderWarnings.map((w, i) => (
+              <p key={i} className="text-amber-700 text-xs leading-relaxed">
+                ⚠ {w}
+              </p>
+            ))}
           </div>
         )}
       </div>
@@ -202,6 +239,16 @@ function InfoRow({ label, value }: { label: string; value: string }) {
     <div className="flex justify-between gap-3">
       <span className="text-text-secondary shrink-0">{label}</span>
       <span className="text-text-primary font-mono truncate text-right">{value}</span>
+    </div>
+  );
+}
+
+function SectionHeader({ icon: Icon, label }: { icon: React.ComponentType<{ size?: number; className?: string }>; label: string }) {
+  return (
+    <div className="flex items-center gap-1.5 pt-2 first:pt-0">
+      <Icon size={12} className="text-text-secondary shrink-0" />
+      <span className="text-[11px] font-semibold text-text-secondary uppercase tracking-wider">{label}</span>
+      <div className="flex-1 h-px bg-border ml-1" />
     </div>
   );
 }

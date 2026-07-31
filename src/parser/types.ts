@@ -54,6 +54,17 @@ export type SectionType =
 /** Convenience: only the steel sub-variants (derived, stays in sync automatically). */
 export type SteelSectionVariant = Extract<SectionType, `STEEL_${string}`>;
 
+// ── Material definition ──────────────────────────────────────────────────
+
+/** Material properties parsed from the input file (STAAD DEFINE MATERIAL, etc.). */
+export interface Material {
+  name: string;           // "STEEL_A36", "FC21", "CONCRETE"
+  type: 'STEEL' | 'CONCRETE' | 'OTHER';
+  e?: number;             // elastic modulus (kN/m²)
+  density?: number;       // density (kg/m³)
+  poisson?: number;       // Poisson ratio
+}
+
 // ── Section configuration (STAAD compound / arrangement) ──────────────────
 
 /** A single config property for InfoPanel display (mirrors SectionDim pattern). */
@@ -95,8 +106,10 @@ export interface ParseSection {
 
   /** STAAD section arrangement config (compound, back-to-back, reversed axis, etc.). */
   config?: SectionConfig;
-  /** Human-readable warning when the section cannot be rendered accurately (e.g. double angle). */
-  renderWarning?: string;
+  /** Material assigned to this section (parsed from DEFINE MATERIAL / CONSTANTS). */
+  material?: Material;
+  /** Human-readable warnings when the section cannot be rendered accurately (e.g. double angle, missing material). */
+  renderWarnings?: string[];
 }
 
 /** A structural member with connectivity and optional section */
@@ -131,4 +144,6 @@ export interface BaseParseResult {
   plates: ParsePlate[];
   supports: ParseSupport[];
   warnings: string[];
+  /** Model units (length + force) — drives display formatting. */
+  units?: { length: string; force: string };
 }

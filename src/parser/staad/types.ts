@@ -58,6 +58,14 @@ export interface StaadUnits {
   force: string;   // KN, KIP, KG, N
 }
 
+export interface StaadMaterial {
+  name: string;           // "STEEL_A36", "FC21"
+  type: 'STEEL' | 'CONCRETE' | 'OTHER';
+  e?: number;             // elastic modulus
+  density?: number;       // density
+  poisson?: number;       // Poisson ratio
+}
+
 export interface StaadParseResult {
   joints: StaadJoint[];
   members: StaadMember[];
@@ -68,6 +76,10 @@ export interface StaadParseResult {
   groups: StaadGroup[];
   memberOffsets: StaadMemberOffset[];
   betaAngles: Map<number, number>;
+  /** Named materials from DEFINE MATERIAL block (name → properties). */
+  materials: Map<string, StaadMaterial>;
+  /** Member ID → material name (from CONSTANTS MATERIAL assignments). */
+  memberMaterials: Map<number, string>;
   units: StaadUnits;
   warnings: string[];
 }
@@ -84,4 +96,5 @@ export type ParserMode =
   | 'constants'
   | 'supports'
   | 'groups'
+  | 'materialDef'
   | 'skip';

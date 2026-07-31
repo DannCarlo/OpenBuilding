@@ -1,4 +1,4 @@
-import type { SectionType, SectionProfile, SectionMeta, SectionConfig } from '../parser/types';
+import type { SectionType, SectionProfile, SectionMeta, SectionConfig, Material } from '../parser/types';
 
 // Normalized geometry model types (format-independent)
 
@@ -32,8 +32,10 @@ export interface MemberSection {
   description: string;
   /** STAAD section arrangement config (compound, back-to-back, reversed axis, etc.). */
   config?: SectionConfig;
-  /** Human-readable warning when the section cannot be rendered accurately. */
-  renderWarning?: string;
+  /** Material assigned to this section. */
+  material?: Material;
+  /** Human-readable warnings when the section cannot be rendered accurately. */
+  renderWarnings?: string[];
 }
 
 export interface ModelSupport {
@@ -53,4 +55,6 @@ export interface ParsedModel {
   plates: ModelPlate[];
   supports: ModelSupport[];
   warnings: string[];
+  /** Model units (length + force). */
+  units?: { length: string; force: string };
 }

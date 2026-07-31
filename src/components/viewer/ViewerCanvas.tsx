@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Scene } from './Scene';
 import { useViewStore } from '../../store/viewStore';
+import { UnitsBadge } from './UnitsBadge';
 
 /**
  * Full-viewport 3D canvas with theme-aware background.
@@ -21,6 +22,7 @@ export function ViewerCanvas() {
           <Scene bgColor={bg} />
         </Suspense>
       </Canvas>
+      <UnitsBadge />
     </div>
   );
 }

@@ -51,5 +51,6 @@ export function buildModel(parsed: BaseParseResult): ParsedModel {
     plates: parsed.plates.map(p => ({ ...p })),
     supports,
     warnings,
+    units: parsed.units,
   };
 }

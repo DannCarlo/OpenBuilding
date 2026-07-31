@@ -20,8 +20,8 @@ export interface MemberGeometryData {
   color: string;
   memberId: number;
   sectionType?: string;
-  /** Warning message when the section cannot be rendered accurately. */
-  renderWarning?: string;
+  /** Warning messages when the section cannot be rendered accurately. */
+  renderWarnings?: string[];
 }
 
 /**
@@ -116,7 +116,7 @@ export function useSceneGeometry() {
 
       // Color — use warning color for members with rendering limitations
       let color = getMemberColor(member.section?.type);
-      const hasWarning = !!member.section?.renderWarning;
+      const hasWarning = !!(member.section?.renderWarnings && member.section.renderWarnings.length > 0);
       if (member.id === selectedMemberId) {
         color = '#FFD700';
       } else if (member.id === hoveredMemberId) {
@@ -142,7 +142,7 @@ export function useSceneGeometry() {
         color,
         memberId: member.id,
         sectionType: member.section?.type,
-        renderWarning: member.section?.renderWarning,
+        renderWarnings: member.section?.renderWarnings,
       });
     }
 

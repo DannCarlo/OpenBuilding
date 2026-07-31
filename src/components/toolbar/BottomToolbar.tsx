@@ -196,7 +196,7 @@ export function BottomToolbar() {
   return (
     <>
       {/* ── Desktop ── */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50 hidden lg:flex
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50 hidden xl:flex
                       items-center justify-center pb-3 pt-1 px-4 select-none pointer-events-none">
         <div className="flex items-center gap-1
                         bg-white/70 backdrop-blur-xl
@@ -209,7 +209,7 @@ export function BottomToolbar() {
       </div>
 
       {/* ── Mobile: fixed full-width scrollable bottom bar (TradingView-style) ── */}
-      <div className="fixed bottom-0 inset-x-0 z-50 lg:hidden
+      <div className="fixed bottom-0 inset-x-0 z-50 xl:hidden
                       bg-white/80 backdrop-blur-xl
                       border-t border-slate-200/50
                       overflow-x-auto scrollbar-hide">

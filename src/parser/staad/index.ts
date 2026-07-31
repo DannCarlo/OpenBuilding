@@ -7,6 +7,7 @@ import { parseMemberLine } from './commands/member-incidences';
 import { parseMemberPropertyLine } from './commands/member-properties';
 import { parseSupportLine } from './commands/supports';
 import { parseGroupBlock } from './commands/group-definitions';
+import { parseMaterialDefinitions } from './commands/material-definitions';
 import { lookupSteelSection } from '../../lib/steel-db';
 import { computeSectionProperties, polygonCircle } from '../../lib/section-profiles';
 import type { SectionProfile, SectionMeta } from '../types';
@@ -26,6 +27,8 @@ export function parseStaadFile(text: string): BaseParseResult {
     groups: [],
     memberOffsets: [],
     betaAngles: new Map(),
+    materials: new Map(),
+    memberMaterials: new Map(),
     units: { length: 'METER', force: 'KN' },
     warnings: [],
   };
@@ -59,12 +62,28 @@ export function parseStaadFile(text: string): BaseParseResult {
       mode = 'idle';
       continue;
     }
+    if (upperLine.startsWith('DEFINE MATERIAL START')) {
+      mode = 'materialDef';
+      groupBlockLines = [];
+      continue;
+    }
+    if (upperLine.startsWith('END DEFINE MATERIAL')) {
+      result.materials = parseMaterialDefinitions(groupBlockLines);
+      mode = 'idle';
+      continue;
+    }
     if (upperLine.startsWith('START ') || upperLine.startsWith('DEFINE ')) {
       mode = 'skip';
       continue;
     }
     if (upperLine.startsWith('END ') || upperLine.startsWith('END DEFINE ')) {
       mode = 'idle';
+      continue;
+    }
+
+    // If we're collecting material definition lines
+    if (mode === 'materialDef') {
+      groupBlockLines.push(line);
       continue;
     }
 
@@ -145,7 +164,7 @@ export function parseStaadFile(text: string): BaseParseResult {
         break;
       }
       case 'constants': {
-        parseConstantLine(line, result.betaAngles, result.warnings);
+        parseConstantLine(line, result.betaAngles, result.memberMaterials, result.warnings);
         break;
       }
       case 'elements': {
@@ -179,24 +198,50 @@ export function parseStaadFile(text: string): BaseParseResult {
 }
 
 /**
- * Parse a CONSTANTS line (BETA angles).
+ * Parse a CONSTANTS line (BETA angles and MATERIAL assignments).
  */
 function parseConstantLine(
   line: string,
   betaMap: Map<number, number>,
+  materialMap: Map<number, string>,
   _warnings: string[]
 ): void {
   const tokens = line.trim().split(/\s+/);
-  const betaIdx = tokens.findIndex(t => t.toUpperCase() === 'BETA');
-  const membIdx = tokens.findIndex(t => t.toUpperCase() === 'MEMB');
-  if (betaIdx < 0 || membIdx < 0 || betaIdx >= tokens.length - 1) return;
+  const upperTokens = tokens.map(t => t.toUpperCase());
 
-  const angle = parseFloat(tokens[betaIdx + 1]);
-  if (isNaN(angle)) return;
+  // ── BETA angles ──────────────────────────────────────
+  const betaIdx = upperTokens.indexOf('BETA');
+  const membIdx = upperTokens.indexOf('MEMB');
+  if (betaIdx >= 0 && membIdx >= 0 && betaIdx < tokens.length - 1) {
+    const angle = parseFloat(tokens[betaIdx + 1]);
+    if (!isNaN(angle)) {
+      const idTokens = tokens.slice(membIdx + 1);
+      for (const mid of expandRange(idTokens)) {
+        betaMap.set(mid, angle);
+      }
+    }
+  }
 
-  const idTokens = tokens.slice(membIdx + 1);
-  for (const mid of expandRange(idTokens)) {
-    betaMap.set(mid, angle);
+  // ── MATERIAL assignments ─────────────────────────────
+  const matIdx = upperTokens.indexOf('MATERIAL');
+  if (matIdx >= 0 && matIdx < tokens.length - 1) {
+    const materialName = tokens[matIdx + 1];
+    const afterMat = upperTokens.slice(matIdx + 2);
+
+    // "MATERIAL STEEL ALL" — no MEMB keyword
+    if (afterMat.length >= 1 && afterMat[0] === 'ALL') {
+      materialMap.set(-1, materialName); // sentinel: -1 = all members
+      return;
+    }
+
+    // "MATERIAL STEEL MEMB 1 2 TO 5" — explicit member list
+    const memIdxMat = afterMat.indexOf('MEMB');
+    if (memIdxMat >= 0) {
+      const idTokens = tokens.slice(matIdx + 2 + memIdxMat + 1);
+      for (const mid of expandRange(idTokens)) {
+        materialMap.set(mid, materialName);
+      }
+    }
   }
 }
 
@@ -339,7 +384,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
           if (entry) {
             let sectionType = entry.variant;
             let sectionConfig: import('../../parser/types').SectionConfig | undefined;
-            let renderWarning: string | undefined;
+            const renderWarnings: string[] = [];
             let meta = entry.meta;  // may be overridden for double angles
 
             // ── Angle-specific arrangement detection ──────────────
@@ -364,13 +409,14 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
                 meta = {
                   ...entry.meta,
                   family: angleFamilyLabel(arrangement),
-                  label: `${entry.meta.label} (${arrangement})`,
                 };
                 if (arrangement === 'SA') {
-                  renderWarning = 'Star angle arrangement — rendering as single angle.';
+                  renderWarnings.push('Star angle arrangement — rendering as single angle.');
                 } else {
-                  renderWarning = `Double angle (${arrangement}) — rendering as single angle profile.`;
+                  renderWarnings.push(`Double angle (${arrangement}) — rendering as single angle profile.`);
                 }
+              } else if (arrangement === 'RA') {
+                renderWarnings.push('Reversed-axis single angle — axis orientation not applied.');
               }
             }
 
@@ -381,7 +427,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
               meta,
               sectionKey: entry.key,
               config: sectionConfig,
-              renderWarning,
+              renderWarnings: renderWarnings.length > 0 ? renderWarnings : undefined,
             };
             for (const mid of prop.memberIds) {
               sectionMap.set(mid, section);
@@ -392,7 +438,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
           const missingSection: ParseSection = {
             type: 'UNKNOWN',
             description: `${staadName} (mapped to ${aiscKey})`,
-            renderWarning: `Section "${staadName}" is in the STAAD mapping but missing from the AISC database.`,
+            renderWarnings: [`Section "${staadName}" is in the STAAD mapping but missing from the AISC database.`],
           };
           for (const mid of prop.memberIds) {
             sectionMap.set(mid, missingSection);
@@ -404,7 +450,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
           const missingSection: ParseSection = {
             type: 'UNKNOWN',
             description: prop.tableName.trim(),
-            renderWarning: `Section "${staadName}" is not in the AISC database — rendering as generic cylinder.`,
+            renderWarnings: [`Section "${staadName}" is not in the AISC database — rendering as generic cylinder.`],
           };
           for (const mid of prop.memberIds) {
             sectionMap.set(mid, missingSection);
@@ -425,7 +471,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
     if (prop.type === 'PRIS') {
       if (depthY == null) {
         // Missing required YD dimension — cannot determine shape
-        section.renderWarning = `PRIS section missing YD dimension — rendering as generic cylinder.`;
+        section.renderWarnings = [`PRIS section missing YD dimension — rendering as generic cylinder.`];
       } else {
         let profile: SectionProfile | undefined;
         let meta: SectionMeta | undefined;
@@ -509,7 +555,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
       }
     } else if (prop.type === 'TAPERED' || prop.type === 'USER') {
       // These types have no built-in profile — render as generic cylinder
-      section.renderWarning = `${prop.type} section — profile not available, rendering as generic cylinder.`;
+      section.renderWarnings = [`${prop.type} section — profile not available, rendering as generic cylinder.`];
     }
 
     for (const mid of prop.memberIds) {
@@ -546,7 +592,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
     }
   }
 
-  // 4. Members: combine incidence + section + groups + offsets
+  // 4. Members: combine incidence + section + groups + offsets + material
   const members: ParseMember[] = [];
   for (const m of staad.members) {
     if (!staad.joints.find(j => j.id === m.jointI)) {
@@ -557,11 +603,42 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
       warnings.push(`Member ${m.id}: end joint ${m.jointJ} not found`);
       continue;
     }
+
+    // Clone section so per-member material attachment doesn't mutate shared sections
+    const baseSection = sectionMap.get(m.id) ?? null;
+    const section = baseSection ? { ...baseSection, renderWarnings: baseSection.renderWarnings ? [...baseSection.renderWarnings] : undefined } : null;
+
+    // ── Attach material ──────────────────────────────────
+    const materialName = staad.memberMaterials.get(m.id)
+      ?? staad.memberMaterials.get(-1); // ALL sentinel
+    if (materialName && section) {
+      const mat = staad.materials.get(materialName);
+      if (mat) {
+        section.material = {
+          name: mat.name,
+          type: mat.type,
+          e: mat.e,
+          density: mat.density,
+          poisson: mat.poisson,
+        };
+        if (mat.type === 'OTHER') {
+          if (!section.renderWarnings) section.renderWarnings = [];
+          section.renderWarnings.push(`Cannot determine material type for "${mat.name}" — defaulting to OTHER.`);
+        }
+      } else {
+        if (!section.renderWarnings) section.renderWarnings = [];
+        section.renderWarnings.push(`Material "${materialName}" assigned but not defined.`);
+      }
+    } else if (section && !materialName) {
+      if (!section.renderWarnings) section.renderWarnings = [];
+      section.renderWarnings.push('No material assigned to this member.');
+    }
+
     members.push({
       id: m.id,
       startNodeId: m.jointI,
       endNodeId: m.jointJ,
-      section: sectionMap.get(m.id) || null,
+      section,
       groupNames: groupMap.get(m.id) || [],
       beta: staad.betaAngles.get(m.id),
       ...offsetMap.get(m.id),
@@ -604,7 +681,7 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
     }
   }
 
-  return { nodes, members, plates, supports, warnings };
+  return { nodes, members, plates, supports, warnings, units: staad.units };
 }
 
 /** Map STAAD section type → format-agnostic type (PRIS only; TABLE handled by registry). */
