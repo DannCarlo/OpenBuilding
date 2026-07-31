@@ -35,6 +35,8 @@
   --shadow-elevated: 0 12px 48px rgba(0, 0, 0, 0.3);
 }
 
+/* ── Base reset ────────────────────────────────────────── */
+
 * {
   box-sizing: border-box;
 }
@@ -50,20 +52,15 @@ html, body, #root {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Liquid glass — Apple-inspired frosted panel.
-   iOS Safari needs translateZ(0) to force GPU compositing,
-   otherwise backdrop-filter silently fails when inside a
-   transformed (e.g. framer-motion animated) container. */
+/* ── Glass panel ───────────────────────────────────────── */
+
 .glass {
   background: var(--color-bg-glass);
-  backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  /* Force GPU layer so backdrop-filter works on iOS Safari
-     even when element or ancestor has CSS transforms */
   transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
 
 /* Thicker fallback for browsers that don't support backdrop-filter */
