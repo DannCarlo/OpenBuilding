@@ -79,8 +79,8 @@ function fmtSectionLabel(raw: string): string {
 
 /**
  * Slide-out info panel showing selected member or plate details.
- * Desktop: left sidebar panel.
- * Mobile: bottom sheet.
+ * Desktop: left sidebar panel with slide-in animation.
+ * Mobile: full-viewport overlay, no animation.
  */
 export function InfoPanel() {
   const selectedMemberId = useUIStore((s) => s.selectedMemberId);
@@ -100,7 +100,7 @@ export function InfoPanel() {
       : null;
 
     const panelContent = (
-      <GlassPanel className="p-5 sm:p-6 w-full sm:w-72">
+      <GlassPanel className="p-5 sm:p-6 w-full sm:w-72 rounded-none! !lg:rounded-xl min-h-dvh sm:min-h-0">
         <PanelHeader title={`Plate ${plate.id}`} onClose={() => selectPlate(null)} />
         <div className="space-y-2.5 text-xs">
           <InfoRow label="Type" value={plate.nodeIds.length === 4 ? 'Quad Shell' : 'Tri Plate'} />
@@ -140,7 +140,7 @@ export function InfoPanel() {
   const endNode = model.nodes.find((n) => n.id === member.endNodeId);
 
   const panelContent = (
-    <GlassPanel className="p-5 sm:p-6 w-full sm:w-72">
+    <GlassPanel className="p-5 sm:p-6 w-full sm:w-72 rounded-none! !lg:rounded-xl min-h-dvh sm:min-h-0">
       <PanelHeader title={`Member ${member.id}`} onClose={() => selectMember(null)} />
 
       <div className="space-y-2.5 text-xs">
@@ -155,7 +155,14 @@ export function InfoPanel() {
           />
         )}
         {member.groupNames.length > 0 && (
-          <InfoRow label="Groups" value={member.groupNames.join(', ')} />
+          <div className="flex justify-between gap-3">
+            <span className="text-text-secondary shrink-0">Groups</span>
+            <div className="text-text-primary font-mono text-right space-y-0.5">
+              {member.groupNames.map((g, i) => (
+                <div key={i}>{g}</div>
+              ))}
+            </div>
+          </div>
         )}
         {member.beta != null && (
           <InfoRow label="Beta Angle" value={`${member.beta}°`} />
@@ -206,6 +213,7 @@ export function InfoPanel() {
 function renderPanel(content: React.ReactNode) {
   return (
     <AnimatePresence>
+      {/* ── Desktop: slide-in left panel ────────────────── */}
       <motion.div
         key="desktop"
         className="absolute left-4 top-24 z-50 hidden sm:block"
@@ -216,9 +224,11 @@ function renderPanel(content: React.ReactNode) {
       >
         {content}
       </motion.div>
+
+      {/* ── Mobile: full-viewport panel (no animation) ──── */}
       <motion.div
         key="mobile"
-        className="absolute bottom-20 left-2 right-2 z-50 sm:hidden"
+        className="fixed inset-0 z-50 sm:hidden overflow-y-auto min-h-dvh"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}

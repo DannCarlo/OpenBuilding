@@ -18,7 +18,7 @@ export function CameraControls() {
   const fitViewTrigger = useViewStore((s) => s.fitViewTrigger);
   const lastFitRef = useRef(-1);
 
-  // Swap mouse buttons based on navMode
+  // Swap mouse buttons AND touch gestures based on navMode
   useEffect(() => {
     if (!controlsRef.current) return;
     if (navMode === 'pan') {
@@ -27,11 +27,19 @@ export function CameraControls() {
         MIDDLE: THREE.MOUSE.DOLLY,
         RIGHT: THREE.MOUSE.ROTATE,
       };
+      controlsRef.current.touches = {
+        ONE: THREE.TOUCH.PAN,
+        TWO: THREE.TOUCH.DOLLY_ROTATE,
+      };
     } else {
       controlsRef.current.mouseButtons = {
         LEFT: THREE.MOUSE.ROTATE,
         MIDDLE: THREE.MOUSE.DOLLY,
         RIGHT: THREE.MOUSE.PAN,
+      };
+      controlsRef.current.touches = {
+        ONE: THREE.TOUCH.ROTATE,
+        TWO: THREE.TOUCH.DOLLY_PAN,
       };
     }
   }, [navMode]);
