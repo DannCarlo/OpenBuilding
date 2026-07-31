@@ -28,30 +28,35 @@ structure_viewer/
 │   │   │                                #   SectionMeta     — label, family, dims[], source, area/ix/iy
 │   │   │                                #   SectionDim      — { name, value }
 │   │   │                                #   SectionConfig   — { arrangement, label?, props[] } (compound/b2b)
+│   │   │                                #   Material        — { name, type, e?, density?, poisson?, strength? }
 │   │   │                                #   ParseSection    — { type, profile?, meta?, sectionKey?,
-│   │   │                                #                        description, config?, renderWarning? }
+│   │   │                                #                        description, config?, material?, renderWarnings? }
 │   │   │                                #   ParseMember, ParseNode, ParseSupport, ParsePlate
-│   │   │                                #   BaseParseResult — universal parser output
+│   │   │                                #   BaseParseResult — universal parser output (+ units)
 │   │   ├── utils.ts                     # getLengthConversion() — shared utility
 │   │   └── staad/                       # STAAD .std parser
 │   │       ├── index.ts                 # parseStaadFile → toBaseResult() → BaseParseResult
 │   │       │                            #   PRIS sections: inline polygon construction
 │   │       │                            #   TABLE sections: direct lookup via staad-to-aisc.json
 │   │       │                            #   Angle config detection: ST/LD/SD/SA/RA → SectionConfig
-│   │       │                            #   Render warnings: double angle, missing DB, unknown PRIS
+│   │       │                            #   DEFINE MATERIAL parsing → material registry
+│   │       │                            #   CONSTANTS MATERIAL assignments (ALL + per-member)
+│   │       │                            #   Render warnings: double angle, missing DB, unknown PRIS, no material
 │   │       ├── types.ts                 # STAAD-internal types (StaadJoint, StaadMember, etc.)
 │   │       ├── utils.ts                 # parseUnitLine, expandRange, stripComments
 │   │       └── commands/
 │   │           ├── joint-coordinates.ts
 │   │           ├── member-incidences.ts
 │   │           ├── member-properties.ts  # Extracts tableName + prefix + SP spacing
+│   │           ├── material-definitions.ts # Parses DEFINE MATERIAL block → StaadMaterial[]
 │   │           ├── supports.ts
 │   │           └── group-definitions.ts
 │   │
 │   ├── model/
 │   │   ├── types.ts                     # ParsedModel, ModelMember { section: MemberSection | null }
-│   │   │                                # MemberSection mirrors ParseSection (+ config?, renderWarning?)
-│   │   └── builder.ts                   # BaseParseResult → ParsedModel (pure assembly)
+│   │   │                                # MemberSection mirrors ParseSection (+ config?, material?, renderWarnings?)
+│   │   │                                # ModelPlate now carries material? and renderWarnings?
+│   │   └── builder.ts                   # BaseParseResult → ParsedModel (pure assembly, passes units)
 │   │
 │   ├── store/
 │   │   ├── modelStore.ts                # model, fileName, isLoading, error
@@ -61,7 +66,8 @@ structure_viewer/
 │   │
 │   ├── components/
 │   │   ├── viewer/
-│   │   │   ├── ViewerCanvas.tsx         # R3F Canvas wrapper with theme-aware background
+│   │   │   ├── ViewerCanvas.tsx         # R3F Canvas wrapper with theme-aware background + UnitsBadge
+│   │   │   ├── UnitsBadge.tsx            # Lower-left viewport unit display (METER/KN, etc.)
 │   │   │   ├── Scene.tsx                # Root scene composition
 │   │   │   ├── useSceneGeometry.ts      # ★ Core hook: model → MemberGeometryData[]
 │   │   │   │                            #   MemberGeometryData: { profile?, meta?, position, rotation,
@@ -84,8 +90,8 @@ structure_viewer/
 │   │   │   └── BottomToolbar.tsx        # ★ Unified toolbar (desktop: full spread, mobile: scrollable bar)
 │   │   │                                #   Groups: Nav Mode | Display Mode | Toggles | Fit View | Stats
 │   │   ├── panels/
-│   │   │   └── InfoPanel.tsx            # ★ Renders member.section.meta.dims — fully generic,
-│   │   │                                #   no section-family special-casing
+│   │   │   └── InfoPanel.tsx            # ★ Componentized: PanelHeader, MaterialSection, WarningsSection
+│   │   │                                #   Shared between member & plate panels — zero duplication
 │   │   └── ui/
 │   │       ├── GlassPanel.tsx
 │   │       ├── IconButton.tsx
@@ -186,11 +192,13 @@ Members.tsx / createSectionGeometry:
   if (profile) return buildExtrudedProfile(profile, length)  ← one path
   return cylinder fallback                                    ← one fallback
   ↓
-InfoPanel.tsx:
-  member.section.meta.dims.map(d => <InfoRow .../>)          ← generic
-  member.section.renderWarning → amber banner at bottom       ← supplementary
+InfoPanel.tsx (componentized):
+  🏷 PanelHeader      — Member/Plate title + close
+  📐 Geometry         — Section, Family, dims, Area, Style, Spacing
+  🧱 MaterialSection  — Name, E, Density, Fy, Fu, Fcu (unit-aware)
+  ⚠ WarningsSection   — amber banner at bottom
 
-**Adding a new section shape** = only the parser producing that shape changes. Renderer untouched. InfoPanel untouched.
+**Adding a new section shape** = only the parser changes. Renderer + InfoPanel untouched.
 
 **Adding a new format** (ETABS, SAP2000):
 1. Create `parser/etabs/index.ts` with a `toBaseResult()` that produces the same `BaseParseResult`
@@ -264,14 +272,33 @@ interface SectionConfig {
 ```
 Set by the parser for angle arrangements. Extended for channels (D), built-up W-shapes, etc. Stored on both `ParseSection.config` and `MemberSection.config`. InfoPanel renders `config.label` as a Style row, then maps over `config.props` for Spacing etc.
 
+### Material — parsed from DEFINE MATERIAL + CONSTANTS
+```typescript
+interface Material {
+  name: string;           // "STEEL_A36", "FC21"
+  type: 'STEEL' | 'CONCRETE' | 'OTHER';
+  e?: number;             // elastic modulus (raw STAAD units)
+  density?: number;       // density (raw STAAD units)
+  poisson?: number;       // Poisson ratio
+  strength?: {
+    fy?: number;          // yield strength (FY)
+    fu?: number;          // ultimate tensile (FU)
+    fcu?: number;         // compressive strength (FCU)
+    ry?: number;          // yield ratio
+    rt?: number;          // tensile ratio
+  };
+}
+```
+Parsed from `DEFINE MATERIAL` block. Assigned to members/plates via `CONSTANTS` (`MATERIAL X ALL` → sentinel, `MATERIAL X MEMB ids` → per-ID). Type inferred from name if not explicit: `FC##` → CONCRETE, `STEEL` → STEEL, else OTHER with warning. Stored on `ParseSection.material`, `MemberSection.material`, `ParsePlate.material`.
+
 ### Render Warnings
 ```typescript
-// On ParseSection, MemberSection, and MemberGeometryData:
-renderWarning?: string;  // e.g. "Double angle (LD) — rendering as single angle profile."
+// On ParseSection, MemberSection, ParsePlate, and MemberGeometryData:
+renderWarnings?: string[];  // multiple warnings per element
 ```
-- **Parser** sets `renderWarning` for: double angles, reversed axis, missing DB sections, unknown PRIS, TAPERED/USER types
-- **Viewer** renders warned members in orange (`#FF8C00`)
-- **InfoPanel** shows an amber banner at the bottom with the warning text
+- **Parser** sets `renderWarnings` for: double angles, reversed axis, missing DB sections, unknown PRIS, TAPERED/USER, no material, unknown material type
+- **Viewer** renders warned members in orange (`#FF8C00`) when `renderWarnings.length > 0`
+- **InfoPanel** shows an amber banner at the bottom listing all warnings
 
 ---
 

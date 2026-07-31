@@ -11,16 +11,18 @@
 
 ---
 
-## P1 — Materials Property for Members
+## ✅ P1 — Materials Property for Members — DONE
 
-### Description
-Add a `material` property to each member, parsed from the STAAD `.std` file. STAAD defines materials via the `CONSTANTS` or `DEFINE MATERIAL` blocks with properties like `E` (elastic modulus), `DENSITY`, `POISSON`, and material type (STEEL, CONCRETE, etc.).
-
-### Scope
-- Parse material definitions from STAAD input
-- Attach material to each member (default: STEEL for TABLE sections, CONCRETE for PRIS sections)
-- Store `material` on `ParseSection` / `MemberSection` (e.g. `{ type: 'STEEL' | 'CONCRETE', e?: number, density?: number }`)
-- Material type drives rendering skin (see P2)
+### What was delivered
+- Parse `DEFINE MATERIAL` block (ISOTROPIC, E, POISSON, DENSITY, TYPE, STRENGTH)
+- Parse `CONSTANTS` MATERIAL assignments (`MATERIAL X ALL`, `MATERIAL X MEMB 1 TO 5`)
+- Attach material to **members** and **plates** via `ALL` sentinel + per-ID lookup
+- Material type inference: `FC##` → CONCRETE, `STEEL` → STEEL, unknown → OTHER + warning
+- Strength properties parsed: FY (yield), FU (ultimate), FCU (compressive)
+- Unit-aware display in InfoPanel: E (GPa/ksi), Density (kg/m³), Fy/Fu/Fcu (MPa/ksi)
+- InfoPanel organized into sections: Identity, 📐 Geometry, 🧱 Material, ⚠ Warnings
+- `renderWarnings` changed to `string[]` for multiple warnings per element
+- Material shown on both member and plate info panels (shared `MaterialSection` component)
 
 ---
 
@@ -75,4 +77,5 @@ Currently all supports render with the same visual marker regardless of type (FI
 - [x] Render warning system (orange members + info panel banner)
 - [x] Section label formatting (`L 2-1/2 x 3-1/2`)
 - [x] Removed `steel-resolver.ts` in favor of JSON mapping
+- [x] **P1 — Materials property** (parse, attach, display, strength, unit-aware, plates too)
 - [x] ARCHITECTURE.md synced

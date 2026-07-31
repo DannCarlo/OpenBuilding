@@ -7,6 +7,18 @@ export function useModelParser() {
   const { setModel, setLoading, setError } = useModelStore();
   const [progress, setProgress] = useState(0);
 
+  // For upload overlay testing: parse a model from text and set it in the store (set only in STAAD for now)
+  const setModelFromText = useCallback(
+    (text: string, fileName: string) => {
+      setProgress(90);
+      const parsed = parseStaadFile(text);
+      const model = buildModel(parsed);
+      setProgress(100);
+      setModel(model, fileName);
+    },
+    [setModel]
+  );
+
   const parseFile = useCallback(
     async (file: File) => {
       setLoading(true);
@@ -15,25 +27,35 @@ export function useModelParser() {
 
       try {
         const text = await readFileAsText(file, (p) => setProgress(p));
-        setProgress(90);
-
-        // Parse STAAD file
-        const parsed = parseStaadFile(text);
-
-        // Build normalized model
-        const model = buildModel(parsed);
-
-        setProgress(100);
-        setModel(model, file.name);
+        setModelFromText(text, file.name);
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to parse file';
         setError(message);
       }
     },
-    [setModel, setLoading, setError]
+    [setModelFromText, setLoading, setError]
   );
 
-  return { parseFile, progress };
+  const loadSample = useCallback(
+    async (path: string, label: string) => {
+      setLoading(true);
+      setError(null);
+      setProgress(5);
+      try {
+        const res = await fetch(path);
+        if (!res.ok) throw new Error(`Failed to load ${path}`);
+        const text = await res.text();
+        setProgress(80);
+        setModelFromText(text, label);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to load sample';
+        setError(message);
+      }
+    },
+    [setModelFromText, setLoading, setError]
+  );
+
+  return { parseFile, loadSample, progress };
 }
 
 function readFileAsText(
