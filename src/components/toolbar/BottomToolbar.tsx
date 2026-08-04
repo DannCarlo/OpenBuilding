@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Crosshair, Hand, Box, Grid3X3, Layers,
-  Eye, EyeOff, Anchor, Maximize2, BarChart3, Wrench,
+  Crosshair, Hand, Grid3X3, Layers,
+  Eye, EyeOff, Anchor, Maximize2, BarChart3, Wrench, Sparkles,
 } from 'lucide-react';
 import { Popover } from '../ui/Popover';
 import { useModelStore } from '../../store/modelStore';
@@ -20,9 +20,9 @@ const STAT_COLORS: Record<string, string> = {
 };
 
 const displayModes: { mode: DisplayMode; icon: React.ReactNode; label: string }[] = [
-  { mode: 'solid', icon: <Box size={14} />, label: 'Solid' },
-  { mode: 'wireframe', icon: <Grid3X3 size={14} />, label: 'Wire' },
+  { mode: 'realistic', icon: <Sparkles size={14} />, label: 'Realistic' },
   { mode: 'semi', icon: <Layers size={14} />, label: 'Semi' },
+  { mode: 'wireframe', icon: <Grid3X3 size={14} />, label: 'Wire' },
 ];
 
 const navModes: { mode: NavMode; icon: React.ReactNode; label: string }[] = [

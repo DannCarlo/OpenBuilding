@@ -1,8 +1,9 @@
 import { useMemo, useState, useRef } from 'react';
 import * as THREE from 'three';
 import { useModelStore } from '../../store/modelStore';
-import { useViewStore } from '../../store/viewStore';
+import { useViewStore, type DisplayMode } from '../../store/viewStore';
 import { useUIStore } from '../../store/uiStore';
+import { getMaterialSkin, SELECTED_COLOR } from '../../lib/colors';
 
 const MIN_THICK = 0.05; // fallback when thickness is missing or zero
 
@@ -96,7 +97,7 @@ export function Plates() {
 
     const nodeMap = new Map(model.nodes.map(n => [n.id, n]));
 
-    const result: { geo: THREE.BufferGeometry; id: number }[] = [];
+    const result: { geo: THREE.BufferGeometry; id: number; materialType?: string }[] = [];
 
     for (const pl of model.plates) {
       const pts = pl.nodeIds
@@ -115,23 +116,22 @@ export function Plates() {
       geo.setIndex(data.indices);
       geo.computeVertexNormals();
 
-      result.push({ geo, id: pl.id });
+      result.push({ geo, id: pl.id, materialType: pl.material?.type });
     }
     return result;
   }, [model]);
 
   if (!solids || solids.length === 0) return null;
 
-  const isWireframe = displayMode === 'wireframe';
-
   return (
     <group>
-      {solids.map(({ geo, id }) => (
+      {solids.map(({ geo, id, materialType }) => (
         <PlateMesh
           key={id}
           geometry={geo}
           plateId={id}
-          wireframe={isWireframe}
+          mode={displayMode}
+          materialType={materialType}
           selected={selectedPlateId === id}
           onClick={() => selectPlate(selectedPlateId === id ? null : id)}
         />
@@ -143,21 +143,38 @@ export function Plates() {
 function PlateMesh({
   geometry,
   plateId: _id,
-  wireframe,
+  mode,
+  materialType,
   selected,
   onClick,
 }: {
   geometry: THREE.BufferGeometry;
   plateId: number;
-  wireframe: boolean;
+  mode: DisplayMode;
+  materialType?: string;
   selected: boolean;
   onClick: () => void;
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
 
-  const baseColor = selected ? '#FFD700' : hovered ? '#88DDA0' : '#50C878';
-  const opacity = selected ? 0.7 : hovered ? 0.6 : 0.45;
+  const realistic = mode === 'realistic';
+  const wireframe = mode === 'wireframe';
+
+  // Material-aware skin (realistic mode only); semi keeps the green plate color
+  const skin = getMaterialSkin(materialType);
+  const defaultPlateColor = '#50C878';
+
+  let baseColor: string;
+  if (selected) baseColor = SELECTED_COLOR;
+  else if (hovered) baseColor = '#88DDA0';
+  else baseColor = realistic ? skin.color : defaultPlateColor;
+
+  // Realistic mode is fully opaque (highlight via color change).
+  // Semi mode stays translucent, with stronger opacity on selection/hover.
+  const opacity = realistic ? 1 : selected ? 0.7 : hovered ? 0.6 : 0.45;
+  const roughness = realistic ? skin.roughness : 0.6;
+  const metalness = realistic ? skin.metalness : 0.1;
 
   return (
     <mesh
@@ -168,11 +185,12 @@ function PlateMesh({
       onPointerOut={() => { setHovered(false); document.body.style.cursor = ''; }}
     >
       <meshStandardMaterial
+        key={mode}
         color={baseColor}
-        roughness={0.6}
-        metalness={0.1}
+        roughness={roughness}
+        metalness={metalness}
         opacity={opacity}
-        transparent
+        transparent={opacity < 1}
         side={THREE.FrontSide}
         wireframe={wireframe}
       />

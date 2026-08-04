@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type DisplayMode = 'solid' | 'wireframe' | 'semi';
+export type DisplayMode = 'realistic' | 'wireframe' | 'semi';
 export type ThemeMode = 'dark' | 'light';
 export type NavMode = 'orbit' | 'pan';
 
@@ -26,7 +26,7 @@ interface ViewState {
 }
 
 export const useViewStore = create<ViewState>((set) => ({
-  displayMode: 'solid',
+  displayMode: 'realistic',
   showLabels: false,
   showGrid: true,
   showSupports: true,

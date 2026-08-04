@@ -1,13 +1,33 @@
+import { useEffect } from 'react';
+import * as THREE from 'three';
+import { useThree } from '@react-three/fiber';
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { useViewStore } from '../../store/viewStore';
 
 /**
  * Theme-aware scene lighting.
  * Light mode: bright, airy, with warm sky tint.
  * Dark mode: moody, contrasty, with cool ambient.
+ * Also installs an offline RoomEnvironment so metallic
+ * (realistic-mode steel) surfaces get real reflections.
  */
 export function Lighting() {
   const theme = useViewStore((s) => s.theme);
   const isDark = theme === 'dark';
+  const gl = useThree((s) => s.gl);
+  const scene = useThree((s) => s.scene);
+
+  // Procedural environment map for PBR reflections (no network fetch)
+  useEffect(() => {
+    const pmrem = new THREE.PMREMGenerator(gl);
+    const envTex = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    scene.environment = envTex;
+    return () => {
+      scene.environment = null;
+      envTex.dispose();
+      pmrem.dispose();
+    };
+  }, [gl, scene]);
 
   return (
     <>

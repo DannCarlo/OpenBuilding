@@ -1,13 +1,23 @@
 import { useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useSceneGeometry, type MemberGeometryData } from './useSceneGeometry';
-import { useViewStore } from '../../store/viewStore';
+import { useViewStore, type DisplayMode } from '../../store/viewStore';
 import { useUIStore } from '../../store/uiStore';
 import { buildExtrudedProfile } from '../../lib/geometry-utils';
+import {
+  getMaterialSkin,
+  RENDER_WARNING_COLOR,
+  SELECTED_COLOR,
+  HOVER_COLOR,
+} from '../../lib/colors';
 
 /**
  * Renders members with proper cross-section shapes.
- * Shape is determined automatically from which dimensions are present.
+ * Display modes:
+ *   realistic — material-aware skins (steel metallic, concrete matte)
+ *   semi      — semi-transparent, keeps section-type/purpose colors
+ *               (columns red, beams blue, steel silver, …) for legibility
+ *   wireframe — geometry edges only
  */
 export function Members() {
   const geo = useSceneGeometry();
@@ -17,17 +27,13 @@ export function Members() {
 
   if (!geo) return null;
 
-  const isWireframe = displayMode === 'wireframe';
-  const isSemi = displayMode === 'semi';
-
   return (
     <group>
       {geo.memberData.map((m) => (
         <MemberCylinder
           key={m.memberId}
           data={m}
-          wireframe={isWireframe}
-          semi={isSemi}
+          mode={displayMode}
           onHover={(hovered) => hoverMember(hovered ? m.memberId : null)}
           onClick={() => selectMember(m.memberId)}
         />
@@ -38,25 +44,38 @@ export function Members() {
 
 function MemberCylinder({
   data,
-  wireframe,
-  semi,
+  mode,
   onHover,
   onClick,
 }: {
   data: MemberGeometryData;
-  wireframe: boolean;
-  semi: boolean;
+  mode: DisplayMode;
   onHover: (hovered: boolean) => void;
   onClick: () => void;
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
 
-  const color = new THREE.Color(data.color);
+  const realistic = mode === 'realistic';
+  const semi = mode === 'semi';
+  const wireframe = mode === 'wireframe';
+
+  // Material-aware skin used in realistic mode only
+  const skin = getMaterialSkin(data.materialType);
+
+  // Final color — interaction states take priority, otherwise:
+  //   realistic → material skin, semi → section-type/purpose color (data.color)
+  let baseColor: string;
+  if (data.isSelected) baseColor = SELECTED_COLOR;
+  else if (data.isHovered) baseColor = HOVER_COLOR;
+  else if (data.hasWarning) baseColor = RENDER_WARNING_COLOR;
+  else baseColor = realistic ? skin.color : data.color;
+
+  const color = new THREE.Color(baseColor);
   const opacity = semi ? 0.5 : 1;
-  const isSteel = data.sectionType?.startsWith('STEEL_');
-  const metalness = isSteel ? 0.75 : 0.3;
-  const roughness = isSteel ? 0.35 : 0.5;
+  const isSteelSection = !!data.sectionType?.startsWith('STEEL_');
+  const roughness = realistic ? skin.roughness : isSteelSection ? 0.35 : 0.5;
+  const metalness = realistic ? skin.metalness : isSteelSection ? 0.75 : 0.3;
 
   // Compute rotation: align axes, then apply beta around member direction
   const rot = data.rotation ? new THREE.Euler(data.rotation[0], data.rotation[1], data.rotation[2]) : new THREE.Euler();
@@ -97,6 +116,7 @@ function MemberCylinder({
     >
       <primitive object={geom} attach="geometry" />
       <meshStandardMaterial
+        key={mode}
         color={color}
         roughness={roughness}
         metalness={metalness}

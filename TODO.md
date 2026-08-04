@@ -26,27 +26,21 @@
 
 ---
 
-## P2 — Realistic View Mode
+## ✅ P2 — Realistic View Mode — DONE
 
-### Description
-Replace the current `solid` display mode with `realistic`. When realistic is selected, members render with material-appropriate skins:
-- **Steel** → metallic grey with slight roughness
-- **Concrete** → matte light-grey with noise/bump texture
-- **Unknown/default** → fallback neutral grey
-
-### View Mode Options (updated)
-| Mode | Description |
-|---|---|
-| **Realistic** | Material-aware skins (steel, concrete, etc.) |
-| **Semi** | Semi-transparent with material tint |
-| **Wireframe** | Unchanged — geometry edges only |
-
-### Scope
-- Rename `solid` → `realistic` in `viewStore`, `BottomToolbar`, and all references
-- Implement material-to-skin mapping in `Members.tsx` (Three.js `MeshStandardMaterial` with per-material `color`, `roughness`, `metalness`)
-- Concrete skin: high roughness (~0.9), low metalness (~0.1), warm grey color
-- Steel skin: low roughness (~0.3), high metalness (~0.8), cool grey color
-- Update `BottomToolbar` labels and icons
+### What was delivered
+- Renamed `solid` → `realistic` in `viewStore`, `BottomToolbar` (label + Sparkles icon), and all references
+- Material-aware skins via `getMaterialSkin()` in `lib/colors.ts` (single source of truth):
+  - **STEEL** → metallic grey (`#B4B6BC`, roughness 0.28, metalness 0.85)
+  - **CONCRETE** → matte warm grey (`#C6C5C1`, roughness 0.92, metalness 0.05)
+  - **OTHER/unknown** → neutral grey fallback
+- `MemberGeometryData` now carries `materialType`, `isSelected`, `isHovered`, `hasWarning`
+- Interaction states (selection gold, hover blue, warning orange) override the skin color
+- **Semi mode** keeps the section-type/purpose colors (`data.color`: columns red, beams blue, steel silver…) at 50% opacity — NOT material skins — so you can still tell element roles while seeing through
+- `Plates.tsx` uses material skins only in realistic mode; realistic plates are **fully opaque** (highlight via color change), semi plates keep the green plate color + translucent
+- Single `mode: DisplayMode` prop passed down (Members + Plates) — no separate `isWireframe`/`isRealistic` booleans
+- `key={mode}` on `<meshStandardMaterial>` forces material re-instantiation on mode switch (fixes stale `transparent` flag not applying on prop diff)
+- `Lighting.tsx` installs an offline `RoomEnvironment` (PMREM) so metallic steel gets real reflections — no network fetch
 
 ---
 
@@ -78,4 +72,5 @@ Currently all supports render with the same visual marker regardless of type (FI
 - [x] Section label formatting (`L 2-1/2 x 3-1/2`)
 - [x] Removed `steel-resolver.ts` in favor of JSON mapping
 - [x] **P1 — Materials property** (parse, attach, display, strength, unit-aware, plates too)
+- [x] **P2 — Realistic view mode** (material skins, env reflections, toolbar rename)
 - [x] ARCHITECTURE.md synced

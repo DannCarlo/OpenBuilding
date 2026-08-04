@@ -22,6 +22,12 @@ export interface MemberGeometryData {
   sectionType?: string;
   /** Warning messages when the section cannot be rendered accurately. */
   renderWarnings?: string[];
+  /** Material type for realistic skins: 'STEEL' | 'CONCRETE' | 'OTHER'. */
+  materialType?: string;
+  /** Interaction state flags (drive the realistic-mode highlight colors). */
+  isSelected?: boolean;
+  isHovered?: boolean;
+  hasWarning?: boolean;
 }
 
 /**
@@ -143,6 +149,10 @@ export function useSceneGeometry() {
         memberId: member.id,
         sectionType: member.section?.type,
         renderWarnings: member.section?.renderWarnings,
+        materialType: member.section?.material?.type,
+        isSelected: member.id === selectedMemberId,
+        isHovered: member.id === hoveredMemberId,
+        hasWarning,
       });
     }
 

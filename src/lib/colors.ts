@@ -39,6 +39,35 @@ export const SUPPORT_COLORS: Record<string, string> = {
 /** Warning color for members with rendering limitations (double angles, missing sections, etc.). */
 export const RENDER_WARNING_COLOR = '#FF8C00'; // dark orange
 
+/** Selection highlight color (gold) */
+export const SELECTED_COLOR = '#FFD700';
+
+/** Hover highlight color (light blue) */
+export const HOVER_COLOR = '#66AAFF';
+
+// ── Material-aware render skins (realistic mode) ─────────────────────────
+
+export interface RenderSkin {
+  color: string;
+  roughness: number;
+  metalness: number;
+}
+
+/** Skins keyed by Material.type ('STEEL' | 'CONCRETE' | 'OTHER'). */
+export const MATERIAL_SKINS: Record<string, RenderSkin> = {
+  STEEL: { color: '#B4B6BC', roughness: 0.28, metalness: 0.85 },
+  CONCRETE: { color: '#C6C5C1', roughness: 0.92, metalness: 0.05 },
+  OTHER: { color: '#9C9CA4', roughness: 0.55, metalness: 0.35 },
+};
+
+export const DEFAULT_SKIN: RenderSkin = MATERIAL_SKINS.OTHER;
+
+/** Resolve a render skin for a material type, falling back to neutral grey. */
+export function getMaterialSkin(materialType?: string): RenderSkin {
+  if (materialType && MATERIAL_SKINS[materialType]) return MATERIAL_SKINS[materialType];
+  return DEFAULT_SKIN;
+}
+
 // Get a color for a member based on its section type
 export function getMemberColor(sectionType?: string): string {
   if (!sectionType) return MEMBER_COLORS.default;

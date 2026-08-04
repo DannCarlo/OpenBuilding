@@ -71,11 +71,14 @@ structure_viewer/
 │   │   │   ├── Scene.tsx                # Root scene composition
 │   │   │   ├── useSceneGeometry.ts      # ★ Core hook: model → MemberGeometryData[]
 │   │   │   │                            #   MemberGeometryData: { profile?, meta?, position, rotation,
-│   │   │   │                            #                          length, radius, beta, color, sectionType }
+│   │   │   │                            #                          length, radius, beta, color, sectionType,
+│   │   │   │                            #                          materialType?, isSelected?, isHovered?, hasWarning? }
 │   │   │   ├── Members.tsx              # ★ createSectionGeometry: profile → buildExtrudedProfile()
 │   │   │   │                            #   3-line implementation. No shape dispatch.
+│   │   │   │                            #   Material-aware skins in realistic mode only (colors.ts)
+│   │   │   │                            #   Semi keeps section colors; key={mode} forces material remount
 │   │   │   ├── Nodes.tsx                # InstancedMesh spheres
-│   │   │   ├── Plates.tsx               # Solid plate/shell bodies (per-node thickness)
+│   │   │   ├── Plates.tsx               # Solid plate/shell bodies (per-node thickness; opaque in realistic)
 │   │   │   ├── Supports.tsx             # Cone (fixed) / sphere (pinned) markers
 │   │   │   ├── Labels.tsx               # 3D node ID labels
 │   │   │   ├── Grid.tsx                 # Theme-aware ground grid
@@ -185,12 +188,22 @@ ParseSection { type, profile, meta, sectionKey, description, config?, renderWarn
   ↓
 model/builder.ts → MemberSection (identical shape)
   ↓
-useSceneGeometry.ts → MemberGeometryData { profile, meta, renderWarning, ... }
+useSceneGeometry.ts → MemberGeometryData { profile, meta, renderWarning, materialType?, isSelected?, ... }
   │                    renderWarning → orange color (#FF8C00)
   ↓
 Members.tsx / createSectionGeometry:
   if (profile) return buildExtrudedProfile(profile, length)  ← one path
   return cylinder fallback                                    ← one fallback
+  ↓
+Members.tsx / realistic skins (getMaterialSkin in lib/colors.ts):
+  STEEL    → { color #B4B6BC, roughness 0.28, metalness 0.85 }   metallic
+  CONCRETE → { color #C6C5C1, roughness 0.92, metalness 0.05 }   matte
+  OTHER    → { color #9C9CA4, roughness 0.55, metalness 0.35 }   neutral fallback
+  Selection/hover/warning override the skin color (gold/blue/orange).
+  Semi mode → section-type/purpose colors (data.color) at 50% opacity.
+  Plates    → skins only in realistic (fully opaque); semi keeps green + translucent.
+  Materials use key={mode} so mode switches force a fresh material instance.
+  Lighting.tsx installs an offline RoomEnvironment (PMREM) so metals reflect.
   ↓
 InfoPanel.tsx (componentized):
   🏷 PanelHeader      — Member/Plate title + close
@@ -388,7 +401,7 @@ Adding a new section type with 10 custom dimensions requires zero InfoPanel chan
 │                                                     │
 ├─────────────────────────────────────────────────────┤
 │  BottomToolbar                                      │
-│  Desktop: [Orbit|Pan] [Solid|Wire|Semi] [Grid...]   │
+│  Desktop: [Orbit|Pan] [Realistic|Wire|Semi] [Grid...] │
 │  Mobile:  [3D▾] [View▾] [Util▾] [Fit] [📊] ←scroll→│
 └─────────────────────────────────────────────────────┘
 ```
@@ -399,7 +412,7 @@ Adding a new section type with 10 custom dimensions requires zero InfoPanel chan
 
 | State | Type | Default | Driven by |
 |---|---|---|---|
-| `displayMode` | `'solid' \| 'wireframe' \| 'semi'` | `'solid'` | Display Mode group |
+| `displayMode` | `'realistic' \| 'wireframe' \| 'semi'` | `'realistic'` | Display Mode group |
 | `navMode` | `'orbit' \| 'pan'` | `'orbit'` | Nav Mode group (swaps OrbitControls mouseButtons) |
 | `showGrid` | `boolean` | `true` | Toggle: Grid |
 | `showLabels` | `boolean` | `false` | Toggle: Labels |
