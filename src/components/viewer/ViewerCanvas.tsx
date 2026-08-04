@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { Scene } from './Scene';
 import { useViewStore } from '../../store/viewStore';
 import { UnitsBadge } from './UnitsBadge';
+import { AxisGuide } from './AxisGuide';
 
 /**
  * Full-viewport 3D canvas with theme-aware background.
@@ -23,6 +24,7 @@ export function ViewerCanvas() {
         </Suspense>
       </Canvas>
       <UnitsBadge />
+      <AxisGuide />
     </div>
   );
 }

@@ -49,7 +49,8 @@ structure_viewer/
 │   │           ├── member-incidences.ts
 │   │           ├── member-properties.ts  # Extracts tableName + prefix + SP spacing
 │   │           ├── material-definitions.ts # Parses DEFINE MATERIAL block → StaadMaterial[]
-│   │           ├── supports.ts
+│   │           ├── supports.ts           # FIXED/PINNED/ROLLER/SPRING + ENFORCED BUT <releases>
+│   │           │                        #   ENFORCED BUT → PINNED/ROLLER/FIXED inference
 │   │           └── group-definitions.ts
 │   │
 │   ├── model/
@@ -66,8 +67,11 @@ structure_viewer/
 │   │
 │   ├── components/
 │   │   ├── viewer/
-│   │   │   ├── ViewerCanvas.tsx         # R3F Canvas wrapper with theme-aware background + UnitsBadge
-│   │   │   ├── UnitsBadge.tsx            # Lower-left viewport unit display (METER/KN, etc.)
+│   │   │   ├── ViewerCanvas.tsx         # R3F Canvas wrapper with theme-aware background + corner overlays
+│   │   │   ├── UnitsBadge.tsx            # Lower-RIGHT viewport unit display (METER/KN, etc.)
+│   │   │   ├── AxisGuide.tsx            # Lower-LEFT gray axis tripod (DOM/SVG) — Z-up convention
+│   │   │   ├── AxisGuideSync.tsx        # useFrame: projects world axes to screen, writes DOM transforms
+│   │   │   ├── axisGuideBridge.ts       # Module-level handle holder (DOM ↔ R3F sync, no re-renders)
 │   │   │   ├── Scene.tsx                # Root scene composition
 │   │   │   ├── useSceneGeometry.ts      # ★ Core hook: model → MemberGeometryData[]
 │   │   │   │                            #   MemberGeometryData: { profile?, meta?, position, rotation,
@@ -79,11 +83,11 @@ structure_viewer/
 │   │   │   │                            #   Semi keeps section colors; key={mode} forces material remount
 │   │   │   ├── Nodes.tsx                # InstancedMesh spheres
 │   │   │   ├── Plates.tsx               # Solid plate/shell bodies (per-node thickness; opaque in realistic)
-│   │   │   ├── Supports.tsx             # Cone (fixed) / sphere (pinned) markers
+│   │   │   ├── Supports.tsx             # Type-specific markers: FIXED base+pyramid, PINNED ball+bracket, ROLLER cylinder+triangle
 │   │   │   ├── Labels.tsx               # 3D node ID labels
 │   │   │   ├── Grid.tsx                 # Theme-aware ground grid
 │   │   │   ├── CameraControls.tsx       # OrbitControls: auto-fit, navMode mouse swap, fitView re-trigger
-│   │   │   └── Lighting.tsx             # Ambient + directional + hemisphere lights
+│   │   │   └── Lighting.tsx             # Ambient + directional + hemisphere lights + offline RoomEnvironment
 │   │   ├── layout/
 │   │   │   ├── MainLayout.tsx
 │   │   │   └── TopBar.tsx               # Logo + filename + open-file + theme toggle

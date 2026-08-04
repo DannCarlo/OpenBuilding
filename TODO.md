@@ -44,23 +44,22 @@
 
 ---
 
-## P3 — Distinct Support Type Rendering
+## ✅ P3 — Distinct Support Type Rendering — DONE
 
-### Description
-Currently all supports render with the same visual marker regardless of type (FIXED, PINNED, ROLLER). Each support type should have a distinct, recognizable 3D representation.
-
-### Expected
-| Type | Visual |
-|---|---|
-| **FIXED** | Full restraint — block/base plate with cross-hatch or pyramid marker |
-| **PINNED** | Hinge — sphere/ball joint with triangular bracket |
-| **ROLLER** | Roller — cylinder/triangle with arrow indicating free direction |
-
-### Scope
-- Update `Supports.tsx` to render type-specific geometry (not just color differences)
-- Use distinct Three.js shapes per type (e.g., `ConeGeometry` for fixed, `SphereGeometry` for pinned, `CylinderGeometry` + triangle for roller)
-- Keep the existing color distinction (`SUPPORT_COLORS`) as a secondary cue
-- Ensure supports are clearly visible at all zoom levels
+### What was delivered
+- Type-specific 3D geometry in `Supports.tsx` (structural drawing conventions):
+  - **FIXED** → base plate (box) + 4-sided pyramid — rigid restraint
+  - **PINNED** → sphere ball joint on a triangular bracket — hinge
+  - **ROLLER** → horizontal cylinder roller + triangle base
+  - **UNKNOWN** → neutral box fallback
+- `SUPPORT_COLORS` kept as secondary cue; materials get a subtle emissive so markers stay visible in dark scenes
+- **Parser improvement** — `parseSupportLine` now handles `ENFORCED BUT <releases>` (very common in real STAAD files):
+  - all translations fixed + ≥2 rotations released → `PINNED`
+  - one translation + ≥2 rotations released → `ROLLER`
+  - no translations released → `FIXED`
+  - partial fixity → `UNKNOWN` (conservative)
+  - bare `ENFORCED` → `FIXED`
+- Verified with 9/9 unit tests against the real bundled parser (`FIXED`, `PINNED`, `ROLLER`, `ENFORCED BUT`, ranges, `SPRING`, unknown)
 
 ---
 
@@ -73,4 +72,5 @@ Currently all supports render with the same visual marker regardless of type (FI
 - [x] Removed `steel-resolver.ts` in favor of JSON mapping
 - [x] **P1 — Materials property** (parse, attach, display, strength, unit-aware, plates too)
 - [x] **P2 — Realistic view mode** (material skins, env reflections, toolbar rename)
+- [x] **P3 — Distinct support rendering** (type-specific geometry + `ENFORCED BUT` parsing)
 - [x] ARCHITECTURE.md synced

@@ -6,6 +6,7 @@ import { Labels } from './Labels';
 import { Grid } from './Grid';
 import { CameraControls } from './CameraControls';
 import { Lighting } from './Lighting';
+import { AxisGuideSync } from './AxisGuideSync';
 
 interface SceneProps {
   bgColor?: string;
@@ -26,6 +27,7 @@ export function Scene({ bgColor = '#ffffff' }: SceneProps) {
       <Supports />
       <Labels />
       <CameraControls />
+      <AxisGuideSync />
     </>
   );
 }
