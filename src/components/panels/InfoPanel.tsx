@@ -1,9 +1,9 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Box, Layers } from 'lucide-react';
+import { X, Box, Layers, Anchor } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { useUIStore } from '../../store/uiStore';
 import { useModelStore } from '../../store/modelStore';
-import type { SectionConfigProp, Material } from '../../parser/types';
+import type { SectionConfigProp, Material, SupportRestraints } from '../../parser/types';
 
 /**
  * Format a dimension for display.
@@ -77,6 +77,11 @@ function fmtSectionLabel(raw: string): string {
   return s;
 }
 
+/** Human-readable support type: "ENFORCED_BUT" → "ENFORCED BUT". */
+function fmtSupportType(type: string): string {
+  return type.replace('_', ' ');
+}
+
 /**
  * Slide-out info panel showing selected member or plate details.
  * Desktop: left sidebar panel with slide-in animation.
@@ -85,11 +90,32 @@ function fmtSectionLabel(raw: string): string {
 export function InfoPanel() {
   const selectedMemberId = useUIStore((s) => s.selectedMemberId);
   const selectedPlateId = useUIStore((s) => s.selectedPlateId);
+  const selectedSupportNodeId = useUIStore((s) => s.selectedSupportNodeId);
   const selectMember = useUIStore((s) => s.selectMember);
   const selectPlate = useUIStore((s) => s.selectPlate);
+  const selectSupport = useUIStore((s) => s.selectSupport);
   const model = useModelStore((s) => s.model);
 
   if (!model) return null;
+
+  // Show element info if a support is selected
+  if (selectedSupportNodeId != null) {
+    const support = model.supports.find((s) => s.nodeId === selectedSupportNodeId);
+    if (!support) return null;
+
+    const panelContent = (
+      <GlassPanel className="p-5 sm:p-6 w-full sm:w-72 rounded-none! !lg:rounded-xl min-h-dvh sm:min-h-0">
+        <PanelHeader title={`Support @ Node ${support.nodeId}`} onClose={() => selectSupport(null)} />
+        <div className="space-y-2.5 text-xs">
+          <InfoRow label="Type" value={fmtSupportType(support.type)} />
+          <InfoRow label="Node" value={String(support.nodeId)} />
+          {support.restraints && <RestraintSection restraints={support.restraints} />}
+        </div>
+      </GlassPanel>
+    );
+
+    return renderPanel(panelContent);
+  }
 
   // Show element info if a plate is selected
   if (selectedPlateId != null) {
@@ -287,6 +313,63 @@ function WarningsSection({ warnings }: { warnings?: string[] }) {
         <p key={i} className="text-amber-700 text-xs leading-relaxed">⚠ {w}</p>
       ))}
     </div>
+  );
+}
+
+/**
+ * Per-DOF restraint table — used by the support info panel.
+ *
+ * The table displays in the app's Z-up convention (matching the axis guide):
+ * X/Y horizontal, Z vertical. STAAD stores the model with Y vertical and X/Z
+ * horizontal, so source DOFs are remapped for display:
+ *   source FY (vertical)  → shows as FZ
+ *   source FZ (horizontal)→ shows as FY
+ *   source MY (vertical)  → shows as MZ
+ *   source MZ (horizontal)→ shows as MY
+ */
+const RESTRAINT_ROWS: { source: keyof SupportRestraints; label: string }[] = [
+  { source: 'fx', label: 'FX' },
+  { source: 'fz', label: 'FY' },
+  { source: 'fy', label: 'FZ' },
+  { source: 'mx', label: 'MX' },
+  { source: 'mz', label: 'MY' },
+  { source: 'my', label: 'MZ' },
+];
+
+function RestraintSection({ restraints }: { restraints: SupportRestraints }) {
+  return (
+    <>
+      <SectionHeader icon={Anchor} label="Restraints" />
+      {/* Legend */}
+      <div className="flex items-center gap-3 pt-1 text-[10px] font-medium text-text-secondary">
+        <span className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-sm bg-green-500/70" />
+          restrained
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-sm bg-slate-300 dark:bg-slate-600" />
+          free
+        </span>
+      </div>
+      {/* DOF pills — green = restrained, grey = free */}
+      <div className="grid grid-cols-3 gap-1.5 pt-1.5">
+        {RESTRAINT_ROWS.map(({ source, label }) => {
+          const restrained = restraints[source];
+          return (
+            <div
+              key={label}
+              className={`flex items-center justify-center rounded-md border px-2 py-1 font-mono text-xs ${
+                restrained
+                  ? 'border-green-500/40 bg-green-500/10 text-green-600 dark:text-green-400'
+                  : 'border-border bg-slate-200/50 dark:bg-slate-700/40 text-text-secondary'
+              }`}
+            >
+              {label}
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 }
 

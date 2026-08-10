@@ -1,5 +1,7 @@
 // STAAD .std parser — format-specific types
 
+import type { SupportRestraints } from '../types';
+
 export interface StaadJoint {
   id: number;
   x: number;
@@ -26,8 +28,10 @@ export interface StaadMemberProperty {
 
 export interface StaadSupport {
   jointIds: number[];
-  type: 'FIXED' | 'PINNED' | 'FIXED_BUT' | 'ROLLER' | 'SPRING' | 'UNKNOWN';
+  type: 'FIXED' | 'PINNED' | 'ENFORCED_BUT' | 'ROLLER' | 'SPRING' | 'UNKNOWN';
   description: string;
+  /** Per-DOF restraint state (present when the file specifies releases). */
+  restraints?: SupportRestraints;
 }
 
 export interface StaadGroup {

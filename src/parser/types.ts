@@ -131,10 +131,22 @@ export interface ParseMember {
   endOffset?: { dx: number; dy: number; dz: number };
 }
 
+/** Per-DOF restraint state for a support. `true` = restrained. */
+export interface SupportRestraints {
+  fx: boolean;
+  fy: boolean;
+  fz: boolean;
+  mx: boolean;
+  my: boolean;
+  mz: boolean;
+}
+
 /** A boundary condition at a node */
 export interface ParseSupport {
   nodeId: number;
-  type: 'FIXED' | 'PINNED' | 'ROLLER' | 'UNKNOWN';
+  type: 'FIXED' | 'PINNED' | 'ROLLER' | 'ENFORCED_BUT' | 'UNKNOWN';
+  /** Per-DOF restraint state (present when the file specifies releases). */
+  restraints?: SupportRestraints;
 }
 
 /** A plate/shell element with per-node thicknesses */

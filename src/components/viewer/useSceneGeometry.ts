@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { useModelStore } from '../../store/modelStore';
 import { DEFAULT_MEMBER_RADIUS } from '../../lib/constants';
-import { getMemberColor, getSupportColor, RENDER_WARNING_COLOR } from '../../lib/colors';
+import { getMemberColor, getSupportColor, RENDER_WARNING_COLOR, SELECTED_COLOR } from '../../lib/colors';
 import { useViewStore } from '../../store/viewStore';
 import { useUIStore } from '../../store/uiStore';
 import * as THREE from 'three';
-import type { SectionProfile, SectionMeta } from '../../parser/types';
+import type { SectionProfile, SectionMeta, SupportRestraints } from '../../parser/types';
 
 export interface MemberGeometryData {
   position: [number, number, number];
@@ -40,6 +40,7 @@ export function useSceneGeometry() {
   const showSupports = useViewStore((s) => s.showSupports);
   const hoveredMemberId = useUIStore((s) => s.hoveredMemberId);
   const selectedMemberId = useUIStore((s) => s.selectedMemberId);
+  const selectedSupportNodeId = useUIStore((s) => s.selectedSupportNodeId);
 
   return useMemo(() => {
     if (!model) return null;
@@ -158,18 +159,25 @@ export function useSceneGeometry() {
 
     // -- Supports --
     const supportData: Array<{
+      nodeId: number;
       position: [number, number, number];
       color: string;
       type: string;
+      restraints?: SupportRestraints;
+      isSelected: boolean;
     }> = [];
 
     for (const support of model.supports) {
       const node = nodeMap.get(support.nodeId);
       if (!node) continue;
+      const isSelected = support.nodeId === selectedSupportNodeId;
       supportData.push({
+        nodeId: support.nodeId,
         position: [node.x, node.y, node.z],
-        color: getSupportColor(support.type),
+        color: isSelected ? SELECTED_COLOR : getSupportColor(support.type, support.restraints),
         type: support.type,
+        restraints: support.restraints,
+        isSelected,
       });
     }
 
@@ -196,7 +204,7 @@ export function useSceneGeometry() {
       labelData,
       bounds: computeBounds(model.nodes),
     };
-  }, [model, displayMode, showLabels, showSupports, hoveredMemberId, selectedMemberId]);
+  }, [model, displayMode, showLabels, showSupports, hoveredMemberId, selectedMemberId, selectedSupportNodeId]);
 }
 
 function computeBounds(nodes: { x: number; y: number; z: number }[]) {

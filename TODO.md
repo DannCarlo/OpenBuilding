@@ -63,6 +63,20 @@
 
 ---
 
+## P4 — Interactive Supports (Click for Restraint Info)
+
+### Description
+Make support markers clickable, like members/plates. Selecting a support opens an info panel showing its restraint details — which translations (FX/FY/FZ) and rotations (MX/MY/MZ) are fixed vs. released.
+
+### Scope
+- **Click/hover** on supports in `Supports.tsx` (pointer events + highlight, matching the member/plate interaction pattern)
+- **Support info panel** in `InfoPanel.tsx` (reuse `PanelHeader`/`InfoRow` patterns):
+  - Type, Node ID, and per-DOF restraint table (FX/FY/FZ/MX/MY/MZ: fixed or free)
+- **Parser work** — `parseSupportLine` currently infers the type from `ENFORCED BUT <releases>` but **discards the detailed releases**. Extend `ParseSupport`/`ModelSupport` to carry the DOF restraint set (e.g., `restraints: { fx, fy, fz, mx, my, mz }`) so the panel can show exactly what's fixed/free
+- Keep the type-specific 3D markers from P3 as-is; color/selection highlight as a secondary cue
+
+---
+
 ## Completed ✅
 
 - [x] STAAD→AISC mapping (1,408 entries)

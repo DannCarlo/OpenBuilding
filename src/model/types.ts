@@ -1,4 +1,4 @@
-import type { SectionType, SectionProfile, SectionMeta, SectionConfig, Material } from '../parser/types';
+import type { SectionType, SectionProfile, SectionMeta, SectionConfig, Material, SupportRestraints } from '../parser/types';
 
 // Normalized geometry model types (format-independent)
 
@@ -40,7 +40,9 @@ export interface MemberSection {
 
 export interface ModelSupport {
   nodeId: number;
-  type: 'FIXED' | 'PINNED' | 'ROLLER' | 'UNKNOWN';
+  type: 'FIXED' | 'PINNED' | 'ROLLER' | 'ENFORCED_BUT' | 'UNKNOWN';
+  /** Per-DOF restraint state (true = restrained). */
+  restraints?: SupportRestraints;
 }
 
 export interface ModelPlate {

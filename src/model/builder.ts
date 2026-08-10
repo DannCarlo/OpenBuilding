@@ -43,6 +43,7 @@ export function buildModel(parsed: BaseParseResult): ParsedModel {
   const supports: ModelSupport[] = parsed.supports.map(s => ({
     nodeId: s.nodeId,
     type: s.type,
+    restraints: s.restraints,
   }));
 
   return {

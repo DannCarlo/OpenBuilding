@@ -1,5 +1,7 @@
 // Color palette for structural elements
 
+import type { SupportRestraints } from '../parser/types';
+
 export const MEMBER_COLORS: Record<string, string> = {
   default: '#4A90D9',        // blue for beams
   column: '#E85D47',         // coral for columns
@@ -33,6 +35,7 @@ export const SUPPORT_COLORS: Record<string, string> = {
   FIXED: '#E85D47',
   PINNED: '#F4A261',
   ROLLER: '#50C878',
+  ENFORCED_BUT: '#7B68EE',   // periwinkle — custom restraint set
   UNKNOWN: '#888888',
 };
 
@@ -74,7 +77,29 @@ export function getMemberColor(sectionType?: string): string {
   return SECTION_COLORS[sectionType] || MEMBER_COLORS.default;
 }
 
-// Get color for a support type
-export function getSupportColor(supportType: string): string {
+/**
+ * Deterministic color for an ENFORCED_BUT support derived from its restraint
+ * pattern — each DOF carries a distinct prime weight, so any single DOF
+ * flipping (e.g. FX restrained vs free) produces a visibly different color.
+ * Stays in the violet/indigo family to remain recognizably "custom restraint".
+ */
+function enforcedButColor(restraints: SupportRestraints): string {
+  const hash =
+    (restraints.fx ? 1 : 0) * 131 +
+    (restraints.fy ? 1 : 0) * 137 +
+    (restraints.fz ? 1 : 0) * 139 +
+    (restraints.mx ? 1 : 0) * 149 +
+    (restraints.my ? 1 : 0) * 151 +
+    (restraints.mz ? 1 : 0) * 163;
+  const hue = 225 + (hash % 60);                  // 225°..285° (violet → indigo)
+  const sat = 45 + ((hash >> 2) % 30);            // 45%..74%
+  const light = 40 + ((hash >> 4) % 20);          // 40%..59%
+  return `hsl(${hue}, ${sat}%, ${light}%)`;
+}
+
+// Get color for a support type. ENFORCED_BUT colors reflect the actual
+// restraint pattern so different restraint sets are visually distinct.
+export function getSupportColor(supportType: string, restraints?: SupportRestraints): string {
+  if (supportType === 'ENFORCED_BUT' && restraints) return enforcedButColor(restraints);
   return SUPPORT_COLORS[supportType] || SUPPORT_COLORS.UNKNOWN;
 }

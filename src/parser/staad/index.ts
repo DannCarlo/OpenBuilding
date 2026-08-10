@@ -698,7 +698,8 @@ function toBaseResult(staad: StaadParseResult): BaseParseResult {
       }
       supports.push({
         nodeId: jointId,
-        type: s.type === 'FIXED_BUT' ? 'FIXED' : mapSupportType(s.type),
+        type: mapSupportType(s.type),
+        restraints: s.restraints,
       });
     }
   }
@@ -754,10 +755,10 @@ function angleStyleLabel(arrangement: string): string {
 /** Map STAAD support type → format-agnostic type */
 function mapSupportType(staadType: string): ParseSupport['type'] {
   switch (staadType) {
-    case 'FIXED':
-    case 'FIXED_BUT': return 'FIXED';
+    case 'FIXED': return 'FIXED';
     case 'PINNED': return 'PINNED';
     case 'ROLLER': return 'ROLLER';
+    case 'ENFORCED_BUT': return 'ENFORCED_BUT';
     default: return 'UNKNOWN';
   }
 }
